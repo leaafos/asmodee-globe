@@ -8,9 +8,8 @@ import Badge from './components/Badge';
 function App() {
   return (
     <div style={{ display: 'flex', height: '100vh', background: 'linear-gradient(-52deg, rgba(44,91,184,1) 19%, rgba(56,73,163,1) 46%, rgba(71,50,135,1) 81%)' }}>
-        {/* Sidebar - 1/4 width */}
         <div style={{
-          width: '25%',
+          width: '20%',
           borderRight: '1px solid #ccc',
           padding: '1rem',
           boxSizing: 'border-box'
@@ -18,19 +17,17 @@ function App() {
           <SideBarGame />
         </div>
 
-        {/* Main content - 3/4 width */}
-        <div style={{ width: '75%', display: 'flex', flexDirection: 'column' }}>
-          {/* Top half */}
-          <div style={{ display: 'flex', flex: 2 }}>
-            <div style={{ width: '60%', borderRight: '1px solid #ccc' }}>
+        <div style={{ width: '80%', display: 'flex', flexDirection: 'column' }}>
+
+          <div style={{ display: 'flex', flex: 2.7 }}>
+            <div style={{ width: '75%',borderRight: '1px solid #ccc' }}>
               <GlobeScene />
             </div>
-            <div style={{ width: '40%' }}>
+            <div style={{ width: '25%' }}>
               <ParrotTalk />
             </div>
           </div>
 
-          {/* Bottom half */}
           <div style={{ display: 'flex', flex: 1, borderTop: '1px solid #ccc' }}>
             <div style={{ flex: 1, borderRight: '1px solid #ccc' }}>
               <Score />

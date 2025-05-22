@@ -89,6 +89,8 @@ const GlobeScene = () => {
     };
 
     globeInstance.current = globe;
+    globeInstance.current.camera().position.z = 400;
+    
   }, []);
 
   useEffect(() => {
@@ -130,8 +132,8 @@ const GlobeScene = () => {
   };
 
   return (
-    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%', background: 'linear-gradient(-52deg, rgba(44,91,184,1) 19%, rgba(56,73,163,1) 46%, rgba(71,50,135,1) 81%)' }}>
-      <div ref={globeRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'  }} />
+    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '600px',}}>
+      <div ref={globeRef} style={{ width: '100%', height: '100%',}} />
 
       {messages.map((msg, index) => {
           const isWest = msg.lng < 0;
@@ -166,7 +168,7 @@ const GlobeScene = () => {
 
       <div style={{
         position: 'absolute',
-        bottom: 20,
+        bottom: -40,
         left: '50%',
         transform: 'translateX(-50%)',
         display: 'flex',

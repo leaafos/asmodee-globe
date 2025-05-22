@@ -3,7 +3,7 @@ import React from 'react';
 const Badge = () => {
     return (
         <div>
-            <h1>Gadge</h1>
+            <h1>Badge</h1>
         </div>
     );
 };
