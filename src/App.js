@@ -19,9 +19,9 @@ function App() {
 
         <div style={{ width: '80%', display: 'flex', flexDirection: 'column' }}>
 
-          <div style={{ display: 'flex', flex: 2.7 }}>
-            <div style={{ width: '75%',borderRight: '1px solid #ccc' }}>
-              <GlobeScene />
+          <div style={{ display: 'flex', flex: 2.7}}>
+            <div style={{ width: '75%',borderRight: '1px solid #ccc', maxHeight: '75vh', overflow: 'hidden', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <GlobeScene/>
             </div>
             <div style={{ width: '25%' }}>
               <ParrotTalk />
