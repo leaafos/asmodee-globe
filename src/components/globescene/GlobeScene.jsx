@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Globe from 'globe.gl';
 import * as THREE from 'three';
+import "./globeScene.scss"
 
 const demoData = [
   { lat: 48.3-10, lng: 2.08-10, city: 'Asmodee HQ (Guyancourt, France)', population: 155000000 },
@@ -196,23 +197,30 @@ const GlobeScene = () => {
     });
   };
 
-  const fixedPositions = [
-    { top: '100px', right: '180px' },  
-    { top: '250px', right: '40px' },   
-    { top: '480px', right: '100px' },  
-    { top: '140px', left: '100px' }, 
-    { top: '300px', left: '60px' }, 
-  ];
+   const fixedPositions = [
+    { top: '24%', right: '11%' },  
+    { top: '43%', right: '4%' },   
+    { top: '64%', right: '11%' },  
+    { top: '30%', left: '11%' }, 
+    { top: '50%', left: '6%' }, 
 
-  return (
-    <div ref={containerRef}>
-      <div ref={globeRef}  />
+];
+
+// Dans le return du composant, ajustez le conteneur principal
+return (
+  <>
+    <div id='mapContainer' ref={containerRef} style={{
+      position: 'relative',
+      overflow: 'hidden',
+      boxSizing: 'border-box'
+    }}>
+      {/* Ajoutez une classe pour le canvas */}
+      <div className="scene-container">
+        <div ref={globeRef} style={{width: '100%', height: '100%'}} />
+      </div>
 
       {messages.map((msg, index) => {
           const pos = fixedPositions[index % fixedPositions.length];
-          const isWest = msg.lng < 0;
-          const topPercent = 50 - (msg.lat / 90) * 50;
-          const verticalSpacing = 40;
 
           return (
             <div
@@ -221,20 +229,19 @@ const GlobeScene = () => {
               style={{
                 position: 'absolute',
                 width: 'auto',
+                maxWidth: '40%', // Limite la largeur
                 ...pos,
-                //top: `${20 + index * verticalSpacing}px`,
-                // left: isWest ? '10px' : 'auto',
-                //right: isWest ? 'auto' : '10px',
                 transform: 'translateY(0)',
                 padding: '6px 14px',
-                backgroundColor: 'linear-gradient(45deg, rgb(255, 255, 255) 40%, rgb(255, 255, 255) 6%)',
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
                 border: '1px solid #fff',
                 borderRadius: '4px',
-                color: '#fff',
-                fontSize: '14px',
-                //whiteSpace: 'nowrap',
+                color: '#000', // Changé pour meilleure lisibilité
+                fontSize: 'clamp(11px, 1.2vw, 14px)', // Taille responsive
+                wordWrap: 'break-word',
                 pointerEvents: 'none',
-                zIndex: 10
+                zIndex: 10,
+                boxSizing: 'border-box'
               }}
             >
               {msg.text}
@@ -244,28 +251,35 @@ const GlobeScene = () => {
 
       <div style={{
         position: 'absolute',
-        width: 'auto',
+        width: '100%',
+        maxWidth: '90%', // Limite la largeur
         height: 'auto',
-        bottom: 20,
+        bottom: '2%', // Pourcentage au lieu de pixels
         left: '50%',
         transform: 'translateX(-50%)',
         display: 'flex',
-        gap: '14px',
+        flexWrap: 'wrap', // Permet le retour à la ligne
+        justifyContent: 'center',
+        gap: 'clamp(8px, 1vw, 14px)', // Gap responsive
         zIndex: 10,
-        borderRadius: '4px'
+        borderRadius: '4px',
+        boxSizing: 'border-box'
       }}>
         {MESSAGE_OPTIONS.map(opt => (
           <button
             key={opt.id}
             onClick={() => handleClick(opt.text)}
             style={{
-              fontSize: '0.8rem',
-              padding: '4px 12px',
+              fontSize: 'clamp(0.7rem, 1.2vw, 0.8rem)', // Taille responsive
+              padding: 'clamp(3px, 0.5vw, 4px) clamp(8px, 1.5vw, 12px)',
               cursor: 'pointer',
               borderRadius: 4,
-              backgroundColor: 'linear-gradient(45deg, rgb(255, 255, 255) 40%, rgb(255, 255, 255) 6%)',
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
               color: '#000',
               border: '1px solid #fff',
+              whiteSpace: 'nowrap',
+              minWidth: 0,
+              flexShrink: 1
             }}
           >
             {opt.text}
@@ -273,6 +287,7 @@ const GlobeScene = () => {
         ))}
       </div>
     </div>
+  </>
   );
 };
 

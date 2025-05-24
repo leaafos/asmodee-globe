@@ -1,0 +1,11 @@
+@import '../../assets/library';
+
+#parrotContainer {
+    background: $background-card;
+    height: 100%;
+    width: 21vw;
+    border-radius: $radius-card;
+    box-shadow: $shadow-card;
+    outline: $border-card;
+    
+}

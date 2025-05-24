@@ -1,0 +1,29 @@
+#mapContainer  {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    height: 100%;
+    width: 52vw;
+    position: relative;
+    
+}
+
+.scene-container {
+    display: flex;
+    justify-content: center;
+    position: relative !important;
+    width: 52vw !important;
+}
+
+.scene-container canvas {
+    width: auto !important;
+    height: 100% !important;
+    bottom: 16% ;
+    position: absolute;
+    
+
+}
+
+
+
+

@@ -1,0 +1,11 @@
+@import "../../assets/library";
+
+#gloryContainer {
+    height: 100%;
+    background: $background-card;
+    width: 50%;
+    margin-left: 1vw;
+    border-radius: $radius-card;
+    box-shadow: $shadow-card;
+    outline: $border-card;
+}

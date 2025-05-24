@@ -1,0 +1,26 @@
+@import '../../assets/library';
+
+#homeContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 3vh 2vw;
+    background: $background-color;
+
+    #mainRightContainer {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        #topContainer {
+            height: 66vh;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #bottomContainer {
+            height: 25vh;
+            display: flex;
+        }
+    }
+}

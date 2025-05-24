@@ -1,0 +1,70 @@
+@import '../../assets/library';
+
+#sideBarContainer {
+    background: $background-sidebar;
+    height: 94vh;
+    width: 21vw;
+    margin-right: 2vw;
+    border-radius: $radius-card;
+    box-shadow: $shadow-card;
+    outline: $border-card;
+    transition-duration: 300ms;
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    #toggleSideBar {
+        transform: rotate(0deg);
+
+    }
+
+    #innerContainer {
+        height: 100%;
+        width: 82%;
+        background-color: yellow;
+        transition-duration: 300ms;
+
+    }
+
+    
+}
+
+#sideBarContainerExpanded {
+    height: 94vh;
+    width: 6vw;
+    background: $background-sidebar;
+    margin-right: 2vw;
+    border-radius: $radius-card;
+    box-shadow: $shadow-card;
+    outline: $border-card;
+    transition-duration: 300ms;
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    #toggleSideBar {
+        transform: rotate(-180deg);
+
+    }
+
+    #innerContainerExpanded {
+        height: 100%;
+        width: 49%;
+        background-color: yellow;
+        transition-duration: 300ms;
+
+    }
+
+    
+}
+
+#toggleSideBar {
+    position: absolute;
+    top: 80px;
+    right: -13px;
+    height: 24px;
+    width: 24px;
+    border-radius: 100%;
+    stroke-width: 0.5px;
+    background: rgba(255, 237, 224);
+}

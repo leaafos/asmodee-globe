@@ -1,5 +1,7 @@
+/*
+
 import React from 'react';
-import GlobeScene from './components/GlobeScene';
+import GlobeScene from './components/globescene/GlobeScene';
 import SideBarGame from './components/SideBarGame';
 import ParrotTalk from './components/ParrotTalk';
 import Score from './components/Score';
@@ -43,3 +45,5 @@ function App() {
 
 
 export default App;
+
+*/
