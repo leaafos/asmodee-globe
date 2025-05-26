@@ -2,17 +2,26 @@
 const express = require('express');
 const app = express();
 const userRoutes = require('./routes/userRoutes');
-const messageRoutes = require('./routes/messagePTRoutes');
+const messagePTRoutes = require('./routes/messagePTRoutes');
 const teamRoutes = require('./routes/teamRoutes');
 const structureRoutes = require('./routes/structureRoutes');
+const reactionRoutes = require('./routes/reactionRoutes');
+const gameRoutes = require('./routes/gameRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
+const badgeRoutes = require('./routes/badgeRoutes');
+const messageRoutes = require('./routes/messageRoutes');
 
 
 app.use(express.json());
 app.use('/', userRoutes);
-app.use('/', messageRoutes);
+app.use('/', messagePTRoutes);
 app.use('/', teamRoutes);
 app.use('/', structureRoutes);
-
+app.use('/', reactionRoutes);
+app.use('/', gameRoutes);
+app.use('/', categoryRoutes);
+app.use('/', badgeRoutes);
+app.use('/', messageRoutes);
 //ajouter les routes de chaque table ici 
 
 

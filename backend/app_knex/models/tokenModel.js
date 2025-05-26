@@ -17,7 +17,7 @@ async function getTokenById(id) {
 
 // Update
 async function updateToken(token, email) {
-  return await knex('tokens').where({ id }).update({ token : newToken, email: newEmail });
+  //return await knex('tokens').where({ id }).update({ token : newToken, email: newEmail });
 }
 
 // Delete
