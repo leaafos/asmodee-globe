@@ -105,6 +105,38 @@ router.delete('/users/:id', async (req, res) => {
 //   }
 // });
 
+// Sign in -- déterminer si l'utilisateur existe déjà avec findOne 
+router.post('/login', async (req, res) => {
+  const { id, name } = req.body;
+
+  if (!id || !name) {
+    return res.status(400).json({ error: 'ID et prénom sont requis.' });
+  }
+
+  try {
+    const user = await userModel.getUserById(id);
+
+    if (!user || user.name.toLowerCase() !== name.toLowerCase()) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé ou prénom incorrect.' });
+    }
+
+    // Pour une démo, tu peux renvoyer des infos utiles au front
+    res.json({
+      message: 'Connexion réussie',
+      user: {
+        id: user.id,
+        name: user.name,
+        structure_id: user.structure_id,
+        team_id: user.team_id,
+        role: user.role
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 // Logout
 // router.post('/logout', async (req, res) => {
 //   const { token } = req.body;

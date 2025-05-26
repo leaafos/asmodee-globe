@@ -17,7 +17,7 @@ async function getCategoryById(id) {
 
 // Update
 async function updateCategory(id, newName) {
-  return await knex('Categories').where({ id }).update({ play: newName });
+  return await knex('Categories').where({ id }).update({ name: newName });
 }
 
 // Delete

@@ -12,7 +12,7 @@ async function getUserFromRequest(req) {
 }
 
 // Créer un message (rôle "A" uniquement)
-router.post('/messages', async (req, res) => {
+router.post('/messagesPT', async (req, res) => {
   const { content } = req.body;
   const user = await getUserFromRequest(req);
 
@@ -29,7 +29,7 @@ router.post('/messages', async (req, res) => {
 });
 
 // Obtenir tous les messages
-router.get('/messages', async (req, res) => {
+router.get('/messagesPT', async (req, res) => {
   try {
     const messages = await messageModel.getAllMessages();
     res.json(messages);
@@ -39,7 +39,7 @@ router.get('/messages', async (req, res) => {
 });
 
 
-router.get('/my-messages', async (req, res) => {
+router.get('/my-messagesPT', async (req, res) => {
   const user = await getUserFromRequest(req);
 
   if (!user) return res.status(401).json({ error: 'Non authentifié' });
@@ -53,7 +53,7 @@ router.get('/my-messages', async (req, res) => {
 });
 
 // Modifier un message (seulement l’auteur)
-router.put('/messages/:id', async (req, res) => {
+router.put('/messagesPT/:id', async (req, res) => {
   const { id } = req.params;
   const { content } = req.body;
   const user = await getUserFromRequest(req);
@@ -72,7 +72,7 @@ router.put('/messages/:id', async (req, res) => {
 });
 
 // Supprimer un message (seulement l’auteur)
-router.delete('/messages/:id', async (req, res) => {
+router.delete('/messagesPT/:id', async (req, res) => {
   const { id } = req.params;
   const user = await getUserFromRequest(req);
 
@@ -90,7 +90,7 @@ router.delete('/messages/:id', async (req, res) => {
 });
 
 // Réagir à un message (tout le monde peut)
-router.post('/messages/:id/reactions', async (req, res) => {
+router.post('/messagesPT/:id/reactions', async (req, res) => {
   const { id } = req.params;
   const { emoji } = req.body;
   const user = await getUserFromRequest(req);

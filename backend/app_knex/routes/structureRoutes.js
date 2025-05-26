@@ -24,23 +24,23 @@ router.get('/structures/:id', async (req, res) => {
   }
 });
 
-// Créer un nouvel utilisateur
+// Créer une nouvelle structure
 router.post('/structures', async (req, res) => {
-  const { name, email } = req.body;
+  const { name, badge_id, structure_id, staff } = req.body;
   try {
-    await structureModel.createStructure(name, email);
+    await structureModel.createStructure(name, badge_id, structure_id, staff);
     res.status(201).json({ message: 'Structure créée avec succès' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-// Mettre à jour une structure existant
+// Mettre à jour une structure existante
 router.put('/structures/:id', async (req, res) => {
   const { id } = req.params;
-  const { name, email } = req.body;
+  const { name, badge_id, structure_id, staff } = req.body;
   try {
-    await structureModel.updateStructure(id, name, email);
+    await structureModel.updateStructure(id, name, badge_id, structure_id, staff );
     res.json({ message: 'Structure mise à jour avec succès' });
   } catch (error) {
     res.status(500).json({ error: error.message });

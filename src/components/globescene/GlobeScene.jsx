@@ -3,6 +3,8 @@ import Globe from 'globe.gl';
 import * as THREE from 'three';
 import "./globeScene.scss"
 
+
+
 const demoData = [
   { lat: 48.3-10, lng: 2.08-10, city: 'Asmodee HQ (Guyancourt, France)', population: 155000000 },
   { lat: 48.870-10, lng: 2.330-10, city: 'Twin Sails (Paris, France)', population: 50000000 },
@@ -59,14 +61,6 @@ const MESSAGE_OPTIONS = [
   { id: 'message', text: '❤️' }
 ];
 
-const fixedPositions = [
-  { top: '20px', right: '20px' },
-  { top: '70px', right: '20px' },
-  { top: '120px', right: '20px' },
-  { bottom: '70px', left: '20px' },
-  { bottom: '20px', left: '20px' },
-];
-
 const GlobeScene = () => {
   const globeRef = useRef();
   const globeInstance = useRef(null);
@@ -112,7 +106,6 @@ const GlobeScene = () => {
         return;
       }
   
-      // Applique les matériaux aux sticks
       sticks.forEach(obj => {
         obj.material = new THREE.MeshStandardMaterial({
           color: new THREE.Color(0xf90073),
@@ -126,10 +119,9 @@ const GlobeScene = () => {
         });
       });
   
-      // Attend 300 ms avant d’ajouter et rendre visible les glowMeshes
       setTimeout(() => {
         sticks.forEach(obj => {
-          // Clone de la géométrie pour glow
+         
           const glowGeometry = obj.geometry.clone();
           glowGeometry.scale(1.5, 1.5, 1.5);
   
@@ -144,7 +136,7 @@ const GlobeScene = () => {
           const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
           glowMesh.position.copy(obj.position);
           glowMesh.quaternion.copy(obj.quaternion);
-          glowMesh.visible = true; // visible au moment de l'ajout
+          glowMesh.visible = true; 
   
           scene.add(glowMesh);
         });
@@ -190,7 +182,7 @@ const GlobeScene = () => {
       if (prev.length < 5) {
         return [...prev, newMsg];
       } else {
-        // remplace le plus ancien (index 0) par le nouveau
+        
         const updated = [...prev.slice(1), newMsg];
         return updated;
       }
@@ -236,9 +228,15 @@ return (
                 backgroundColor: 'rgba(255, 255, 255, 0.9)',
                 border: '1px solid #fff',
                 borderRadius: '4px',
+<<<<<<< HEAD:src/components/globescene/GlobeScene.jsx
                 color: '#000', // Changé pour meilleure lisibilité
                 fontSize: 'clamp(11px, 1.2vw, 14px)', // Taille responsive
                 wordWrap: 'break-word',
+=======
+                color: '#fff',
+                fontSize: '14px',
+                whiteSpace: 'nowrap',
+>>>>>>> c90914f (remplissage bdd et continuation routes):src/components/GlobeScene.jsx
                 pointerEvents: 'none',
                 zIndex: 10,
                 boxSizing: 'border-box'

@@ -1,5 +1,5 @@
 // db.js - Fichier pour gérer les opérations CRUD avec Knex
-const knex = require('knex')(require('./knexfile')['development']);
+const knex = require('knex')(require('../knexfile')['development']);
 
 // Create
 async function createScore(score, date, ranking) {
