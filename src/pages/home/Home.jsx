@@ -4,8 +4,17 @@ import ParrotTalk from "../../components/parrottalk/ParrotTalk"
 import TreasureTrail from "../../components/treasuretrail/TreasureTrail"
 import "./home.scss"
 import GloryChest from "../../components/glorychest/GloryChest"
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const Home = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user) navigate("/login");
+    }, []);
     return (
         <>
             <div id="homeContainer">

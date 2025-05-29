@@ -26,9 +26,9 @@ router.get('/reactions/:id', async (req, res) => {
 
 // Créer une nouvelle reaction
 router.post('/reactions', async (req, res) => {
-  const { content } = req.body;
+  const { user_id, reaction, messagePT_id } = req.body;
   try {
-    await reactionModel.createReaction(content);
+    await reactionModel.createReaction(user_id, reaction, messagePT_id);
     res.status(201).json({ message: 'Reaction créée avec succès' });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -38,9 +38,9 @@ router.post('/reactions', async (req, res) => {
 // Mettre à jour une reaction existante
 router.put('/reactions/:id', async (req, res) => {
   const { id } = req.params;
-  const { reaction } = req.body;
+  const { user_id, reaction, messagePT_id } = req.body;
   try {
-    await reactionModel.updateReaction(id, reaction);
+    await reactionModel.updateReaction(id, user_id, reaction, messagePT_id);
     res.json({ message: 'Reaction mise à jour avec succès' });
   } catch (error) {
     res.status(500).json({ error: error.message });

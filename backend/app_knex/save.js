@@ -7,12 +7,12 @@ const dbStructure = require('./models/structureModel');
 
 async function main() {
   // Create
-  await dbUser.createUser( 'Jensen', 'Erik', 'Production Manager','23', '1', '0', null, null, "A" );
-  await dbUser.createUser( 'Smith', 'Kayla', 'Game Designer','37', '2', '0', null, null, "B" );
-  await dbTeam.createTeam('Development Team', null, '23', '5' );
-  await dbTeam.createTeam('Game Developement Team', null, '37', '10' );
-  await dbStructure.createStructure(23, 'Bezzerwizzer', '14', 'Denmark', 'Copenhagen', '08:30', '16:30' );
-  await dbStructure.createStructure(37, 'Exploding Kittens', '85', 'USA', 'Los Angeles', '17:00', '01:00' );
+  await dbUser.createUser('Erik', 'Jensen', 'Production Manager',1, 1, '0', null, null, "A" );
+  await dbUser.createUser( 'Kayla','Smith', 'Game Designer',2, 2, '0', null, null, "B" );
+  await dbTeam.createTeam('Bezzerwizzer Development Team', null, 1, 5 );
+  await dbTeam.createTeam('Game Developement Team', null, 2, 10 );
+  await dbStructure.createStructure(23, 'Bezzerwizzer', 14, 'Denmark', 'Copenhagen', '08:30', '16:30', null, null, null, null );
+  await dbStructure.createStructure(37, 'Exploding Kittens', 85, 'USA', 'Los Angeles', '17:00', '01:00', null, null, null, null );
   
   // Read
   const allUsers = await dbUser.getAllUsers();

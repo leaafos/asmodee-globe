@@ -26,9 +26,9 @@ router.get('/structures/:id', async (req, res) => {
 
 // Créer une nouvelle structure
 router.post('/structures', async (req, res) => {
-  const { name, badge_id, structure_id, staff } = req.body;
+  const { name, staff, country, city, timeStart, timeEnd, website, latitude, longitude, size } = req.body;
   try {
-    await structureModel.createStructure(name, badge_id, structure_id, staff);
+    await structureModel.createStructure(name, staff, country, city, timeStart, timeEnd, website, latitude, longitude, size);
     res.status(201).json({ message: 'Structure créée avec succès' });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -38,9 +38,9 @@ router.post('/structures', async (req, res) => {
 // Mettre à jour une structure existante
 router.put('/structures/:id', async (req, res) => {
   const { id } = req.params;
-  const { name, badge_id, structure_id, staff } = req.body;
+  const { name, staff, country, city, timeStart, timeEnd, website, latitude, longitude, size} = req.body;
   try {
-    await structureModel.updateStructure(id, name, badge_id, structure_id, staff );
+    await structureModel.updateStructure(id, name, staff, country, city, timeStart, timeEnd, website, latitude, longitude, size );
     res.json({ message: 'Structure mise à jour avec succès' });
   } catch (error) {
     res.status(500).json({ error: error.message });

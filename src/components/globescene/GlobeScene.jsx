@@ -4,7 +4,6 @@ import * as THREE from 'three';
 import "./globeScene.scss"
 
 
-
 const demoData = [
   { lat: 48.3-10, lng: 2.08-10, city: 'Asmodee HQ (Guyancourt, France)', population: 155000000 },
   { lat: 48.870-10, lng: 2.330-10, city: 'Twin Sails (Paris, France)', population: 50000000 },
@@ -53,13 +52,6 @@ const arcsData = [
   },
 ];
 
-const MESSAGE_OPTIONS = [
-  { id: 'message1', text: 'Hello' },
-  { id: 'message2', text: 'Have a nice day !' },
-  { id: 'message3', text: 'Be bold !' },
-  { id: 'message4', text: 'Let\' play !' },
-  { id: 'message', text: '❤️' }
-];
 
 const GlobeScene = () => {
   const globeRef = useRef();
@@ -162,10 +154,10 @@ const GlobeScene = () => {
         return;
       }
 
-      const camera = globe.camera();
-      const renderer = globe.renderer();
-      const width = renderer.domElement.width;
-      const height = renderer.domElement.height;
+      //const camera = globe.camera();
+      //const renderer = globe.renderer();
+      //const width = renderer.domElement.width;
+      //const height = renderer.domElement.height;
 
   
 
@@ -177,12 +169,16 @@ const GlobeScene = () => {
 
   const handleClick = (text) => {
     setMessages(prev => {
-      const newMsg = { id: Date.now(), text, lat: 48.773, lng: 2.043 };
+      const newMsg = { id: Date.now(), 
+        text, 
+        structure: messages.structure,
+        country: messages.country,
+        lat: 48.773, 
+        lng: 2.043 };
   
       if (prev.length < 5) {
         return [...prev, newMsg];
       } else {
-        
         const updated = [...prev.slice(1), newMsg];
         return updated;
       }
@@ -198,7 +194,28 @@ const GlobeScene = () => {
 
 ];
 
-// Dans le return du composant, ajustez le conteneur principal
+const [messageOptions, setMessageOptions] = useState([]);
+
+useEffect(() => {
+  const fetchMessages = async () => {
+    try {
+      const res = await fetch('http://localhost/messages');
+      const data = await res.json();
+      const formatted = data.map(message => ({
+        id: message.id,
+        text: message.text,
+        structure: message.structure,
+        country: message.country
+      }));
+      setMessageOptions(formatted);
+    } catch (err) {
+      console.error('Erreur lors du chargement des messages :', err);
+    }
+  };
+
+  fetchMessages();
+}, []);
+
 return (
   <>
     <div id='mapContainer' ref={containerRef} style={{
@@ -206,7 +223,6 @@ return (
       overflow: 'hidden',
       boxSizing: 'border-box'
     }}>
-      {/* Ajoutez une classe pour le canvas */}
       <div className="scene-container">
         <div ref={globeRef} style={{width: '100%', height: '100%'}} />
       </div>
@@ -221,28 +237,27 @@ return (
               style={{
                 position: 'absolute',
                 width: 'auto',
-                maxWidth: '40%', // Limite la largeur
+                maxWidth: '40%', 
                 ...pos,
                 transform: 'translateY(0)',
                 padding: '6px 14px',
                 backgroundColor: 'rgba(255, 255, 255, 0.9)',
                 border: '1px solid #fff',
                 borderRadius: '4px',
-<<<<<<< HEAD:src/components/globescene/GlobeScene.jsx
-                color: '#000', // Changé pour meilleure lisibilité
-                fontSize: 'clamp(11px, 1.2vw, 14px)', // Taille responsive
+                color: '#000', 
+                fontSize: 'clamp(11px, 1.2vw, 14px)', 
                 wordWrap: 'break-word',
-=======
-                color: '#fff',
-                fontSize: '14px',
-                whiteSpace: 'nowrap',
->>>>>>> c90914f (remplissage bdd et continuation routes):src/components/GlobeScene.jsx
                 pointerEvents: 'none',
                 zIndex: 10,
                 boxSizing: 'border-box'
               }}
             >
               {msg.text}
+              {msg.structure && msg.country && (
+                <div style={{ marginTop: 30, fontSize: '0.9em', color: '#444' }}>
+                  {msg.structure} — {msg.country}
+                </div>
+              )}
             </div>
           );
         })}
@@ -250,25 +265,27 @@ return (
       <div style={{
         position: 'absolute',
         width: '100%',
-        maxWidth: '90%', // Limite la largeur
+        maxWidth: '90%', 
         height: 'auto',
-        bottom: '2%', // Pourcentage au lieu de pixels
+        bottom: '2%', 
         left: '50%',
         transform: 'translateX(-50%)',
         display: 'flex',
-        flexWrap: 'wrap', // Permet le retour à la ligne
+        flexWrap: 'wrap', 
         justifyContent: 'center',
-        gap: 'clamp(8px, 1vw, 14px)', // Gap responsive
+        gap: 'clamp(8px, 1vw, 14px)',
         zIndex: 10,
         borderRadius: '4px',
         boxSizing: 'border-box'
       }}>
-        {MESSAGE_OPTIONS.map(opt => (
+
+      
+        {messageOptions.map(opt => (
           <button
             key={opt.id}
             onClick={() => handleClick(opt.text)}
             style={{
-              fontSize: 'clamp(0.7rem, 1.2vw, 0.8rem)', // Taille responsive
+              fontSize: 'clamp(0.7rem, 1.2vw, 0.8rem)', 
               padding: 'clamp(3px, 0.5vw, 4px) clamp(8px, 1.5vw, 12px)',
               cursor: 'pointer',
               borderRadius: 4,

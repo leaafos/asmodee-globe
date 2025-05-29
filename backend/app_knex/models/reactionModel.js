@@ -2,8 +2,8 @@
 const knex = require('knex')(require('../knexfile')['development']);
 
 // Create
-async function createReaction(reaction) {
-  return await knex('Reactions').insert({ reaction});
+async function createReaction(user_id, reaction, messagePT_id) {
+  return await knex('Reactions').insert({ user_id, reaction, messagePT_id });
 }
 
 // Read
@@ -16,8 +16,8 @@ async function getReactionById(id) {
 }
 
 // Update
-async function updateReaction(id, newReaction) {
-  return await knex('Reactions').where({ id }).update({ reaction: newReaction });
+async function updateReaction(id, newUserId, newReaction, newMessagePTId) {
+  return await knex('Reactions').where({ id }).update({ user_id: newUserId, reaction: newReaction, messagePT_id: newMessagePTId });
 }
 
 // Delete

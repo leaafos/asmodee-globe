@@ -1,5 +1,6 @@
 // app.js (ou index.js)
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const userRoutes = require('./routes/userRoutes');
 const messagePTRoutes = require('./routes/messagePTRoutes');
@@ -10,8 +11,9 @@ const gameRoutes = require('./routes/gameRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const badgeRoutes = require('./routes/badgeRoutes');
 const messageRoutes = require('./routes/messageRoutes');
+const teamBadgesRoutes = require('./routes/teamBadgesRoutes');
 
-
+app.use(cors()); 
 app.use(express.json());
 app.use('/', userRoutes);
 app.use('/', messagePTRoutes);
@@ -22,6 +24,9 @@ app.use('/', gameRoutes);
 app.use('/', categoryRoutes);
 app.use('/', badgeRoutes);
 app.use('/', messageRoutes);
+app.use('/uploads', express.static('uploads'));
+app.use('/', teamBadgesRoutes); 
+
 //ajouter les routes de chaque table ici 
 
 

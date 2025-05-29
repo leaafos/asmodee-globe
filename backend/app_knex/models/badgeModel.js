@@ -2,8 +2,8 @@
 const knex = require('knex')(require('../knexfile')['development']);
 
 // Create
-async function createBadge(id, name, title, description, image, vote) {
-  return await knex('Badges').insert({  name, title, description, image, vote});
+async function createBadge(id, name, title, description, image, vote_threshold) {
+  return await knex('Badges').insert({  name, title, description, image, vote_threshold});
 }
 
 // Read
@@ -16,8 +16,8 @@ async function getBadgeById(id) {
 }
 
 // Update
-async function updateBadge(id, newName, newTitle, newDescription, newImage, newVote) {
-  return await knex('Badges').where({ id }).update({ name: newName, title: newTitle, description: newDescription, image: newImage, vote: newVote });
+async function updateBadge(id, newName, newTitle, newDescription, newImage, newVote_threshold) {
+  return await knex('Badges').where({ id }).update({ name: newName, title: newTitle, description: newDescription, image: newImage, vote_threshold: newVote_threshold });
 }
 
 // Delete

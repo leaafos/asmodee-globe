@@ -29,9 +29,9 @@ router.get('/users/:id', async (req, res) => {
 
 // Créer un nouvel utilisateur
 router.post('/users', async (req, res) => {
-  const { name, surname, jobTitle, structure_id, team_id, score_id, role } = req.body;
+  const { name, surname, jobTitle, structure_id, team_id, score_id, liked_id, image, role } = req.body;
   try {
-    await userModel.createUser(name, surname, jobTitle, structure_id, team_id, score_id, role);
+    await userModel.createUser(name, surname, jobTitle, structure_id, team_id, score_id, liked_id, image, role);
     res.status(201).json({ message: 'Utilisateur créé avec succès' });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -47,9 +47,11 @@ router.put('/users/:id', async (req, res) => {
   const { structure_id } = req.body;
   const { team_id } = req.body;
   const { score_id } = req.body;
+  const { liked_id } = req.body;
+  const { image } = req.body;
   const { role } = req.body;
   try {
-    await userModel.updateUser(id, name, surname, jobTitle, structure_id, team_id, score_id, role);
+    await userModel.updateUser(id, name, surname, jobTitle, structure_id, team_id, score_id, liked_id, image, role);
     res.json({ message: 'Utilisateur mis à jour avec succès' });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -66,6 +68,7 @@ router.delete('/users/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 // Sign up
 // router.post('/signup', async (req, res) => {
@@ -107,14 +110,14 @@ router.delete('/users/:id', async (req, res) => {
 
 // Sign in -- déterminer si l'utilisateur existe déjà avec findOne 
 router.post('/login', async (req, res) => {
-  const { id, name } = req.body;
+  const { name } = req.body;
 
-  if (!id || !name) {
-    return res.status(400).json({ error: 'ID et prénom sont requis.' });
+  if (!name) {
+    return res.status(400).json({ error: 'Le prénom est requis.' });
   }
 
   try {
-    const user = await userModel.getUserById(id);
+    const user = await userModel.getUserByName(name);
 
     if (!user || user.name.toLowerCase() !== name.toLowerCase()) {
       return res.status(404).json({ error: 'Utilisateur non trouvé ou prénom incorrect.' });
@@ -132,6 +135,7 @@ router.post('/login', async (req, res) => {
       }
     });
   } catch (error) {
+    console.error('Erreur dans /login:', error); 
     res.status(500).json({ error: error.message });
   }
 });

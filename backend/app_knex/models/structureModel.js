@@ -2,13 +2,25 @@
 const knex = require('knex')(require('../knexfile')['development']);
 
 // Create
-async function createStructure(id, name, staff, country, city, timeStart, timeEnd ) {
-  return await knex('Structures').insert({ name, staff, country, city, timeStart, timeEnd});
+
+async function createStructure(name, staff, country, city, timeStart, timeEnd, website, latitude, longitude, size) {
+  return await knex('structures').insert({
+    name,
+    staff,
+    country,
+    city,
+    timeStart,
+    timeEnd,
+    website,
+    latitude,
+    longitude,
+    size
+  });
 }
 
 // Read
 async function getAllStructures() {
-  return await knex.select().from('Structures');
+  return await knex.select('*').from('Structures');
 }
 
 async function getStructureById(id) {
@@ -16,8 +28,8 @@ async function getStructureById(id) {
 }
 
 // Update
-async function updateStructure(id, newName, newStaff, newCountry, newCity, newTimeStart, newTimeEnd) {
-  return await knex('Structures').where({ id }).update({ name: newName, staff: newStaff, country: newCountry, city: newCity, timeStart: newTimeStart, timeEnd: newTimeEnd });
+async function updateStructure(id, newName, newStaff, newCountry, newCity, newTimeStart, newTimeEnd, newWebsite, newLatitude, newLongitude, newSize) {
+  return await knex('Structures').where({ id }).update({ name: newName, staff: newStaff, country: newCountry, city: newCity, timeStart: newTimeStart, timeEnd: newTimeEnd, website: newWebsite, latitude: newLatitude, longitude: newLongitude, size: newSize });
 }
 
 // Delete

@@ -1,4 +1,3 @@
-const { tab } = require('@testing-library/user-event/dist/tab');
 
 const knex = require('knex')(require('./knexfile')['development']);
 
@@ -14,6 +13,10 @@ async function createTable() {
         table.string('city');
         table.string('timeStart');
         table.string('timeEnd');
+        table.string('website');
+        table.decimal('latitude');
+        table.decimal('longitude');
+        table.integer('size');
       });
       console.log('La table "structures" a été créée avec succès.');
     } else {
@@ -28,12 +31,26 @@ async function createTable() {
         table.string('title');
         table.string('description');
         table.string('image');
-        table.integer('vote');
+        table.integer('vote_threshold'); // Seuil de vote pour obtenir le badge
       });
       console.log('La table "badges" a été créée avec succès.');
     } else {
       console.log('La table "badges" existe déjà.');
     }
+
+    const existsTeamBadges = await knex.schema.hasTable('team_badges'); // pour gérer relation many to many
+    if (!existsTeamBadges) {
+      await knex.schema.createTable('team_badges', table => {
+        table.increments('id').primary();
+        table.integer('team_id').unsigned().references('id').inTable('teams');
+        table.integer('badge_id').unsigned().references('id').inTable('badges');
+        table.integer('votes').defaultTo(0);
+        table.boolean('unlocked').defaultTo(false);
+      });
+      console.log('La table "team_badges" a été créée avec succès.');
+    } else {
+      console.log('La table "team_badges" existe déjà.');
+}
 
     const existsCategories = await knex.schema.hasTable('categories');
     if (!existsCategories) {
@@ -51,8 +68,8 @@ async function createTable() {
       await knex.schema.createTable('teams', table => {
         table.increments('id').primary();
         table.string('name');
-        table.integer('badge_id').unsigned();
-        table.foreign('badge_id').references('id').inTable('badges');
+        table.integer('badgeTeam_id').unsigned();
+        table.foreign('badgeTeam_id').references('id').inTable('team_badges');
         table.integer('structure_id').unsigned();
         table.foreign('structure_id').references('id').inTable('structures');
         table.integer('staff');
@@ -121,9 +138,13 @@ async function createTable() {
     if (!existsScores) {
       await knex.schema.createTable('scores', table => {
         table.increments('id').primary();
-        table.integer('user_id').unsigned().nullable().references('id').inTable('users');
+        table.integer('user_id').unsigned()
+        table.foreign('user_id').references('id').inTable('users');
         table.integer('score');
         table.string('date');
+        // table.string('image');
+        table.integer('game_id').unsigned()
+        table.foreign('game_id').references('id').inTable('games');
         table.integer('play_id').unsigned()
         table.foreign('play_id').references('id').inTable('plays');
         table.integer('ranking');

@@ -2,8 +2,8 @@
 const knex = require('knex')(require('../knexfile')['development']);
 
 // Create
-async function createTeam(id, name, staff) {
-  return await knex('Teams').insert({ name, staff});
+async function createTeam( name, badgeTeam_id, structure_id, staff) {
+  return await knex('Teams').insert({ name, badgeTeam_id, structure_id, staff});
 }
 
 // Read
@@ -16,8 +16,8 @@ async function getTeamById(id) {
 }
 
 // Update
-async function updateTeam(id, newName, newStaff) {
-  return await knex('Teams').where({ id }).update({ name: newName, staff: newStaff});
+async function updateTeam(id, newName, newBadgeTeam_id, newStructure_id, newStaff) {
+  return await knex('Teams').where({ id }).update({ name: newName, badgeTeam_id: newBadgeTeam_id, structure_id: newStructure_id, staff: newStaff});
 }
 
 // Delete

@@ -3,6 +3,9 @@ const router = express.Router();
 const messageModel = require('../models/messagePTModel');
 const reactionModel = require('../models/reactionModel');
 const userModel = require('../models/userModel');
+const knex = require('knex');
+const knexfile = require('../knexfile');
+const db = knex(knexfile.development);
 
 
 // Middleware pour simuler un utilisateur connecté (à remplacer par auth réelle)
@@ -13,32 +16,37 @@ async function getUserFromRequest(req) {
 
 // Créer un message (rôle "A" uniquement)
 router.post('/messagesPT', async (req, res) => {
-  const { content } = req.body;
-  const user = await getUserFromRequest(req);
-
-  if (!user || user.role !== 'A') {
-    return res.status(403).json({ error: 'Permission refusée' });
-  }
-
   try {
-    const message = await messageModel.createMessage(user.id, content);
-    res.status(201).json(message);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    const { user_id, message } = req.body;
+    if (!user_id || !message) {
+      return res.status(400).json({ error: "user_id et message sont requis" });
+    }
+
+    await db('messagesPT').insert({
+      user_id,
+      message,
+      date: new Date().toISOString()
+    });
+
+    res.status(201).json({ message: 'Message créé avec succès' });
+  } catch (err) {
+    console.error("Erreur dans POST /messagesPT :", err);
+    res.status(500).json({ error: err.message });
   }
 });
 
 // Obtenir tous les messages
 router.get('/messagesPT', async (req, res) => {
   try {
-    const messages = await messageModel.getAllMessages();
+    const messages = await messageModel.getMessages();
     res.json(messages);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Erreur dans GET /messagesPT :', error);
+    res.status(500).json({ error: 'Erreur lors de la récupération des messages' });
   }
 });
 
-
+// Obtenir un message par ID de l'utilisateur
 router.get('/my-messagesPT', async (req, res) => {
   const user = await getUserFromRequest(req);
 
@@ -55,16 +63,16 @@ router.get('/my-messagesPT', async (req, res) => {
 // Modifier un message (seulement l’auteur)
 router.put('/messagesPT/:id', async (req, res) => {
   const { id } = req.params;
-  const { content } = req.body;
+  const { message } = req.body;
   const user = await getUserFromRequest(req);
 
-  const message = await messageModel.getMessageById(id);
+  const messages = await messageModel.getMessagePTById(id);
   if (!message || message.user_id !== user.id) {
     return res.status(403).json({ error: 'Non autorisé' });
   }
 
   try {
-    await messageModel.updateMessage(id, content);
+    await messageModel.updateMessagePT(id, message);
     res.json({ message: 'Message mis à jour' });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -76,13 +84,13 @@ router.delete('/messagesPT/:id', async (req, res) => {
   const { id } = req.params;
   const user = await getUserFromRequest(req);
 
-  const message = await messageModel.getMessageById(id);
+  const message = await messageModel.getMessagePTById(id);
   if (!message || message.user_id !== user.id) {
     return res.status(403).json({ error: 'Non autorisé' });
   }
 
   try {
-    await messageModel.deleteMessage(id);
+    await messageModel.deleteMessagePT(id);
     res.json({ message: 'Message supprimé' });
   } catch (error) {
     res.status(500).json({ error: error.message });

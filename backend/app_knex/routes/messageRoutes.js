@@ -60,11 +60,9 @@ router.post('/send-message', async (req, res) => {
     // Ici tu peux enregistrer sentMessage dans ta base si besoin
 
     res.status(200).json({
-      message: 'Message envoyé avec succès',
-      from: user.name,
+      message: message.text,
       structure: structure.name,
       country: structure.country,
-      content: message.content
     });
 
   } catch (error) {
@@ -73,7 +71,16 @@ router.post('/send-message', async (req, res) => {
 });
 
 
-
+// Supprimer un message
+router.delete('/messages/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await messageModel.deleteMessage(id);
+    res.json({ message: 'Message supprimé avec succès' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 
 
