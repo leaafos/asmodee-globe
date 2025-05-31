@@ -115,6 +115,7 @@ async function createTable() {
         table.foreign('liked_id').references('id').inTable('liked');
         table.integer('category_id').unsigned()
         table.foreign('category_id').references('id').inTable('categories');
+        table.string('image');
       });
       console.log('La table "games" a été créée avec succès.');
     } else {

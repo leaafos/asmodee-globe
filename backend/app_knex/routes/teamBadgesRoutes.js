@@ -14,6 +14,28 @@ router.get('/teamBadges', async (req, res) => {
   }
 });
 
+// Récupérer les badges d'une team par userId en attente
+router.get('/teamBadges/pending/:teamId', async (req, res) => {
+  const { teamId } = req.params;
+  try {
+    const pendingBadges = await teamBadgeModel.getPendingBadgesByTeamId(teamId);
+    res.json(pendingBadges);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Récupérer les badges d'une team par teamId débloqués
+router.get('/teamBadges/unlocked/:teamId', async (req, res) => {
+  const { teamId } = req.params;
+  try {
+    const unlockedBadges = await teamBadgeModel.getUnlockedBadgesByTeamId(teamId);
+    res.json(unlockedBadges);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Récupérer les badges d'une équipe par teamId
 router.get('/teams/:teamId/badges', async (req, res) => {
   const { teamId } = req.params;

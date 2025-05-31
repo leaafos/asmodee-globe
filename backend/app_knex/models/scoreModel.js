@@ -1,36 +1,83 @@
-// db.js - Fichier pour gérer les opérations CRUD avec Knex
-const knex = require('knex')(require('../knexfile')['development']);
+const db = require('../db');
 
-// Create
-async function createScore(user_id, score, date, image, game_id, play_id, ranking) {
-  return await knex('Scores').insert({ user_id, score, date, image, game_id, play_id, ranking });
+async function getScoresByUser(userId) {
+  return db('scores')
+    .where('user_id', userId)
+    .join('games', 'scores.game_id', 'games.id')
+    .select(
+      'scores.id',
+      'scores.score',
+      'scores.date',
+      'scores.ranking',
+      'games.name as game_name'
+    );
 }
 
-// Read
-async function getAllScores() {
-  return await knex.select().from('Scores');
+async function getScoresByUserId(userId) {
+  return getScoresByUser(userId);
 }
 
-async function getScoreById(id) {
-  return await knex('Scores').where({ id }).first();
+async function addScore({ user_id, game_id, score, date, play_id, ranking }) {
+  return db('scores').insert({
+    user_id,
+    game_id,
+    score,
+    date,
+    play_id,
+    ranking,
+  });
 }
 
-// Update
-async function updateScore(id, newUserId, newScore, newDate, newImage, newGameId, newPlayId, newRanking) {
-  return await knex('Scores').where({ id }).update({ user_id: newUserId, score: newScore, date: newDate, image: newImage, game_id: newGameId, play_id: newPlayId, ranking: newRanking });
+async function getTotalScore(userId) {
+  const result = await db('scores')
+    .where('user_id', userId)
+    .sum('score as totalScore')
+    .first();
+  return result.totalScore || 0;
 }
 
-// Delete
-async function deleteScore(id) {
-  return await knex('Scores').where({ id }).del();
+/**
+ * Récupère le classement global des scores avec les infos utilisateurs et structure.
+ * @param {number} currentUserId - L'id de l'utilisateur connecté.
+ * @returns {Array} Liste des scores avec nom personnalisé et infos structure.
+ */
+async function getRanking(currentUserId) {
+  const scores = await db('scores')
+    .join('users', 'scores.user_id', 'users.id')
+    .leftJoin('structures', 'users.structure_id', 'structures.id')
+    .select(
+      'scores.user_id',
+      'users.name as user_name',
+      'users.jobtitle as user_jobtitle',
+      'users.surname as user_surname',
+      'structures.city',
+      'structures.country'
+    )
+    .sum('scores.score as total_score')
+    .groupBy(
+      'scores.user_id',
+      'users.name',
+      'users.jobtitle',
+      'users.surname',
+      'structures.city',
+      'structures.country'
+    )
+    .orderBy('total_score', 'desc');
+
+  return scores.map((score, index) => ({
+    user_id: score.user_id,
+    score: score.total_score,
+    ranking: index + 1,
+    name: score.user_id === currentUserId
+      ? 'Me'
+      : `${score.user_surname} ${score.user_name} – ${score.user_jobtitle || ''} (${score.city || ''}, ${score.country || ''})`,
+  }));
 }
 
 module.exports = {
-  createScore,
-  getAllScores,
-  getScoreById,
-  updateScore,
-  deleteScore
+  getScoresByUser,
+  getScoresByUserId,
+  addScore,
+  getTotalScore,
+  getRanking,
 };
-
-// npm install knex sqlite3

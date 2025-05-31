@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const reactionModel = require('../models/reactionModel');
+const knex = require('knex')(require('../knexfile')['development']);
 
 // Récupérer tous les reactions
 router.get('/reactions', async (req, res) => {
@@ -10,6 +11,32 @@ router.get('/reactions', async (req, res) => {
     res.json(reactions);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+// Récupérer les reactions d'un utilisateur pour un message spécifique
+router.post('/reactions/toggle', async (req, res) => {
+  const { user_id, reaction, messagePT_id } = req.body;
+
+  if (!user_id || !reaction || !messagePT_id) {
+    return res.status(400).json({ error: 'Champs manquants' });
+  }
+
+  try {
+    const existing = await knex('reactions')
+      .where({ user_id, reaction, messagePT_id })
+      .first();
+
+    if (existing) {
+      await knex('reactions').where({ id: existing.id }).del();
+      return res.json({ message: 'Réaction supprimée' });
+    } else {
+      await knex('reactions').insert({ user_id, reaction, messagePT_id });
+      return res.json({ message: 'Réaction ajoutée' });
+    }
+  } catch (error) {
+    console.error('Erreur toggle réaction:', error);
+    res.status(500).json({ error: 'Erreur serveur lors du toggle réaction' });
   }
 });
 

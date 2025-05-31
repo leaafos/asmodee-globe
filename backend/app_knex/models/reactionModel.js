@@ -11,6 +11,23 @@ async function getAllReactions() {
   return await knex.select().from('Reactions');
 }
 
+async function toggleReaction(user_id, reaction, messagePT_id) {
+  const existing = await knex('reactions')
+    .where({ user_id, reaction, messagePT_id })
+    .first();
+
+  if (existing) {
+    // Supprime la réaction existante
+    await knex('reactions').where({ id: existing.id }).del();
+    return { toggled: false }; // off
+  } else {
+    // Crée la réaction
+    await knex('reactions').insert({ user_id, reaction, messagePT_id });
+    return { toggled: true }; // on
+  }
+}
+
+
 async function getReactionById(id) {
   return await knex('Reactions').where({ id }).first();
 }
@@ -30,7 +47,8 @@ module.exports = {
   getAllReactions,
   getReactionById,
   updateReaction,
-  deleteReaction
+  deleteReaction,
+  toggleReaction
 };
 
 // npm install knex sqlite3

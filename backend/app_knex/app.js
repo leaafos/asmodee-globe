@@ -12,6 +12,8 @@ const categoryRoutes = require('./routes/categoryRoutes');
 const badgeRoutes = require('./routes/badgeRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const teamBadgesRoutes = require('./routes/teamBadgesRoutes');
+const likedRoutes = require('./routes/likedRoutes'); 
+const scoreRoutes = require('./routes/scoreRoutes'); 
 
 app.use(cors()); 
 app.use(express.json());
@@ -26,9 +28,8 @@ app.use('/', badgeRoutes);
 app.use('/', messageRoutes);
 app.use('/uploads', express.static('uploads'));
 app.use('/', teamBadgesRoutes); 
-
-//ajouter les routes de chaque table ici 
-
+app.use('/', likedRoutes); 
+app.use('/', scoreRoutes); 
 
 // const allowedApiKeys = ['TestP3', 'YOUR_API_KEY_1', 'YOUR_API_KEY_2']; //la liste des clés API autorisées
 

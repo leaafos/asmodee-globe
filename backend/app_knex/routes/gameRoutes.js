@@ -1,19 +1,35 @@
-// gameRoutes.js
 const express = require('express');
 const router = express.Router();
 const gameModel = require('../models/gameModel');
+const multer = require('multer');
+const path = require('path');
 
-// Récupérer tous les games
+// Configuration de multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Assure-toi que ce dossier existe
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const uniqueName = Date.now() + ext;
+    cb(null, uniqueName);
+  }
+});
+const upload = multer({ storage: storage });
+
+
+// GET tous les jeux avec catégories
 router.get('/games', async (req, res) => {
   try {
-    const games = await gameModel.getAllGames();
+    const games = await gameModel.getGamesWithCategories();
     res.json(games);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    console.error('Erreur dans /games :', err);
+    res.status(500).json({ error: 'Erreur serveur' });
   }
 });
 
-// Récupérer une game par ID
+// GET un jeu par ID
 router.get('/games/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -24,30 +40,32 @@ router.get('/games/:id', async (req, res) => {
   }
 });
 
-// Créer un nouveau jeu
-router.post('/games', async (req, res) => {
-  const { id, name, category_id, liked_id, score_id } = req.body;
+// POST nouveau jeu avec image
+router.post('/games', upload.single('image'), async (req, res) => {
+  const { id, name, category_id } = req.body;
+  const image = req.file ? req.file.filename : null;
   try {
-    await gameModel.createGame(id, name, category_id, liked_id, score_id);
+    await gameModel.createGame(id, name, category_id, image);
     res.status(201).json({ message: 'Jeu créé avec succès' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-// Mettre à jour un jeu existant
-router.put('/games/:id', async (req, res) => {
+// PUT mise à jour jeu avec image
+router.put('/games/:id', upload.single('image'), async (req, res) => {
   const { id } = req.params;
-  const { name, category_id, liked_id, score_id } = req.body;
+  const { name, category_id } = req.body;
+  const image = req.file ? req.file.filename : null;
   try {
-    await gameModel.updateGame(id, name, category_id, liked_id, score_id);
+    await gameModel.updateGame(id, name, category_id, image);
     res.json({ message: 'Jeu mis à jour avec succès' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-// Supprimer un jeu
+// DELETE un jeu
 router.delete('/games/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -57,8 +75,5 @@ router.delete('/games/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
-
-
 
 module.exports = router;
