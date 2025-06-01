@@ -244,9 +244,15 @@ return (
                 backgroundColor: 'rgba(255, 255, 255, 0.9)',
                 border: '1px solid #fff',
                 borderRadius: '4px',
+<<<<<<< Updated upstream
                 color: '#000', 
                 fontSize: 'clamp(11px, 1.2vw, 14px)', 
                 wordWrap: 'break-word',
+=======
+                color: '#fff',
+                fontSize: '14px',
+                whiteSpace: 'nowrap',
+>>>>>>> Stashed changes
                 pointerEvents: 'none',
                 zIndex: 10,
                 boxSizing: 'border-box'
