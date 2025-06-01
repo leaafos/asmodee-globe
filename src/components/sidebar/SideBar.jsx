@@ -1,6 +1,8 @@
 import "./sideBar.scss";
 import { useState, useEffect } from "react";
 import arrow from "../../assets/arrow.svg";
+import SinkOrSail from "../sidebar/SinkOrSail"; 
+
 
 const SideBar = () => {
   const [expandedBar, setExpandedBar] = useState(false);
@@ -8,6 +10,7 @@ const SideBar = () => {
   const [userId, setUserId] = useState(null);
   const [games, setGames] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [showSinkOrSail, setShowSinkOrSail] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -55,12 +58,33 @@ const SideBar = () => {
       });
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem("user"); 
+    window.location.href = "/login"; 
+  };
+
   return (
     <div id={expandedBar ? "sideBarContainerExpanded" : "sideBarContainer"}>
       <button id="toggleSideBar" onClick={handleClick}>
         <img src={arrow} alt="toggle sidebar" />
       </button>
       <div id={expandedBar ? "innerContainerExpanded" : "innerContainer"}>
+        <div style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
+          <button onClick={handleLogout} >
+            Logout
+          </button>
+        </div>
+        <div style={{ padding: "10px", textAlign: "center" }}>
+          <button onClick={() => setShowSinkOrSail(true)}>Sink or Sail</button>
+        </div>
+        {showSinkOrSail && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <button className="close-btn" onClick={() => setShowSinkOrSail(false)}>X</button>
+              <SinkOrSail />
+            </div>
+          </div>
+        )}
         <div>
           <h3>Hello, {userName}</h3>
 

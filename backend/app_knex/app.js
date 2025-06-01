@@ -14,6 +14,7 @@ const messageRoutes = require('./routes/messageRoutes');
 const teamBadgesRoutes = require('./routes/teamBadgesRoutes');
 const likedRoutes = require('./routes/likedRoutes'); 
 const scoreRoutes = require('./routes/scoreRoutes'); 
+const sinkOrSailRoutes = require('./routes/sinkOrSailRoutes'); // Assurez-vous d'importer le bon fichier de routes
 
 app.use(cors()); 
 app.use(express.json());
@@ -30,6 +31,7 @@ app.use('/uploads', express.static('uploads'));
 app.use('/', teamBadgesRoutes); 
 app.use('/', likedRoutes); 
 app.use('/', scoreRoutes); 
+app.use('/', sinkOrSailRoutes); 
 
 // const allowedApiKeys = ['TestP3', 'YOUR_API_KEY_1', 'YOUR_API_KEY_2']; //la liste des clés API autorisées
 

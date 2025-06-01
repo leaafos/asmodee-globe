@@ -38,7 +38,7 @@ const GloryChest = () => {
         setPendingBadges(pendingData);
 
         // Récupérer badges en cours des autres équipes
-        const resOthers = await fetch(`http://localhost/teamBadges/pending/exclude/${teamId}`);
+        const resOthers = await fetch(`http://localhost/teamBadges/pendingOthers/${teamId}`);
         if (!resOthers.ok) throw new Error("Erreur lors de la récupération des badges des autres équipes");
         const othersData = await resOthers.json();
         setOthersPendingBadges(othersData);
