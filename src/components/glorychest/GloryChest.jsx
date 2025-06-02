@@ -10,6 +10,11 @@ const GloryChest = () => {
   const [showForm, setShowForm] = useState(false);
   const [voteMessage, setVoteMessage] = useState(null);
   const [voteError, setVoteError] = useState(null);
+  const [treasureTrailContent, setTreasureTrailContent] = useState(false)
+
+  function handleClick3() {
+    setTreasureTrailContent(!treasureTrailContent)
+  }
 
   useEffect(() => {
     // Récupérer user depuis localStorage
@@ -80,8 +85,23 @@ const GloryChest = () => {
 
   return (
     <div id="gloryContainer">
-      <h2>Glory Chest de la team {teamId}</h2>
-      <button onClick={() => setShowForm(true)}>Soumettre un badge</button>
+      <div id="buttonsTop">
+        <button className="changeContent"></button>
+        <button className="changeContent"></button>
+      </div>
+      <div id="mainContent">
+
+      </div>
+
+   
+    </div>
+  );
+};
+
+export default GloryChest;
+
+/*
+<button onClick={() => setShowForm(true)}>Soumettre un badge</button>
       {showForm && <TeamBadgeForm />}
 
       <section>
@@ -156,8 +176,5 @@ const GloryChest = () => {
           ))
         )}
       </section>
-    </div>
-  );
-};
 
-export default GloryChest;
+*/

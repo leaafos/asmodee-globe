@@ -8,4 +8,131 @@
     border-radius: $radius-card;
     box-shadow: $shadow-card;
     outline: $border-card;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    &.error {
+        color: red;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #titleContainer {
+        height: 25%;
+        padding: 0 2vw;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid white;
+        flex-shrink: 0;
+
+        #titleText {
+            font-size: 1rem;
+            color: white;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    #listScores {
+        flex: 1;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        #tableWrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #tableHeader {
+            display: flex;
+            position: sticky;
+            font-size: 0.65rem;
+            flex-shrink: 0;
+        }
+
+        #userRow {
+            display: flex;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            position: sticky;
+            top: 49px;
+            z-index: 2;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #scrollableContent {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            // Scrollbar personnalisée
+            &::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 3px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 3px;
+            }
+
+            &::-webkit-scrollbar-thumb:hover {
+                background: rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        .table-row {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background-color 0.2s ease;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        .col-rank {
+            width: 80px;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .col-name {
+            flex: 1;
+            color: white;
+            padding-left: 16px;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .col-score {
+            width: 100px;
+            text-align: right;
+            color: white;
+            font-weight: 600;
+            padding-right: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+    }
 }

@@ -32,36 +32,53 @@ const TreasureTrail = () => {
     }
   }, []);
 
+  const userScore = scores.find(score => score.id === userId);
+  const otherScores = scores.filter(score => score.id !== userId);
+
   if (loading) {
     return <div id="treasureContainer">Chargement des scores...</div>;
   }
 
   if (error) {
-    return <div id="treasureContainer" style={{ color: "red" }}>Erreur : {error}</div>;
+    return <div id="treasureContainer" className="error">Erreur : {error}</div>;
   }
 
   return (
     <div id="treasureContainer">
-    <h2>Classement des scores</h2>
-    {scores.length === 0 ? (
-      <p>Aucun score disponible pour le moment.</p>
-    ) : (
-      <table className="scoresTable">
-        <thead>
-          <tr>
-            <th>Nom</th><th>Score</th><th>Classement</th>
-          </tr>
-        </thead>
-        <tbody>
-          {scores.map((scoreItem) => (
-            <tr key={scoreItem.id}>
-              <td>{scoreItem.name}</td><td>{scoreItem.score}</td><td>{scoreItem.ranking ?? "-"}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    )}
-  </div>
+      <div id="titleContainer">
+        <span id="titleText">TREASURE TRAIL</span>
+      </div>
+      
+      <div id="listScores">
+        {scores.length === 0 ? (
+          <p>Aucun score disponible pour le moment.</p>
+        ) : (
+          <div id="tableWrapper">
+            <div id="tableHeader">
+              <div className="col-rank">Rank</div>
+              <div className="col-name">Name</div>
+              <div className="col-score">Score</div>
+            </div>
+            {userScore && (
+              <div id="userRow">
+                <div className="col-rank">{userScore.ranking}</div>
+                <div className="col-name">{userScore.name} ✨</div>
+                <div className="col-score">{userScore.score}</div>
+              </div>
+            )}
+            <div id="scrollableContent">
+              {otherScores.map((scoreItem) => (
+                <div key={scoreItem.id} className="table-row">
+                  <div className="col-rank">{scoreItem.ranking ?? "-"}</div>
+                  <div className="col-name">{scoreItem.name}</div>
+                  <div className="col-score">{scoreItem.score}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

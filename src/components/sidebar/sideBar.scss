@@ -3,7 +3,7 @@
 #sideBarContainer {
     background: $background-sidebar;
     height: 94vh;
-    width: 21vw;
+    width: 25vw;
     margin-right: 2vw;
     border-radius: $radius-card;
     box-shadow: $shadow-card;
@@ -24,12 +24,576 @@
         //background-color: yellow;
         transition-duration: 300ms;
 
+        #topIcons {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 3vh 0;
+            //background-color: red;
+            height: 20px;
+            width: 120px;
+
+            .buttonTop {
+                height: 18px;
+                background: none;
+                border: 0;
+                cursor: pointer;
+
+                .imgIcon{
+                    height: 100%;
+                }
+            }
+
+            #logOutButton {
+                font-size: 0.75rem;
+                padding: 5px 10px;
+                background: $background-button;
+                color: $color-button;
+                border-radius: $radius-button;
+                border: $border-button;
+                cursor: pointer;
+        
+            }
+        }
+
+        #userBlock {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 2vh;
+
+            #avatar {
+                background: radial-gradient(50% 50% at 50% 50%, rgba(73, 122, 220, 0.00) 50.48%, rgba(241, 251, 255, 0.48) 100%);
+                border-radius: 100%;
+            }
+
+            #userInfo {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                gap: 5px;
+                
+
+                #jobTitle {
+                    font-size: 0.6875rem;
+                    color: $color-title;
+                    line-height: 0.4;
+                }
+                #userName {
+                    font-size: 0.9rem;
+                    color: white;
+                }
+
+            }
+        }
+
+        #favoritesList {
+            height: 33%;
+            border-top: 1px black solid;
+            padding: 1vh 0;
+
+            #favoritesTitle {
+                color: $color-title;
+                font-size: 0.9rem;
+                
+            }
+
+            #displayFavorites {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
+                border: 0;
+                border-radius: 12px;
+                padding: 16px;
+                margin: 1vh 0;
+
+                #leftFavorites {
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    width: auto;
+                    
+
+                    #favoriteButtonImg {
+                        width: 24px;
+
+                    }
+
+                    #favoriteButtonText {
+                        color: white;
+                        font-size: 1rem;
+
+                    }
+                }
+            }
+
+            #noContainerFavoriteGames {
+                display: none;
+            }
+
+            #containerFavoriteGames {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 250px;
+                overflow-y: scroll;
+
+                .gameBlock {
+                    width: 89%;
+                    height: auto;
+                    padding: 3%;
+                    list-style: none;
+                    display: flex;
+                    justify-content: space-between;
+                    background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
+                    border: 1px solid white;
+                    border-radius: 10px;
+                    margin-bottom: 1vh;
+                    color: white;
+
+                    .leftBlock {
+                        width: 26%;
+                        height: auto;
+                        border-radius: 4px;
+                    }
+
+                    .rightBlock {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-around;
+                        width: 68%;
+                        gap: 10px;
+
+                        .topBlock {
+                            display: flex;
+                            justify-content: space-between;
+
+                            .titleAndCategories {
+                                display: flex;
+                                flex-direction: column;
+
+                                .gameName {
+                                    font-size: 1rem;
+                                }
+
+                                .categoryName {
+                                    font-size: 0.5rem;
+                                }
+                            }
+
+                            .usersInGame {
+                                gap: 3px;
+                                height: 16%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                font-size: 0.625rem;
+                                color: white;
+                                padding: 5px 5px;
+                                background: linear-gradient(173deg, rgba(255, 255, 255, 0.40) 0%, rgba(238, 237, 237, 0.20) 100%);
+                                box-shadow: 0px 0.2px 3.3px 0px #CFE3F7;
+                                border-radius: 10px;
+
+                                .presence {
+                                    background-color: #46B82C;
+                                    height: 6px;
+                                    width: 6px;
+                                    border-radius: 100%;
+                                }
+                            }
+                                 
+                        }
+
+                        .bottomBlock {
+                            display: flex;
+                            justify-content: space-between;
+
+                            .leftButtons {
+                                display: flex;
+                                gap: 4px;
+                                
+
+                                .findMatch {
+                                font-size: 0.625rem;
+                                background: none;
+                                cursor: pointer;
+                                border: 1px solid white;
+                                border-radius: 4px;
+                                padding: 2px 5px;
+                                color: white;
+                                
+                                }
+                            
+                                .invite {
+                                    font-size: 0.625rem;
+                                    background: none;
+                                    cursor: pointer;
+                                    border-radius: 4px;
+                                    border: 1px solid white;
+                                    color: white;
+                                }
+
+
+                            }
+
+                            .favorite-btn {
+                                background: none;
+                                border: 0;
+                                cursor: pointer;
+
+                            }
+
+                            .favorited {
+                                background: none;
+                                border: 0;
+                                cursor: pointer;
+
+                            }
+                        }
+
+                    }
+                }
+
+            }
+
+            
+        }
+
+        #gameList {
+            height: 33%;
+            border-top: 1px black solid;
+            padding: 1vh 0;
+
+
+            #gamesMostPlayed {
+                color: $color-title;
+                font-size: 0.9rem;
+                
+            }
+
+            #gamesTitle {
+                display: none;
+            }
+
+            #searchGames {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
+                border: 0;
+                border-radius: 12px;
+                padding: 4px 16px;
+                margin: 1vh 0;
+
+                #leftGamesButton {
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    width: auto;
+                    
+
+                    #gameButtonImg {
+                        width: 24px;
+
+                    }
+
+                    #gameButtonText {
+                        color: white;
+                        font-size: 1rem;
+
+                    }
+                }
+            }
+
+            #containerGamesExtended {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 420px;
+                overflow-y: scroll;
+
+
+                .gameBlock {
+                    width: 89%;
+                    height: auto;
+                    padding: 3%;
+                    list-style: none;
+                    display: flex;
+                    justify-content: space-between;
+                    background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
+                    border: 1px solid white;
+                    border-radius: 10px;
+                    margin-bottom: 1vh;
+                    color: white;
+
+                    .leftBlock {
+                        width: 26%;
+                        height: auto;
+                        border-radius: 4px;
+                    }
+
+                    .rightBlock {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-around;
+                        width: 68%;
+                        gap: 10px;
+
+                        .topBlock {
+                            display: flex;
+                            justify-content: space-between;
+
+                            .titleAndCategories {
+                                display: flex;
+                                flex-direction: column;
+
+                                .gameName {
+                                    font-size: 1rem;
+                                }
+
+                                .categoryName {
+                                    font-size: 0.5rem;
+                                }
+                            }
+
+                            .usersInGame {
+                                gap: 3px;
+                                height: 16%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                font-size: 0.625rem;
+                                color: white;
+                                padding: 5px 5px;
+                                background: linear-gradient(173deg, rgba(255, 255, 255, 0.40) 0%, rgba(238, 237, 237, 0.20) 100%);
+                                box-shadow: 0px 0.2px 3.3px 0px #CFE3F7;
+                                border-radius: 10px;
+
+                                .presence {
+                                    background-color: #46B82C;
+                                    height: 6px;
+                                    width: 6px;
+                                    border-radius: 100%;
+                                }
+                            }
+                                 
+                        }
+
+                        .bottomBlock {
+                            display: flex;
+                            justify-content: space-between;
+
+                            .leftButtons {
+                                display: flex;
+                                gap: 4px;
+                                
+
+                                .findMatch {
+                                font-size: 0.625rem;
+                                background: none;
+                                cursor: pointer;
+                                border: 1px solid white;
+                                border-radius: 4px;
+                                padding: 2px 5px;
+                                color: white;
+                                }
+                            
+                                .invite {
+                                    font-size: 0.625rem;
+                                    background: none;
+                                    cursor: pointer;
+                                    border-radius: 4px;
+                                    border: 1px solid white;
+                                    color: white;
+                                }
+
+
+                            }
+
+                            .favorite-btn {
+                                background: none;
+                                border: 0;
+                                cursor: pointer;
+
+                            }
+
+                            .favorited {
+                                background: none;
+                                border: 0;
+                                cursor: pointer;
+
+                            }
+                        }
+
+                    }
+                }
+
+            }
+
+            #containerGames {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 170px;
+                overflow-y: scroll;
+
+                .gameBlock {
+                    width: 89%;
+                    height: auto;
+                    padding: 3%;
+                    list-style: none;
+                    display: flex;
+                    justify-content: space-between;
+                    background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
+                    border: 1px solid white;
+                    border-radius: 10px;
+                    margin-bottom: 1vh;
+                    color: white;
+
+                    .leftBlock {
+                        width: 26%;
+                        height: auto;
+                        border-radius: 4px;
+                    }
+
+                    .rightBlock {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-around;
+                        width: 68%;
+                        gap: 10px;
+
+                        .topBlock {
+                            display: flex;
+                            justify-content: space-between;
+
+                            .titleAndCategories {
+                                display: flex;
+                                flex-direction: column;
+
+                                .gameName {
+                                    font-size: 1rem;
+                                }
+
+                                .categoryName {
+                                    font-size: 0.5rem;
+                                }
+                            }
+
+                            .usersInGame {
+                                gap: 3px;
+                                height: 16%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                font-size: 0.625rem;
+                                color: white;
+                                padding: 5px 5px;
+                                background: linear-gradient(173deg, rgba(255, 255, 255, 0.40) 0%, rgba(238, 237, 237, 0.20) 100%);
+                                box-shadow: 0px 0.2px 3.3px 0px #CFE3F7;
+                                border-radius: 10px;
+
+                                .presence {
+                                    background-color: #46B82C;
+                                    height: 6px;
+                                    width: 6px;
+                                    border-radius: 100%;
+                                }
+                            }
+                                 
+                        }
+
+                        .bottomBlock {
+                            display: flex;
+                            justify-content: space-between;
+
+                            .leftButtons {
+                                display: flex;
+                                gap: 4px;
+                                
+
+                                .findMatch {
+                                font-size: 0.625rem;
+                                background: none;
+                                cursor: pointer;
+                                border: 1px solid white;
+                                border-radius: 4px;
+                                padding: 2px 5px;
+                                color: white;
+                                }
+                            
+                                .invite {
+                                    font-size: 0.625rem;
+                                    background: none;
+                                    cursor: pointer;
+                                    border-radius: 4px;
+                                    border: 1px solid white;
+                                    color: white;
+                                }
+
+
+                            }
+
+                            .favorite-btn {
+                                background: none;
+                                border: 0;
+                                cursor: pointer;
+
+                            }
+
+                            .favorited {
+                                background: none;
+                                border: 0;
+                                cursor: pointer;
+
+                            }
+                        }
+
+                    }
+                }
+
+            }
+
+            
+        }
+
+        #stateBar {
+            display: flex;
+            justify-content: space-evenly;
+            height: 2px;
+            
+            width: 100%;
+
+            #small {
+                height: 2px;
+                background-color: #D1D1D6;
+                border-radius: 2px;
+                width: 10%;
+            }
+
+            #extend {
+                height: 2px;
+                background-color: white;
+                border-radius: 2px;
+                width: 40%;
+            }
+        }
+
     }
 
     
 }
 
-#sideBarContainerExpanded {
+#sideBarContainerNotExpanded {
     height: 94vh;
     width: 6vw;
     background: $background-sidebar;
@@ -47,11 +611,180 @@
 
     }
 
-    #innerContainerExpanded {
+    #innerContainerNotExpanded {
         height: 100%;
-        width: 49%;
+        width: 100%;
         //background-color: yellow;
         transition-duration: 300ms;
+        display: flex;
+        flex-direction: column;
+
+        #topIcons {
+            display: none;
+
+        }
+
+        #userBlock {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 80%;
+            margin-bottom: 2vh;
+
+            #avatar {
+                background: radial-gradient(50% 50% at 50% 50%, rgba(73, 122, 220, 0.00) 50.48%, rgba(241, 251, 255, 0.48) 100%);
+                border-radius: 100%;
+            }
+
+            #userInfo {
+                display: none;
+
+            }
+        }
+
+        #favoritesList {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 33%;
+            padding: 1vh 0;
+
+            #favoritesTitle {
+                text-align: center;
+                color: $color-title;
+                font-size: 0.9rem;
+                
+            }
+
+            #displayFavorites {
+                
+                width: 100%;
+                border: 0;
+                border-radius: 12px;
+                background: none;
+                
+
+                #leftFavorites {
+                    
+
+                    #favoriteButtonImg {
+                        width: 24px;
+                        background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
+                        padding: 16px;
+                        margin: 1vh 0;
+                        border-radius: 12px;
+
+                    }
+
+                    #favoriteButtonText {
+                        display: none;
+
+                    }
+                }
+
+                #arrow {
+                    display: none;
+                }
+            }
+
+            #noContainerFavoriteGames {
+                display: none;
+            }
+
+            #containerFavoriteGames {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 300px;
+                overflow-y: scroll;
+
+                .gameBlock {
+                    height: auto;
+                    padding: 3%;
+                    list-style: none;
+                    display: flex;
+                    justify-content: space-between;
+                    border-radius: 10px;
+                    margin-bottom: 1vh;
+
+                    .leftBlock {
+                        width: 56px;
+                        height: 56px;
+                        border-radius: 4px;
+                    }
+
+                    .rightBlock {
+                        display: none; 
+
+                    
+
+                    }
+                }
+
+            }
+
+            
+        }
+
+        #gameList {
+            height: 33%;
+            padding: 1vh 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            #gamesMostPlayed {
+                display: none;
+            }
+
+
+            #gamesTitle {
+                color: $color-title;
+                font-size: 0.9rem;
+                margin-bottom: 1vh;
+                
+            }
+
+            #searchGames {
+                display: none;
+                
+            }
+
+            #containerGames {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 310px;
+                overflow-y: scroll;
+
+                .gameBlock {
+                    height: auto;
+                    padding: 3%;
+                    list-style: none;
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 1vh;
+
+                    .leftBlock {
+                        width: 56px;
+                        height: 56px;
+                        border-radius: 4px;
+                    }
+
+                    .rightBlock {
+                        display: none;
+                        
+                        
+                    }
+                }
+
+            }
+        }
+        
 
     }
 
@@ -68,3 +801,4 @@
     stroke-width: 0.5px;
     background: rgba(255, 237, 224);
 }
+
