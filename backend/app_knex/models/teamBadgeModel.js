@@ -60,7 +60,7 @@ const getPendingBadgesExcludingTeam = async (teamId) => {
       'team_badges.team_id',
       'teams.name as team_name',
       'team_badges.votes',
-      'team_badges.vote_threshold', // si ce champ existe dans ta table team_badges ou dans badges
+      'badges.vote_threshold', 
       'badges.id as badge_id',
       'badges.name as badge_name',
       'badges.description',
