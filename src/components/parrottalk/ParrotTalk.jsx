@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./parrotTalk.scss";
 
 const ParrotTalk = () => {
-  // Récupère l'utilisateur connecté depuis localStorage
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
   const userRole = user?.role; // 'A' ou 'B'
@@ -12,7 +11,6 @@ const ParrotTalk = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  // Charger messages + réactions associées
   useEffect(() => {
     fetch("http://localhost/messagesPT")
       .then((res) => {
@@ -20,8 +18,6 @@ const ParrotTalk = () => {
         return res.json();
       })
       .then((data) => {
-        // on s’attend à ce que chaque message ait un tableau "reactions"
-        // sinon, on initialise à []
         const withReactions = data.map((msg) => ({
           ...msg,
           reactions: msg.reactions || [],
@@ -47,7 +43,6 @@ const ParrotTalk = () => {
       if (!res.ok) throw new Error("Erreur lors de l'envoi du message");
 
       const newMessage = await res.json();
-      // ajouter message avec réactions vides
       setMessages((prev) => [...prev, { ...newMessage, reactions: [] }]);
       setMessage("");
       setError("");
@@ -56,7 +51,6 @@ const ParrotTalk = () => {
     }
   };
 
-  // Toggle réaction coeur pour un message donné
   async function toggleReaction(messageId, reactionType) {
     try {
       const res = await fetch("http://localhost/reactions/toggle", {
@@ -75,7 +69,6 @@ const ParrotTalk = () => {
         throw new Error("Erreur lors du toggle réaction");
       }
 
-      // Mise à jour locale des réactions dans le message
       setMessages((prevMessages) =>
         prevMessages.map((msg) => {
           if (msg.id === messageId) {
@@ -84,12 +77,10 @@ const ParrotTalk = () => {
             );
             let newReactions;
             if (existing) {
-              // Retirer la réaction (toggle off)
               newReactions = msg.reactions.filter(
                 (r) => !(r.user_id === userId && r.reaction === reactionType)
               );
             } else {
-              // Ajouter la réaction (toggle on)
               newReactions = [...msg.reactions, { user_id: userId, reaction: reactionType }];
             }
             return { ...msg, reactions: newReactions };
@@ -103,11 +94,9 @@ const ParrotTalk = () => {
     }
   }
 
-  // Fonction utilitaire pour compter le nombre de réactions d’un type sur un message
   const countReactions = (msg, reactionType) =>
     msg.reactions.filter((r) => r.reaction === reactionType).length;
 
-  // Vérifie si l’utilisateur connecté a déjà mis ce type de réaction
   const userHasReacted = (msg, reactionType) =>
     msg.reactions.some((r) => r.user_id === userId && r.reaction === reactionType);
 

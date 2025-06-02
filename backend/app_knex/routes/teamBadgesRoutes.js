@@ -36,6 +36,34 @@ router.get('/teamBadges/unlocked/:teamId', async (req, res) => {
   }
 });
 
+// Récupérer les badges d'une team par teamId en attente, mais excluant les badges de l'équipe elle-même
+router.get('/teamBadges/pendingOthers/:teamId', async (req, res) => {
+  const { teamId } = req.params;
+  try {
+    const pendingOthersBadges = await teamBadgeModel.getPendingBadgesExcludingTeam(teamId);
+    res.json(pendingOthersBadges);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Ajouter un vote à un teamBadge
+router.post('/teamBadges/:id/vote', async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.body; // optionnel si tu veux vérifier que l'utilisateur n'a pas déjà voté
+
+  try {
+    // Ici tu peux vérifier si userId a déjà voté sur ce teamBadgeId pour éviter votes multiples (optionnel)
+    // await teamBadgeModel.checkUserVote(id, userId);
+
+    await teamBadgeModel.addVote(id, userId);
+
+    res.json({ message: 'Vote ajouté avec succès' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Récupérer les badges d'une équipe par teamId
 router.get('/teams/:teamId/badges', async (req, res) => {
   const { teamId } = req.params;

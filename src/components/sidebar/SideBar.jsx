@@ -19,6 +19,7 @@ const SideBar = () => {
   const [userJob, setUserJob] = useState('');
   const [games, setGames] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [showSinkOrSail, setShowSinkOrSail] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -75,6 +76,11 @@ const SideBar = () => {
         console.error("Erreur mise à jour favoris :", err);
       });
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem("user"); 
+    window.location.href = "/login"; 
+  };
 
   return (
     <div id={expandedBar ? "sideBarContainerNotExpanded" : "sideBarContainer"}>
@@ -215,3 +221,30 @@ const SideBar = () => {
 };
 
 export default SideBar;
+
+/*
+
+=======
+import SinkOrSail from "../sidebar/SinkOrSail"; 
+
+>>>>>>> 2384efbb228dfdad176cc65f184338cdb626d432
+      <div id={expandedBar ? "innerContainerExpanded" : "innerContainer"}>
+        <div style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
+          <button onClick={handleLogout} >
+            Logout
+          </button>
+        </div>
+        <div style={{ padding: "10px", textAlign: "center" }}>
+          <button onClick={() => setShowSinkOrSail(true)}>Sink or Sail</button>
+        </div>
+        {showSinkOrSail && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <button className="close-btn" onClick={() => setShowSinkOrSail(false)}>X</button>
+              <SinkOrSail />
+            </div>
+          </div>
+        )}
+>>>>>>> 2384efbb228dfdad176cc65f184338cdb626d432
+
+*/

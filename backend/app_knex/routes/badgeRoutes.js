@@ -25,7 +25,7 @@ router.put('/badges/:id', upload.single('image'), async (req, res) => {
   const { id } = req.params;
   const { name, title, description, vote_threshold } = req.body;
   const image = req.file ? req.file.filename : null; // Nom du fichier uploadé
-  console.log({ id, name, title, description, image, vote_threshold }); // Ajoute ça
+  console.log({ id, name, title, description, image, vote_threshold }); 
 
   try {
     await badgeModel.updateBadge(id, name, title, description, image, vote_threshold);
