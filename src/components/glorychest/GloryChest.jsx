@@ -156,7 +156,7 @@ const GloryChest = () => {
                 Votes : {badge.votes} / {badge.vote_threshold} (
                 {badge.vote_threshold - badge.votes} votes manquants)
               </p>
-              <button onClick={() => handleVote(badge.id)}>Voter</button>
+              <button onClick={() => handleVote(badge.id)}> Voter </button>
             </div>
           ))
         )}
