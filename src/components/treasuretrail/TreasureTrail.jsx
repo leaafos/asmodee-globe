@@ -55,9 +55,9 @@ const TreasureTrail = () => {
         ) : (
           <div id="tableWrapper">
             <div id="tableHeader">
-              <div className="col-rank">Rank</div>
-              <div className="col-name">Name</div>
-              <div className="col-score">Score</div>
+              <div className="col-rank">RANK</div>
+              <div className="col-name">NAME</div>
+              <div className="col-score">SCORE</div>
             </div>
             {userScore && (
               <div id="userRow">
