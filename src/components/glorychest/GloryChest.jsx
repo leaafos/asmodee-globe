@@ -8,6 +8,7 @@ import Background from "three/src/renderers/common/Background.js";
 
 const GloryChest = () => {
   const [teamId, setTeamId] = useState(null);
+  const [user, setUser] = useState(null); // Ajouté
   const [unlockedBadges, setUnlockedBadges] = useState([]);
   const [pendingBadges, setPendingBadges] = useState([]);
   const [othersPendingBadges, setOthersPendingBadges] = useState([]);
@@ -32,11 +33,11 @@ const GloryChest = () => {
   );
 
   useEffect(() => {
-    // Récupérer user depuis localStorage
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      const user = JSON.parse(storedUser);
-      setTeamId(user.teamId || user.team_id);
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser); // Stocker l'utilisateur
+      setTeamId(parsedUser.teamId || parsedUser.team_id);
     }
   }, []);
 
@@ -45,19 +46,16 @@ const GloryChest = () => {
 
     const fetchTeamBadges = async () => {
       try {
-        // Récupérer badges débloqués de l'équipe
         const resUnlocked = await fetch(`http://localhost/teamBadges/unlocked/${teamId}`);
         if (!resUnlocked.ok) throw new Error("Erreur lors de la récupération des badges débloqués");
         const unlockedData = await resUnlocked.json();
         setUnlockedBadges(unlockedData);
 
-        // Récupérer badges en cours (non débloqués) de l'équipe
         const resPending = await fetch(`http://localhost/teamBadges/pending/${teamId}`);
         if (!resPending.ok) throw new Error("Erreur lors de la récupération des badges en cours");
         const pendingData = await resPending.json();
         setPendingBadges(pendingData);
 
-        // Récupérer badges en cours des autres équipes
         const resOthers = await fetch(`http://localhost/teamBadges/pendingOthers/${teamId}`);
         if (!resOthers.ok) throw new Error("Erreur lors de la récupération des badges des autres équipes");
         const othersData = await resOthers.json();
@@ -70,27 +68,34 @@ const GloryChest = () => {
     fetchTeamBadges();
   }, [teamId]);
 
-  // Fonction pour voter sur un badge d'une autre équipe
   const handleVote = async (teamBadgeId) => {
     setVoteMessage(null);
     setVoteError(null);
 
+    if (!user) {
+      setVoteError("Utilisateur non authentifié.");
+      return;
+    }
+
     try {
-      const res = await fetch(`http://localhost/teamBadges/vote/${teamBadgeId}`, {
+      const res = await fetch(`http://localhost/teamBadges/${teamBadgeId}/vote`, {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: user.id }),
       });
+
       if (!res.ok) {
         const errData = await res.json();
         throw new Error(errData.error || "Erreur lors du vote");
       }
+
       setVoteMessage("Vote enregistré !");
-      // Mettre à jour les listes pour rafraîchir l'affichage
-      // On refait le fetch des badges en cours des autres équipes et de la nôtre
-      const resPending = await fetch(`http://localhost/teamBadges/pending/exclude/${teamId}`);
+
+      const resPending = await fetch(`http://localhost/teamBadges/pendingOthers/exclude/${teamId}`);
       const othersData = await resPending.json();
       setOthersPendingBadges(othersData);
 
-      const resTeamPending = await fetch(`http://localhost/teamBadges/pending/${teamId}`);
+      const resTeamPending = await fetch(`http://localhost/teamBadges/pendingOthers/${teamId}`);
       const teamPendingData = await resTeamPending.json();
       setPendingBadges(teamPendingData);
     } catch (err) {

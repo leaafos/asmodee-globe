@@ -4,40 +4,6 @@ import * as THREE from 'three';
 import "./globeScene.scss"
 
 
-const demoData = [
-  { lat: 48.3-10, lng: 2.08-10, city: 'Asmodee HQ (Guyancourt, France)', population: 155000000 },
-  { lat: 48.870-10, lng: 2.330-10, city: 'Twin Sails (Paris, France)', population: 50000000 },
-  { lat: 46.580-10, lng: 0.340-10, city: 'Libellud (Poitiers, France)', population: 30000000 },
-  { lat: 50.850-10, lng: 4.350-10, city: 'Repos Production (Bruxelles, Belgique)', population: 30000000 },
-  { lat: 49.982-10, lng: 8.074-10, city: 'Lookout Games (Schwabenheim, Allemagne)', population: 20000000 },
-  { lat: 51.152-10, lng: 6.675-10, city: 'Asmodee Holding GmbH (Essen, Allemagne)', population: 50000000 },
-  { lat: 45.464-10, lng: 9.190-10, city: 'Asmodee Italia (Milan, Italie)', population: 40000000 },
-  { lat: 40.416-10, lng: -3.703-10, city: 'Asmodee Ibérica (Madrid, Espagne)', population: 40000000 },
-  { lat: 59.329-10, lng: 18.068-10, city: 'Asmodee Nordics (Stockholm, Suède)', population: 35000000 },
-  { lat: 51.150-10, lng: -0.980-10, city: 'Asmodee UK (Alton, Royaume-Uni)', population: 60000000 },
-  { lat: 45.421-10, lng: -75.699-10, city: 'Asmodee Canada (Ottawa, Canada)', population: 40000000 },
-  { lat: -33.868-10, lng: 151.209-10, city: 'Asmodee Australia (Sydney, Australie)', population: 30000000 },
-  { lat: 44.933-10, lng: -93.090-10, city: 'Asmodee North America (Roseville, USA)', population: 100000000 },
-  { lat: 44.933-10, lng: -93.090-10, city: 'Fantasy Flight Games (Roseville, USA)', population: 50000000 },
-  { lat: 44.933-10, lng: -93.090-10, city: 'Z-Man Games (Roseville, USA)', population: 30000000 },
-  { lat: 32.776-10, lng: -96.797-10, city: 'Plaid Hat Games (Dallas, USA)', population: 30000000 },
-  { lat: 22.3193-10, lng: 114.1694-10, city: 'Asmodee Asia (Hong Kong)', population: 25000000 },
-  { lat: 31.2304-10, lng: 121.4737-10, city: 'Asmodee China (Shanghai, Chine)', population: 25000000 },
-  { lat: 37.5665-10, lng: 126.9780-10, city: 'Asmodee Korea (Séoul, Corée du Sud)', population: 20000000 },
-  { lat: 25.0330-10, lng: 121.5654-10, city: 'Asmodee Taiwan (Taipei, Taïwan)', population: 20000000 },
-  { lat: 48.8566-10, lng: 2.3522-10, city: 'Days of Wonder (Paris, France)', population: 30000000 },
-  { lat: 50.8503-10, lng: 4.3517-10, city: 'Pearl Games (Bruxelles, Belgique)', population: 15000000 },
-  { lat: 43.2965-10, lng: 5.3698-10, city: 'Space Cowboys (Marseille, France)', population: 20000000 },
-  { lat: 45.7640-10, lng: 4.8357-10, city: 'Ludonaute (Lyon, France)', population: 15000000 },
-  { lat: 52.3676-10, lng: 4.9041-10, city: 'Enigma Distribution (Amsterdam, Pays-Bas)', population: 20000000 },
-  { lat: 60.1695-10, lng: 24.9354-10, city: 'Asmodee Nordics (Helsinki, Finlande)', population: 15000000 },
-  { lat: 52.2297-10, lng: 21.0122-10, city: 'Rebel Studio (Varsovie, Pologne)', population: 15000000 },
-  { lat: 45.5017-10, lng: -73.5673-10, city: 'Plan B Games (Montréal, Canada)', population: 20000000 },
-  { lat: 51.5074-10, lng: -0.1278-10, city: 'Coiledspring Games (Londres, Royaume-Uni)', population: 15000000 },
-  { lat: 52.5200-10, lng: 13.4050-10, city: 'ADC Blackfire Entertainment (Berlin, Allemagne)', population: 20000000 },
-  { lat: 35.6895-10, lng: 139.6917, city: 'Asmodee Japan (Tokyo, Japon)', population: 20000000 }
-];
-
 const arcsData = [
   {
     startLat: 48.773,
@@ -59,15 +25,38 @@ const GlobeScene = () => {
   const [messages, setMessages] = useState([]);
   const containerRef = useRef();
   const labelRefs = useRef([]);
+  const [structures, setStructures] = useState([]);
+
+useEffect(() => {
+  fetch('http://localhost/structures') 
+    .then(res => res.json())
+    .then(data => {
+      console.log("Structures récupérées :", data);
+      const formatted = data.map(struct => ({
+          lat: struct.latitude,
+          lng: struct.longitude,
+          name: struct.name,
+          structure: struct.name,
+          city: struct.city,
+          country: struct.country,
+          population: struct.size || 10000000,
+          website: struct.website,
+      }));
+      console.log("Structures chargées :", formatted);
+      setStructures(formatted);
+    })
+    .catch(err => console.error("Erreur lors du chargement des structures :", err));
+}, []);
+
 
 
   useEffect(() => {
     if (!globeRef.current) return;
-
+    console.log("Initialisation de Globe.js");
     const globe = Globe()(globeRef.current)
       .globeImageUrl('globe-texture-v11.png')
       .backgroundColor('rgba(0, 0, 0, 0)')
-      .pointsData(demoData)
+      .pointsData(structures)
       .pointAltitude(d => Math.sqrt(d.population) * 0.00001)
       .pointColor(() => 'rgba(249, 0, 115, 1)')
       .pointRadius(0.15)
@@ -78,7 +67,9 @@ const GlobeScene = () => {
       .arcDashLength(d => d.dashLength)
       .arcDashGap(0.9)
       .arcDashAnimateTime(d => d.animationDuration)
-      .arcDashInitialGap(() => 0);
+      .arcDashInitialGap(() => 0)
+      .onPointClick(d => handleClickStick(d));
+
 
     globe.controls().autoRotate = true;
     globe.controls().autoRotateSpeed = 0.1;
@@ -141,6 +132,29 @@ const GlobeScene = () => {
     
   }, []);
 
+  const handleClickStick = (structureData) => {
+    setMessages(prev => {
+      const newMsg = {
+        id: Date.now(),
+        text: structureData.name,
+        structure: structureData.structure,
+        country: structureData.country,
+        city: structureData.city,
+        lat: structureData.lat,
+        lng: structureData.lng,
+        website: structureData.website
+      };
+
+      if (prev.length < 5) {
+        console.log("Ajout du message :", newMsg);
+        return [...prev, newMsg];
+      } else {
+        console.log("Remplacement du message le plus ancien par :", newMsg);
+        return [...prev.slice(1), newMsg];
+      }
+    });
+  };
+
   useEffect(() => {
     labelRefs.current = labelRefs.current.slice(0, messages.length);
   }, [messages]);
@@ -153,14 +167,6 @@ const GlobeScene = () => {
         requestAnimationFrame(animate);
         return;
       }
-
-      //const camera = globe.camera();
-      //const renderer = globe.renderer();
-      //const width = renderer.domElement.width;
-      //const height = renderer.domElement.height;
-
-  
-
       requestAnimationFrame(animate);
     };
 
@@ -228,6 +234,7 @@ return (
       </div>
 
       {messages.map((msg, index) => {
+          const posGlobe = fixedPositions[index % fixedPositions.length];
           const pos = fixedPositions[index % fixedPositions.length];
 
           return (
@@ -244,20 +251,47 @@ return (
                 backgroundColor: 'rgba(255, 255, 255, 0.9)',
                 border: '1px solid #fff',
                 borderRadius: '4px',
+<<<<<<< HEAD
+                color: '#000', 
+                fontSize: 'clamp(11px, 1.2vw, 14px)', 
+                wordWrap: 'break-word',
+
+=======
                 color: '#fff',
                 fontSize: '14px',
                 whiteSpace: 'nowrap',
+>>>>>>> 81d0376425d49badc74c05a3f52c181cdbf84a49
                 pointerEvents: 'none',
                 zIndex: 10,
                 boxSizing: 'border-box'
               }}
             >
               {msg.text}
-              {msg.structure && msg.country && (
-                <div style={{ marginTop: 30, fontSize: '0.9em', color: '#444' }}>
-                  {msg.structure} — {msg.country}
-                </div>
-              )}
+              {/* <div style={{
+                position: 'absolute',
+                top: `${20 + index * 80}px`,
+                right: '20px',
+                width: '300px',
+                padding: '12px',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                border: '1px solid #ccc',
+                borderRadius: '6px',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+                zIndex: 20,
+                color: '#000',
+                fontSize: '0.9rem',
+                lineHeight: 1.4
+              }}>
+               <div>
+                <strong>{msg.structure}</strong><br />
+                {msg.city}, {msg.country}<br />
+                {msg.website && (
+                  <a href={msg.website} target="_blank" rel="noopener noreferrer" style={{ color: '#0077cc' }}>
+                    Site web
+                  </a>
+                )}
+              </div>
+              </div> */}
             </div>
           );
         })}
