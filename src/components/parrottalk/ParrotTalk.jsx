@@ -102,21 +102,7 @@ const ParrotTalk = () => {
 
   return (
     <div id="parrotContainer">
-      <h3>Parrot Talk</h3>
-
-      {userRole === "A" && (
-        <form onSubmit={handleSubmit}>
-          <textarea
-            placeholder="Écris ton message ici..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <button type="submit">Envoyer</button>
-        </form>
-      )}
-
-      {error && <p className="error">{error}</p>}
-
+      <span id="titleParrot">THE PARROT TALK</span>
       <div id="messagesList">
         {messages.length === 0 ? (
           <p>Aucun message pour le moment.</p>
@@ -124,7 +110,7 @@ const ParrotTalk = () => {
           messages.map((msg) => (
             <div key={msg.id} className="messageItem">
               <p>
-                <strong>{msg.name}</strong> - {msg.structure} - {msg.country}
+                {msg.name} - {msg.structure} - {msg.country}
               </p>
               <p>{msg.message}</p>
 
@@ -139,6 +125,20 @@ const ParrotTalk = () => {
             </div>
           ))
         )}
+        {userRole === "A" && (
+        <form className="formMessage" onSubmit={handleSubmit}>
+          <input
+            id="inputMessage"
+            placeholder="Écris ton message ici..."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            style={{background: 'none', border: '1px solid white'}}
+          />
+          <button type="submit">Envoyer</button>
+        </form>
+      )}
+
+      {error && <p className="error">{error}</p>}
       </div>
     </div>
   );
