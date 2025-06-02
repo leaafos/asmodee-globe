@@ -8,8 +8,18 @@ async function createMessage(id, text) {
 
 // Read
 async function getAllMessages() {
-  return await knex.select().from('Messages');
+  return await knex('messages')
+    .leftJoin('structures', 'messages.structure_id', 'structures.id')
+    .select(
+      'messages.id',
+      'messages.text',
+      'messages.structure_id',
+      'structures.name as structure',
+      'structures.country'
+    )
+    .orderBy('messages.id', 'desc');
 }
+
 
 async function getMessageById(id) {
   return await knex('Messages').where({ id }).first();

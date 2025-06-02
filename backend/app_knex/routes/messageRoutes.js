@@ -1,4 +1,6 @@
 const express = require('express');
+const knex = require('../knexfile'); 
+const db = require('../db'); 
 const router = express.Router();
 const messageModel = require('../models/messageModel');
 const userModel = require('../models/userModel');
@@ -22,17 +24,80 @@ router.get('/messages', async (req, res) => {
   }
 });
 
-// créer un message
 router.post('/messages', async (req, res) => {
-  const { id, text } = req.body;
+  const { text, structure_id } = req.body;
+
   try {
-    await messageModel.createMessage(id, text);
-    res.status(201).json({ message: 'Message créée avec succès' });
+    const [id] = await knex('messages').insert({ text, structure_id }).returning('id');
+
+    const message = await knex('messages')
+      .where({ 'messages.id': id })
+      .join('structures', 'messages.structure_id', 'structures.id')
+      .select(
+        'messages.id',
+        'messages.text',
+        'structures.name as structure',
+        'structures.country',
+        'structures.city',
+        'structures.latitude as lat',
+        'structures.longitude as lng',
+        'structures.website'
+      )
+      .first();
+
+    res.json(message);
+  } catch (err) {
+    console.error("Erreur création message :", err);
+    res.status(500).json({ error: "Erreur lors de la création du message." });
+  }
+});
+
+// créer un message
+// router.post('/messages', async (req, res) => {
+//   const { id, text } = req.body;
+//   try {
+//     await messageModel.createMessage(id, text);
+//     res.status(201).json({ message: 'Message créée avec succès' });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
+
+// Route pour récupérer tous les messages persistants
+router.get('/projected-messages', async (req, res) => {
+  try {
+    const [rows] = await db.execute('SELECT * FROM projected_messages ORDER BY created_at DESC LIMIT 5'); // Récupérer les 5 derniers messages
+    res.json(rows);
   } catch (error) {
+    console.error('Erreur lors de la récupération des messages projetés:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
+// Route pour ajouter un nouveau message persistant
+router.post('/projected-messages', async (req, res) => {
+  const { text, lat, lng, sender_structure, sender_country } = req.body;
+  if (!text || !lat || !lng || !sender_structure || !sender_country) {
+    return res.status(400).json({ error: 'Tous les champs sont requis.' });
+  }
+  try {
+    const [result] = await db.execute(
+      'INSERT INTO projected_messages (text, lat, lng, sender_structure, sender_country) VALUES (?, ?, ?, ?, ?)',
+      [text, lat, lng, sender_structure, sender_country]
+    );
+    // Supprimer le plus ancien message si plus de 5 messages existent
+    await db.execute(`
+      DELETE FROM projected_messages
+      WHERE id NOT IN (SELECT id FROM (SELECT id FROM projected_messages ORDER BY created_at DESC LIMIT 5) as sub)
+    `);
+
+    res.status(201).json({ message: 'Message projeté ajouté avec succès', id: result.insertId });
+  } catch (error) {
+    console.error('Erreur lors de l\'ajout du message projeté:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 // Envoyer un message prédéfini en tant qu'utilisateur connecté
 router.post('/send-message', async (req, res) => {
   const { id, user_id } = req.body;

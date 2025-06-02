@@ -13,6 +13,18 @@ router.get('/structures', async (req, res) => {
   }
 });
 
+// récupérer une structure depuis userId
+router.get('/structures/user/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const structure = await structureModel.getStructureByUserId(userId);
+    res.json(structure);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 // Récupérer une structure par ID
 router.get('/structures/:id', async (req, res) => {
   const { id } = req.params;
