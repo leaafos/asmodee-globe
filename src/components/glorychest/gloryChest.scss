@@ -8,22 +8,44 @@
     border-radius: $radius-card;
     box-shadow: $shadow-card;
     outline: $border-card;
+    overflow: hidden;
 
     #buttonsTop {
         display: flex;
         width: auto;
-        background-color: aqua;
         height: 25%;
 
-        .changeContent {
+        .button {
+            width: 50%;
+            background: none;
+            border: 0;
+            cursor: pointer;
+            
+
+        }
+
+        .activeButton {
+            border: 0;
+            background-image: none !important;
+            
 
         }
     }
 
     #mainContent {
         flex: 1;
-        background-color: red;
         width: auto;
         height: max-content;
+
+        #gloryChestContent {
+            background-color: red;
+            overflow-y: scroll;
+
+        }
+
+        #piratCouncilContent {
+            background-color: aquamarine;
+
+        }
     }
 }
