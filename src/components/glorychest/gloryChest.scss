@@ -8,4 +8,22 @@
     border-radius: $radius-card;
     box-shadow: $shadow-card;
     outline: $border-card;
+
+    #buttonsTop {
+        display: flex;
+        width: auto;
+        background-color: aqua;
+        height: 25%;
+
+        .changeContent {
+
+        }
+    }
+
+    #mainContent {
+        flex: 1;
+        background-color: red;
+        width: auto;
+        height: max-content;
+    }
 }
