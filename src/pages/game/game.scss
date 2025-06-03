@@ -1,0 +1,14 @@
+#gameContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 3vh 2vw;
+
+    #innerGameContainer {
+        display: flex;
+        background-color: red;
+        border: 1px solid white;
+        width: 100%;
+        padding-right: 3vw;
+
+    }
+}

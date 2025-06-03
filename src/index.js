@@ -7,6 +7,7 @@ import './index.css';
 import Home from './pages/home/Home';
 import reportWebVitals from './reportWebVitals';
 import Login from './components/login';
+import Game from './pages/game/Game';
 
 const root = document.getElementById("root");
 
@@ -15,6 +16,7 @@ ReactDOM.createRoot(root).render(
     <Routes>
       <Route path="*" element={<Login />} />
       <Route path="/" element={<Home />} />
+      <Route path='/game/:gameId' element={<Game />} />
       
 
     </Routes>

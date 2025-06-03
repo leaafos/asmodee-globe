@@ -10,8 +10,10 @@ import myGames from "../../assets/my_games_icon.svg"
 import searchIcon from "../../assets/search_icon.svg"
 import avatar from "../../assets/avatar.png"
 import { cover } from "three/src/extras/TextureUtils.js";
+import { useNavigate } from "react-router-dom";
 
 const SideBar = () => {
+  const navigate = useNavigate();
   const [expandedBar, setExpandedBar] = useState(false);
   const [expandedFavorites, setExpandedFavorites] = useState(false);
   const [userName, setUserName] = useState('');
@@ -82,6 +84,10 @@ const SideBar = () => {
     window.location.href = "/login"; 
   };
 
+  const handleGameClick = (gameId) => {
+    navigate(`/game/${gameId}`);
+  };
+
   return (
     <div id={expandedBar ? "sideBarContainerNotExpanded" : "sideBarContainer"}>
       <button id="toggleSideBar" onClick={handleClick}>
@@ -133,7 +139,7 @@ const SideBar = () => {
                           </div>
                           <div className="bottomBlock">
                             <div className="leftButtons">
-                              <button className="findMatch">Find a match</button>
+                              <button className="findMatch" onClick={() => handleGameClick(game.id)}>Find a match</button>
                               <button className="invite">Invite</button>
                             </div>
                             <button
@@ -187,7 +193,7 @@ const SideBar = () => {
                           </div>
                           <div className="bottomBlock">
                             <div className="leftButtons">
-                              <button className="findMatch">Find a match</button>
+                              <button className="findMatch" onClick={() => handleGameClick(game.id)}>Find a match</button>
                               <button className="invite">Invite</button>
                             </div>
                             <button

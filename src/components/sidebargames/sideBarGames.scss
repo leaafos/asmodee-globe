@@ -1,10 +1,10 @@
 @import '../../assets/library';
 
-#sideBarContainer {
+#sideBarGamesContainer {
     background: $background-sidebar;
     height: 94vh;
     width: 21vw;
-    margin-right: 2vw;
+
     border-radius: $radius-card;
     box-shadow: $shadow-card;
     outline: $border-card;
@@ -97,14 +97,13 @@
         }
 
         #favoritesList {
-            height: 33%;
+            height: auto;
             border-top: 1px white solid;
             padding: 1vh 0;
 
             #favoritesTitle {
                 color: $color-title;
                 font-size: 0.9rem;
-                
             }
 
             #displayFavorites {
@@ -143,12 +142,12 @@
             }
 
             #containerFavoriteGames {
-                margin: 0;
+                margin-top: 2vh;
                 padding: 0;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                height: 250px;
+                height: auto;
                 overflow-y: scroll;
 
                 .gameBlock {
@@ -163,6 +162,7 @@
                     border-radius: 10px;
                     margin-bottom: 1vh;
                     color: white;
+                   
 
                     .leftBlock {
                         width: 26%;
@@ -273,7 +273,7 @@
         }
 
         #gameList {
-            height: 33%;
+            height: auto;
             border-top: 1px white solid;
             padding: 1vh 0;
 
@@ -447,12 +447,12 @@
             }
 
             #containerGames {
-                margin: 0;
+                margin-top: 2vh;
                 padding: 0;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                height: 170px;
+                height: 100%;
                 overflow-y: scroll;
 
                 .gameBlock {
@@ -602,11 +602,10 @@
     
 }
 
-#sideBarContainerNotExpanded {
+#sideBarGamesContainerNotExpanded {
     height: 94vh;
-    width: 6vw;
+    width: 3vw;
     background: $background-sidebar;
-    margin-right: 2vw;
     border-radius: $radius-card;
     box-shadow: $shadow-card;
     outline: $border-card;
@@ -632,7 +631,7 @@
         width: 100%;
         //background-color: yellow;
         transition-duration: 300ms;
-        display: flex;
+        display: none;
         flex-direction: column;
 
         #topIcons {
@@ -806,15 +805,3 @@
 
     
 }
-
-#toggleSideBar {
-    position: absolute;
-    top: 80px;
-    right: -13px;
-    height: 24px;
-    width: 24px;
-    border-radius: 100%;
-    stroke-width: 0.5px;
-    background: rgba(255, 237, 224);
-}
-
