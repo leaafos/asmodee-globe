@@ -251,16 +251,9 @@ return (
                 backgroundColor: 'rgba(255, 255, 255, 0.9)',
                 border: '1px solid #fff',
                 borderRadius: '4px',
-<<<<<<< HEAD
-                color: '#000', 
-                fontSize: 'clamp(11px, 1.2vw, 14px)', 
-                wordWrap: 'break-word',
-
-=======
                 color: '#fff',
                 fontSize: '14px',
                 whiteSpace: 'nowrap',
->>>>>>> 81d0376425d49badc74c05a3f52c181cdbf84a49
                 pointerEvents: 'none',
                 zIndex: 10,
                 boxSizing: 'border-box'

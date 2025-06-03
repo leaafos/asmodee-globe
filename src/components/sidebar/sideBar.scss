@@ -14,7 +14,14 @@
     position: relative;
 
     #toggleSideBar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         transform: rotate(0deg);
+        backdrop-filter: blur(80px);
+        background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
+        border: 1px solid white;
+        cursor: pointer;
 
     }
 
@@ -38,6 +45,8 @@
                 background: none;
                 border: 0;
                 cursor: pointer;
+                
+
 
                 .imgIcon{
                     height: 100%;
@@ -89,7 +98,7 @@
 
         #favoritesList {
             height: 33%;
-            border-top: 1px black solid;
+            border-top: 1px white solid;
             padding: 1vh 0;
 
             #favoritesTitle {
@@ -265,7 +274,7 @@
 
         #gameList {
             height: 33%;
-            border-top: 1px black solid;
+            border-top: 1px white solid;
             padding: 1vh 0;
 
 
@@ -608,6 +617,13 @@
 
     #toggleSideBar {
         transform: rotate(-180deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(80px);
+        background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
+        border: 1px solid white;
+        cursor: pointer;
 
     }
 

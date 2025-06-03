@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "./login.scss"
 
 
 function Login() {
@@ -23,27 +24,45 @@ function Login() {
         return;
       }
       setUser(data.user);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        console.log('Utilisateur connecté:', data.user);
-       navigate('/');
+      localStorage.setItem('user', JSON.stringify(data.user));
+      console.log('Utilisateur connecté:', data.user);
+      navigate('/');
     } catch (err) {
       setError('Erreur réseau');
-        console.error(err);
+      console.error(err);
     }
   };
 
 
   return (
-    <form onSubmit={handleLogin}>
-      <input
-        type="text"
-        placeholder="Prénom"
-        value={name}
-        onChange={e => setName(e.target.value)}
-      />
-      <button type="submit">Se connecter</button>
-      {error && <p style={{color: 'red'}}>{error}</p>}
-    </form>
+    <div id='loginContainer'>
+      <div id='welcomeBlock'>
+        <div id='innerWelcomeBlock'>
+          <div id='topBlock'>
+            <span id='mainTitle'>FELLOWSHIP WALL</span>
+            <span id='description'>Have fun, let's go !</span>
+
+          </div>
+          
+          <form onSubmit={handleLogin} id='formLogin'>
+            <input
+              type="text"
+              placeholder="Username"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              id='inputLogin'
+            />
+            <button type="submit" id='btnLogin'>Sign in</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+          </form>
+
+        </div>
+
+
+
+      </div>
+    </div>
+
   );
 }
 

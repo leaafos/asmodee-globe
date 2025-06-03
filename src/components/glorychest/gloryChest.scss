@@ -15,19 +15,25 @@
         width: auto;
         height: 25%;
 
+
+
         .button {
             width: 50%;
             background: none;
             border: 0;
             cursor: pointer;
-            
+            font-weight: 500;
+            font-size: 1rem;
+            color: white;
+
 
         }
 
         .activeButton {
             border: 0;
             background-image: none !important;
-            
+            color: rgba(255, 255, 255, 0.50);
+
 
         }
     }
@@ -35,16 +41,178 @@
     #mainContent {
         flex: 1;
         width: auto;
-        height: max-content;
+        height: 75%;
+        overflow: scroll;
 
         #gloryChestContent {
+            padding: 0 5%;
+            height: 100%;
             background-color: red;
-            overflow-y: scroll;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+
+            .badge-card {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 70%;
+                background-color: green;
+
+                .imgBadge {
+                    width: auto;
+                    height: 60px;
+                    background-color: yellow;
+                }
+
+                .badgeName {
+                    font-size: 1rem;
+                    color: white;
+                }
+            }
+            
+
+            
+
+            #buttonBadge {
+                height: 60px;
+                width: 60px;
+                background: radial-gradient(50% 50% at 50% 50%, rgba(73, 122, 220, 0.00) 50.48%, rgba(241, 251, 255, 0.48) 100%);
+                border: 1px solid white;
+                
+            }
 
         }
 
         #piratCouncilContent {
-            background-color: aquamarine;
+            flex: 1;
+            padding: 3%;
+
+            .innerContainer {
+                background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
+                display: flex;
+                gap: 20px;
+                padding: 2%;
+                border-radius: 10px;
+                
+
+                .leftContainer {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    #voteButton {
+                        background: none;
+                        border: 1px solid white;
+                        font-size: 0.65rem;
+                        color: white;
+                        padding: 4px 10px;
+                        border-radius: 4px;
+                        cursor: pointer;
+
+                        
+                    }
+
+                    #voteButton:hover {
+                        background-color: white;
+                        color: grey;
+
+                    }
+
+
+                }
+
+                .rightBlock {
+                    display: flex;
+                    flex-direction: column;
+                    width: 75%;
+
+                    .topRightBlock {
+                        display: flex;
+                        justify-content: space-between;
+                        gap: 10px;
+
+                        .badgeInfos {
+                            display: flex;
+                            flex-direction: column;
+                            width: auto;
+                            padding: 4px;
+                            gap: 4px;
+
+                            .badgeName {
+                                font-size: 1rem;
+                                font-weight: 400;
+                                color: white;
+
+                            }
+
+                            .teamName {
+                                font-size: 0.65rem;
+                                box-shadow: 0px 0.2px 3.3px 0px #CFE3F7;
+                                background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                color: white;
+                                padding: 2px 4px;
+
+
+                            }
+
+
+                        }
+
+                        .voteBar {
+                            flex: 1;
+                            margin: 10px 0;
+                            display: flex;
+                            align-items: end;
+
+                            .vote-progress-container {
+                                width: 100%;
+                                height: 16px;
+                                background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
+                                border-radius: 15px;
+                                overflow: hidden;
+                                position: relative;
+                                border: 1px solid white;
+
+                                .vote-progress-bar {
+                                    height: 100%;
+                                    background: rgba(255, 255, 255, 0.50);
+                                    border-radius: 15px;
+                                    transition: width 0.3s ease-in-out;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    position: relative;
+                                    min-width: 60px;
+                                    /* Pour afficher le pourcentage même avec peu de votes */
+
+                                     .vote-percentage {
+                                        color: #473287;
+                                        font-weight: 400;
+                                        font-size: 0.65rem;
+                                    }
+
+                                }
+                            
+                            }
+                        }
+                    }
+
+                    .bottomRightBlock {
+                        margin-top: 10px;
+
+                        .description {
+                            margin: 0;
+                            color: white;
+                            font-size: 0.9rem;
+                        }
+                    }
+                }
+            }
 
         }
     }
