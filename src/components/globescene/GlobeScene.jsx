@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Globe from 'globe.gl';
+import { interpolateRgb } from 'd3-interpolate';
 import * as THREE from 'three';
 import './globeScene.scss';
 
@@ -23,7 +24,7 @@ const fixedPositions = [
   { top: '50%', left: '6%' },
 ];
 
-
+const interpolateColor = interpolateRgb('#FDB2D5', '#f90073');
 
 const GlobeScene = () => {
   const globeRef = useRef();
@@ -34,16 +35,42 @@ const GlobeScene = () => {
   const [messages, setMessages] = useState([]);
   const [messageOptions, setMessageOptions] = useState([]);
   const [popupData, setPopupData] = useState(null);
+  const [latOffset, setLatOffset] = useState(46);
+  const [lngOffset, setLngOffset] = useState(2);
 
-  // Charger les structures
+  // Charge les messages depuis le backend, pas depuis localStorage
+  const fetchMessages = async () => {
+    try {
+      const res = await fetch('http://localhost/messages');
+      if (!res.ok) throw new Error('Erreur de récupération des messages');
+      const data = await res.json();
+      // Assure toi que structure et country sont présents dans data, sinon fallback
+      const formatted = data.map(m => ({
+        id: m.id,
+        text: m.text,
+        structure: m.structure ?? 'N/A',
+        country: m.country ?? 'N/A',
+      }));
+      setMessageOptions(formatted);
+      setMessages(formatted.slice(0, 5));
+    } catch (err) {
+      console.error('Erreur lors du chargement des messages :', err);
+    }
+    const interval = setInterval(() => {
+      fetchMessages(); 
+    }, 2000); 
+
+    return () => clearInterval(interval);
+  };
+
   useEffect(() => {
     fetch('http://localhost/structures')
       .then(res => res.json())
       .then(data => {
         const formatted = data.map(struct => ({
           id: struct.id,
-          lat: struct.latitude,
-          lng: struct.longitude,
+          lat: struct.latitude + latOffset,
+          lng: struct.longitude + lngOffset,
           name: struct.name,
           structure: struct.name,
           city: struct.city,
@@ -52,22 +79,22 @@ const GlobeScene = () => {
           website: struct.website,
         }));
         setStructures(formatted);
+        console.log("Structures formatées avec offset :", formatted);
       })
       .catch(err => console.error("Erreur lors du chargement des structures :", err));
-  }, []);
+  }, [latOffset, lngOffset]);
+
+  const [hoveredStructure, setHoveredStructure] = useState(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Initialisation du globe
   useEffect(() => {
     if (!globeRef.current) return;
+    console.log("Structures injectées dans globe:", structures);
 
     const globe = Globe()(globeRef.current)
       .globeImageUrl('globe-texture-v11.png')
       .backgroundColor('rgba(0, 0, 0, 0)')
-      .pointsData(structures)
-      .pointAltitude(d => Math.sqrt(d.population) * 0.00001)
-      .pointColor(() => 'rgba(249, 0, 115, 1)')
-      .pointRadius(0.15)
-      .pointLabel(d => `${d.city} (${d.population.toLocaleString()})`)
       .arcsData(arcsData)
       .arcColor(d => [d.colorStart, d.colorEnd])
       .arcStroke(d => d.stroke)
@@ -75,7 +102,27 @@ const GlobeScene = () => {
       .arcDashGap(0.9)
       .arcDashAnimateTime(d => d.animationDuration)
       .arcDashInitialGap(() => 0)
-      .onPointClick(handleClickStick);
+      .pointsData(structures)
+      .pointLat(d => d.lat)
+      .pointLng(d => d.lng)
+      .pointsTransitionDuration(0)
+      .pointAltitude(d => Math.sqrt(d.population) * 0.00001)
+      .pointColor((d, i) => interpolateColor(i / structures.length))
+      .pointRadius(0.4)
+      .pointLabel(d => `${d.name} — ${d.city}, ${d.country}`)
+      .onPointClick(d => {
+        console.log("Point cliqué :", d);
+      })
+      .onPointHover((point, event) => {
+        if (point) {
+          setHoveredStructure(point);
+          if (event) {
+            setMousePosition({ x: event.clientX, y: event.clientY });
+          }
+        } else {
+          setHoveredStructure(null);
+        }
+      });
 
     globe.controls().autoRotate = true;
     globe.controls().autoRotateSpeed = 0.1;
@@ -101,7 +148,7 @@ const GlobeScene = () => {
         obj.material = new THREE.MeshStandardMaterial({
           color: new THREE.Color(0xf90073),
           emissive: new THREE.Color(0xf90073),
-          emissiveIntensity: 3,
+          emissiveIntensity: 5,
           metalness: 0.7,
           roughness: 0.05,
           transparent: true,
@@ -110,7 +157,7 @@ const GlobeScene = () => {
         });
 
         const glowGeometry = obj.geometry.clone();
-        glowGeometry.scale(1.5, 1.5, 1.5);
+        glowGeometry.scale(2, 2, 1.5);
 
         const glowMaterial = new THREE.MeshBasicMaterial({
           color: new THREE.Color(0xf90073),
@@ -151,85 +198,64 @@ const GlobeScene = () => {
       lng: structureData.lng,
       website: structureData.website
     };
-
     setMessages(prev =>
       prev.length < 5 ? [...prev, newMsg] : [...prev.slice(1), newMsg]
     );
   };
 
-  // Clic sur un bouton message
-// const handleClick = async (messageId) => {
-//   try {
-//     const storedUser = localStorage.getItem("user");
-//     if (!storedUser) {
-//       console.warn("Aucun user_id dans localStorage");
-//       return;
-//     }
+  // Envoi message et rechargement depuis base
+  const handleClick = async (messageId) => {
+    try {
+      const messageOpt = messageOptions.find(m => m.id === messageId);
+      if (!messageOpt) return;
 
-    // const parsedUser = JSON.parse(storedUser);
-    // const userId = parsedUser.id;
-    // const structuresUserId = await fetch(`http://localhost/structures/user/${userId}`)
+      const storedUser = localStorage.getItem("user");
+      if (!storedUser) {
+        console.error('Aucun utilisateur stocké');
+        return;
+      }
 
-    // const structures = await fetch(`http://localhost/structures/user/${userId}`, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     user_id: userId,
-    //     structure_id: structures.id
-    //   })
-    // });
+      const { id: userId } = JSON.parse(storedUser);
 
-    // const messageOpt = messageOptions.find(m => m.id === messageId);
-    // if (!messageOpt) {
-    //   console.warn(`Message introuvable pour l'ID : ${messageId}`);
-    //   return;
-    // }
+      const userRes = await fetch(`http://localhost/users/${userId}`);
+      const userData = await userRes.json();
+      const structureId = userData.structure_id;
 
-    // const structure = structures.find(s => s.id === userId.structure);
-    // if (!structure) {
-    //   console.warn(`Structure introuvable pour : ${userId.structure}`);
-    //   return;
-    // }
+      const postRes = await fetch('http://localhost/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: messageOpt.text,
+          structure_id: structureId
+        })
+      });
 
-    // const response = await fetch('http://localhost/messages', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     text: messageOpt.text,
-    //     user_id: userId,
-    //     structure_id: structure.id
-    //   })
-    // });
+      if (!postRes.ok) {
+        const errorText = await postRes.text();
+        throw new Error(`Erreur création message : ${postRes.status} - ${errorText}`);
+      }
 
-//     if (!response.ok) throw new Error('Erreur API');
+      let postData = null;
+      const contentType = postRes.headers.get("content-type");
+      const contentLength = postRes.headers.get("content-length");
 
-//     const newMsg = await response.json();
+      if (
+        contentType && contentType.includes("application/json") &&
+        contentLength !== "0"
+      ) {
+        postData = await postRes.json();
+      }
 
-//     setMessages(prev =>
-//       prev.length < 5 ? [...prev, newMsg] : [...prev.slice(1), newMsg]
-//     );
-//   } catch (error) {
-//     console.error('Erreur lors de l\'envoi du message :', error);
-//   }
-// };
+      console.log('Message créé avec succès:', postData ?? '[Pas de contenu JSON]');
+      await fetchMessages(); // RECHARGE depuis backend
+    } catch (error) {
+      console.error('Erreur lors du clic sur message :', error);
+    }
+  };
 
-
-  // Charger les messages disponibles
+  // Charger les messages au montage
   useEffect(() => {
-    fetch('http://localhost/messages')
-      .then(res => res.json())
-      .then(data => {
-        const formatted = data.map(m => ({
-          id: m.id,
-          text: m.text,
-          structure: m.structure?.name,
-          country: m.structure?.name
-        }));
-        setMessageOptions(formatted);
-        console.log('Messages chargés :', formatted);
-        setMessages(formatted.slice(0, 5)); 
-      })
-      .catch(err => console.error('Erreur lors du chargement des messages :', err));
+    fetchMessages();
   }, []);
 
   useEffect(() => {
@@ -243,35 +269,35 @@ const GlobeScene = () => {
       </div>
 
       {popupData && (
-          <div style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: 'white',
-            border: '2px solid #f90073',
-            padding: '20px',
-            borderRadius: '8px',
-            zIndex: 20,
-            boxShadow: '0 0 20px rgba(0,0,0,0.3)',
-            minWidth: '250px',
-            textAlign: 'center'
-          }}>
-            <h3 style={{ margin: '0 0 10px' }}>{popupData.name}</h3>
-            <p><strong>Ville :</strong> {popupData.city}</p>
-            <p><strong>Pays :</strong> {popupData.country}</p>
-            <p><strong>Site :</strong> <a href={popupData.website} target="_blank" rel="noreferrer">{popupData.website}</a></p>
-            <button onClick={() => setPopupData(null)} style={{
-              marginTop: '10px',
-              backgroundColor: '#f90073',
-              color: '#fff',
-              border: 'none',
-              padding: '8px 12px',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}>Fermer</button>
-          </div>
-        )}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: 'white',
+          border: '2px solid #f90073',
+          padding: '20px',
+          borderRadius: '8px',
+          zIndex: 20,
+          boxShadow: '0 0 20px rgba(0,0,0,0.3)',
+          minWidth: '250px',
+          textAlign: 'center'
+        }}>
+          <h3 style={{ margin: '0 0 10px' }}>{popupData.name}</h3>
+          <p><strong>Ville :</strong> {popupData.city}</p>
+          <p><strong>Pays :</strong> {popupData.country}</p>
+          <p><strong>Site :</strong> <a href={popupData.website} target="_blank" rel="noreferrer">{popupData.website}</a></p>
+          <button onClick={() => setPopupData(null)} style={{
+            marginTop: '10px',
+            backgroundColor: '#f90073',
+            color: '#fff',
+            border: 'none',
+            padding: '8px 12px',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}>Fermer</button>
+        </div>
+      )}
 
       {messages.map((msg, index) => (
         <div
@@ -296,62 +322,10 @@ const GlobeScene = () => {
         >
           <strong>{msg.text}</strong><br />
           <span style={{ fontSize: '0.75em' }}>
-            {msg.structure} – {msg.country}
+            {msg.structure}  {msg.country}
           </span>
         </div>
       ))}
-{/* 
-          return (
-            <div
-              key={msg.id}
-              ref={el => labelRefs.current[index] = el}
-              style={{
-                position: 'absolute',
-                width: 'auto',
-                maxWidth: '40%', 
-                ...pos,
-                transform: 'translateY(0)',
-                padding: '6px 14px',
-                backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                border: '1px solid #fff',
-                borderRadius: '4px',
-                color: '#fff',
-                fontSize: '14px',
-                whiteSpace: 'nowrap',
-                pointerEvents: 'none',
-                zIndex: 10,
-                boxSizing: 'border-box'
-              }}
-            >
-              {msg.text} */}
-              {/* <div style={{
-                position: 'absolute',
-                top: `${20 + index * 80}px`,
-                right: '20px',
-                width: '300px',
-                padding: '12px',
-                backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                border: '1px solid #ccc',
-                borderRadius: '6px',
-                boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-                zIndex: 20,
-                color: '#000',
-                fontSize: '0.9rem',
-                lineHeight: 1.4
-              }}>
-               <div>
-                <strong>{msg.structure}</strong><br />
-                {msg.city}, {msg.country}<br />
-                {msg.website && (
-                  <a href={msg.website} target="_blank" rel="noopener noreferrer" style={{ color: '#0077cc' }}>
-                    Site web
-                  </a>
-                )}
-              </div>
-              </div> */}
-            {/* </div>
-          );
-        })} */}
 
       <div style={{
         position: 'absolute',
@@ -367,27 +341,28 @@ const GlobeScene = () => {
         zIndex: 10,
         borderRadius: '4px',
       }}>
-       {messageOptions
-        .filter(opt => opt.id >= 1 && opt.id <= 5)
-        .map(opt => (
-          <button
-            key={opt.id}
-            //onClick={() => handleClick(opt.id)}
-            style={{
-              fontSize: 'clamp(0.7rem, 1.2vw, 0.8rem)',
-              padding: 'clamp(3px, 0.5vw, 4px) clamp(8px, 1.5vw, 12px)',
-              cursor: 'pointer',
-              borderRadius: 4,
-              backgroundColor: 'rgba(255, 255, 255, 0.9)',
-              color: '#000',
-              border: '1px solid #fff',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {opt.text}
-          </button>
-      ))}
-        
+        {messageOptions
+          .filter(opt => opt.id >= 1 && opt.id <= 5)
+          .map(opt => (
+            <button
+              key={opt.id}
+              onClick={() => handleClick(opt.id)}
+              style={{
+                fontSize: 'clamp(0.7rem, 1.2vw, 0.8rem)',
+                padding: 'clamp(3px, 0.5vw, 4px) clamp(8px, 1.5vw, 12px)',
+                cursor: 'pointer',
+                borderRadius: '4px',
+                border: '1px solid #f90073',
+                backgroundColor: 'transparent',
+                color: '#f90073',
+                transition: 'all 0.3s ease-in-out',
+              }}
+            //   onMouseOver={e => e.currentTarget.style.backgroundColor = '#f90073', e.currentTarget.style.color = 'white'}
+            //   onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent', e.currentTarget.style.color = '#f90073'}
+            >
+              {opt.text}
+            </button>
+          ))}
       </div>
     </div>
   );

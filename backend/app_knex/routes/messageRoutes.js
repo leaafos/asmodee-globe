@@ -1,17 +1,11 @@
 const express = require('express');
-const knex = require('../knexfile'); 
+//const knex = require('../db'); 
 const db = require('../db'); 
 const router = express.Router();
 const messageModel = require('../models/messageModel');
 const userModel = require('../models/userModel');
 const structureModel = require('../models/structureModel');
 
-
-// // Middleware pour simuler un utilisateur connecté (à remplacer par auth réelle)
-// async function getUserFromRequest(req) {
-//   const userId = req.header('x-user-id'); // Simulé
-//   return await userModel.getUserById(userId);
-// }
 
 
 // Obtenir tous les messages
@@ -28,9 +22,9 @@ router.post('/messages', async (req, res) => {
   const { text, structure_id } = req.body;
 
   try {
-    const [id] = await knex('messages').insert({ text, structure_id }).returning('id');
+    const [id] = await db('messages').insert({ text, structure_id }).returning('id');
 
-    const message = await knex('messages')
+    const message = await db('messages')
       .where({ 'messages.id': id })
       .join('structures', 'messages.structure_id', 'structures.id')
       .select(

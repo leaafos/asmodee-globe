@@ -8,6 +8,8 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "cors": "^2.8.5",
+    "d3": "^7.9.0",
+    "d3-interpolate": "^3.0.1",
     "globe.gl": "^2.41.4",
     "knex": "^3.1.0",
     "multer": "^2.0.0",
