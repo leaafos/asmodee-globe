@@ -45,10 +45,10 @@
                 background: none;
                 border: 0;
                 cursor: pointer;
-                
 
 
-                .imgIcon{
+
+                .imgIcon {
                     height: 100%;
                 }
             }
@@ -61,7 +61,7 @@
                 border-radius: $radius-button;
                 border: $border-button;
                 cursor: pointer;
-        
+
             }
         }
 
@@ -81,13 +81,14 @@
                 flex-direction: column;
                 justify-content: space-around;
                 gap: 5px;
-                
+
 
                 #jobTitle {
                     font-size: 0.6875rem;
                     color: $color-title;
                     line-height: 0.4;
                 }
+
                 #userName {
                     font-size: 0.9rem;
                     color: white;
@@ -122,7 +123,7 @@
                     align-items: center;
                     gap: 20px;
                     width: auto;
-                    
+
 
                     #favoriteButtonImg {
                         width: 24px;
@@ -162,7 +163,7 @@
                     border-radius: 10px;
                     margin-bottom: 1vh;
                     color: white;
-                   
+
 
                     .leftBlock {
                         width: 26%;
@@ -214,7 +215,7 @@
                                     border-radius: 100%;
                                 }
                             }
-                                 
+
                         }
 
                         .bottomBlock {
@@ -224,19 +225,19 @@
                             .leftButtons {
                                 display: flex;
                                 gap: 4px;
-                                
+
 
                                 .findMatch {
-                                font-size: 0.625rem;
-                                background: none;
-                                cursor: pointer;
-                                border: 1px solid white;
-                                border-radius: 4px;
-                                padding: 2px 5px;
-                                color: white;
-                                
+                                    font-size: 0.625rem;
+                                    background: none;
+                                    cursor: pointer;
+                                    border: 1px solid white;
+                                    border-radius: 4px;
+                                    padding: 2px 5px;
+                                    color: white;
+
                                 }
-                            
+
                                 .invite {
                                     font-size: 0.625rem;
                                     background: none;
@@ -269,7 +270,181 @@
 
             }
 
-            
+            #nbPlayers {
+                display: flex;
+                flex-direction: column;
+
+                #title {
+                   font-size: 0.75rem;
+                }
+
+                #first-line {
+                    background-color: #22c55e;
+                    color: white;
+                    padding: 1rem;
+                    border-radius: 0.25rem;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .player-selector {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+
+                        #arrow-down {
+                            font-size: 0.65rem;
+                        }
+                    }
+                }
+
+                .second-line {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    background-color: #ef4444;
+                    color: white;
+                    padding: 1rem;
+                    border-radius: 0.25rem;
+
+                    .speed-text {
+                        margin-bottom: 1rem;
+                        width: auto;
+
+
+                        
+                    }
+
+                    .slider-container {
+                        position: relative;
+                        margin-bottom: 1rem;
+                        width: 100%;
+                        height: 16px;
+
+                        .slider-track {
+                            position: relative;
+                            height: 3rem;
+                            background: rgba(255, 255, 255, 0.50);
+                            
+                            border-radius: 9999px;
+                            cursor: pointer;
+                            flex: 1;
+                            display: flex;
+                            align-items: center;
+                            
+                           
+                            height: 16px;
+
+                            &.dragging {
+                                cursor: grabbing;
+                            }
+
+                            .speed-icon {
+                                flex: 1;
+                                height: 16px;
+                                outline: 1px solid black;
+                                pointer-events: none;
+                                z-index: 2;
+                                position: relative;
+
+                                &.infinity {
+                                    
+                                    // Styles spécifiques pour l'infini si nécessaire
+                                }
+
+                                &.turtle {
+                                    // Styles spécifiques pour la tortue si nécessaire
+                                }
+
+                                &.rabbit {
+                                    // Styles spécifiques pour le lapin si nécessaire
+                                }
+                            }
+
+                            .slider-fill-container {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                right: 0;
+                                bottom: 0;
+                                border-radius: 9999px;
+                                overflow: hidden;
+
+                                .slider-fill {
+                                    height: 100%;
+                                    background-color: white;
+                                    transition: all 0.15s ease;
+                                    border-radius: 9999px;
+                                }
+                            }
+
+                            .slider-knob {
+                                position: absolute;
+                                width: 1.5rem;
+                                height: 1.5rem;
+                                background-color: white;
+                                border: 2px solid #3b82f6;
+                                border-radius: 9999px;
+                                cursor: grab;
+                                transform: translateY(-50%);
+                                top: 50%;
+                                transition: all 0.15s ease;
+                                z-index: 3;
+
+                                &:hover {
+                                    transform: translateY(-50%) scale(1.05);
+                                }
+
+                                &.dragging {
+                                    cursor: grabbing;
+                                    transform: translateY(-50%) scale(1.1);
+                                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                                }
+                            }
+                        }
+                    }
+
+                    .duration-text {
+                        text-align: center;
+                    }
+                }
+
+                .third-line {
+                    background-color: #fbbf24;
+                    color: black;
+                    padding: 1rem;
+                    border-radius: 0.25rem;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .board-select {
+                        background-color: white;
+                        border: 1px solid #d1d5db;
+                        border-radius: 0.25rem;
+                        padding: 0.25rem 0.5rem;
+                        color: black;
+                    }
+                }
+
+                .fourth-line {
+                    background-color: #3b82f6;
+                    color: white;
+                    padding: 1rem;
+                    border-radius: 0.25rem;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .dolphin-select {
+                        background-color: white;
+                        color: black;
+                        border: 1px solid #d1d5db;
+                        border-radius: 0.25rem;
+                        padding: 0.25rem 0.5rem;
+                    }
+                }
+            }
         }
 
         #gameList {
@@ -281,7 +456,7 @@
             #gamesMostPlayed {
                 color: $color-title;
                 font-size: 0.9rem;
-                
+
             }
 
             #gamesTitle {
@@ -304,7 +479,7 @@
                     align-items: center;
                     gap: 20px;
                     width: auto;
-                    
+
 
                     #gameButtonImg {
                         width: 24px;
@@ -392,7 +567,7 @@
                                     border-radius: 100%;
                                 }
                             }
-                                 
+
                         }
 
                         .bottomBlock {
@@ -402,18 +577,18 @@
                             .leftButtons {
                                 display: flex;
                                 gap: 4px;
-                                
+
 
                                 .findMatch {
-                                font-size: 0.625rem;
-                                background: none;
-                                cursor: pointer;
-                                border: 1px solid white;
-                                border-radius: 4px;
-                                padding: 2px 5px;
-                                color: white;
+                                    font-size: 0.625rem;
+                                    background: none;
+                                    cursor: pointer;
+                                    border: 1px solid white;
+                                    border-radius: 4px;
+                                    padding: 2px 5px;
+                                    color: white;
                                 }
-                            
+
                                 .invite {
                                     font-size: 0.625rem;
                                     background: none;
@@ -518,7 +693,7 @@
                                     border-radius: 100%;
                                 }
                             }
-                                 
+
                         }
 
                         .bottomBlock {
@@ -528,18 +703,18 @@
                             .leftButtons {
                                 display: flex;
                                 gap: 4px;
-                                
+
 
                                 .findMatch {
-                                font-size: 0.625rem;
-                                background: none;
-                                cursor: pointer;
-                                border: 1px solid white;
-                                border-radius: 4px;
-                                padding: 2px 5px;
-                                color: white;
+                                    font-size: 0.625rem;
+                                    background: none;
+                                    cursor: pointer;
+                                    border: 1px solid white;
+                                    border-radius: 4px;
+                                    padding: 2px 5px;
+                                    color: white;
                                 }
-                            
+
                                 .invite {
                                     font-size: 0.625rem;
                                     background: none;
@@ -572,14 +747,14 @@
 
             }
 
-            
+
         }
 
         #stateBar {
             display: flex;
             justify-content: space-evenly;
             height: 2px;
-            
+
             width: 100%;
 
             #small {
@@ -599,7 +774,7 @@
 
     }
 
-    
+
 }
 
 #sideBarGamesContainerNotExpanded {
@@ -668,19 +843,19 @@
                 text-align: center;
                 color: $color-title;
                 font-size: 0.9rem;
-                
+
             }
 
             #displayFavorites {
-                
+
                 width: 100%;
                 border: 0;
                 border-radius: 12px;
                 background: none;
-                
+
 
                 #leftFavorites {
-                    
+
 
                     #favoriteButtonImg {
                         width: 24px;
@@ -731,16 +906,16 @@
                     }
 
                     .rightBlock {
-                        display: none; 
+                        display: none;
 
-                    
+
 
                     }
                 }
 
             }
 
-            
+
         }
 
         #gameList {
@@ -759,12 +934,12 @@
                 color: $color-title;
                 font-size: 0.9rem;
                 margin-bottom: 1vh;
-                
+
             }
 
             #searchGames {
                 display: none;
-                
+
             }
 
             #containerGames {
@@ -792,16 +967,16 @@
 
                     .rightBlock {
                         display: none;
-                        
-                        
+
+
                     }
                 }
 
             }
         }
-        
+
 
     }
 
-    
+
 }

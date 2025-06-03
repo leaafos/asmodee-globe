@@ -1,5 +1,5 @@
 import "./sideBarGames.scss";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import arrow from "../../assets/arrow.svg";
 import userIcon from "../../assets/user_icon.png"
 import arrowDown from "../../assets/arrow_down_icon.png"
@@ -9,6 +9,9 @@ import settings from "../../assets/settings_icon.svg"
 import myGames from "../../assets/my_games_icon.svg"
 import searchIcon from "../../assets/search_icon.svg"
 import avatar from "../../assets/avatar.png"
+import infinityBg from "../../assets/infinityBg.svg"
+import rabbitBg from "../../assets/rabbitBg.svg"
+import turtleBg from "../../assets/turtleBg.svg"
 import { useNavigate, useParams } from "react-router-dom";
 
 const SideBarGamesContainer = () => {
@@ -95,6 +98,89 @@ const SideBarGamesContainer = () => {
         console.log("Player clicked:", playerId);
     };
 
+    //Slider 
+
+    const [sliderValue, setSliderValue] = useState(50); // Position en pourcentage (0-100)
+    const [isDragging, setIsDragging] = useState(false);
+    const sliderRef = useRef(null);
+    const knobRef = useRef(null);
+
+    // Fonction pour obtenir le texte de vitesse basé sur la position
+    const getSpeedText = (value) => {
+        if (value < 33) return "Slow";
+        if (value < 67) return "Normal";
+        return "Fast";
+    };
+
+    // Fonction pour obtenir la durée estimée basée sur la position
+    const getGameDuration = (value) => {
+        if (value < 33) return "~5 min";
+        if (value < 67) return "~3 min";
+        return "~1 min";
+    };
+
+    // Gérer le début du glissement
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        e.preventDefault();
+    };
+
+    // Gérer le glissement avec throttling
+    const handleMouseMove = React.useCallback((e) => {
+        if (!isDragging || !sliderRef.current) return;
+
+        e.preventDefault(); // Empêcher le comportement par défaut
+
+        const sliderRect = sliderRef.current.getBoundingClientRect();
+        const sliderWidth = sliderRect.width;
+        const mouseX = e.clientX - sliderRect.left;
+
+        // Calculer la nouvelle position en pourcentage
+        let newValue = (mouseX / sliderWidth) * 100;
+        newValue = Math.max(0, Math.min(100, newValue)); // Limiter entre 0 et 100
+
+        setSliderValue(newValue);
+    }, [isDragging]);
+
+    // Gérer la fin du glissement
+    const handleMouseUp = React.useCallback(() => {
+        setIsDragging(false);
+    }, []);
+
+   useEffect(() => {
+    if (isDragging) {
+        // Utiliser des options passives pour éviter les blocages
+        document.addEventListener('mousemove', handleMouseMove, { passive: false });
+        document.addEventListener('mouseup', handleMouseUp, { passive: true });
+
+        // Désactiver la sélection de texte pendant le glissement
+        document.body.style.userSelect = 'none';
+    } else {
+        // Réactiver la sélection de texte
+        document.body.style.userSelect = '';
+    }
+
+    return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+        document.body.style.userSelect = '';
+    };
+}, [isDragging, handleMouseMove, handleMouseUp]);
+
+    // Gérer le clic direct sur la piste du slider
+    const handleSliderClick = (e) => {
+        if (isDragging) return;
+
+        const sliderRect = sliderRef.current.getBoundingClientRect();
+        const sliderWidth = sliderRect.width;
+        const mouseX = e.clientX - sliderRect.left;
+
+        let newValue = (mouseX / sliderWidth) * 100;
+        newValue = Math.max(0, Math.min(100, newValue));
+
+        setSliderValue(newValue);
+    };
+
     return (
         <div id={expandedBar ? "sideBarGamesContainerNotExpanded" : "sideBarGamesContainer"}>
             <button id="toggleSideBar" onClick={handleClick}>
@@ -165,8 +251,73 @@ const SideBarGamesContainer = () => {
                             })}
                         </ul>
                         <div id="nbPlayers">
-                            <h1>Hello</h1>
+                            {/* First Line */}
+                            <div id="first-line">
+                                <span id="title">Number of player</span>
+                                <select className="player-selector">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
+                            {/* Second Line - Slider */}
+                            <div className="second-line">
 
+                                    <span id="speed-text">Game speed : {getSpeedText(sliderValue)}</span>
+
+                                {/* Slider Container */}
+                                <div className="slider-container">
+                                    <div
+                                        ref={sliderRef}
+                                        className={`slider-track ${isDragging ? 'dragging' : ''}`}
+                                        onClick={handleSliderClick}
+                                    >
+                                        <img className="speed-icon" src={infinityBg} />
+
+                                        <img className="speed-icon" src={turtleBg} />
+
+                                        <img className="speed-icon" src={rabbitBg} />
+
+                                        {/* Slider Track - Full Height Background */}
+                                        <div className="slider-fill-container">
+                                            {/* Progress Fill - White background that fills the entire height */}
+                                            <div
+                                                className="slider-fill"
+                                                style={{ width: `${sliderValue}%` }}
+                                            />
+                                        </div>
+
+                                        {/* Draggable Knob */}
+                                        <div
+                                            ref={knobRef}
+                                            className={`slider-knob ${isDragging ? 'dragging' : ''}`}
+                                            style={{
+                                                left: `calc(${sliderValue}% - 12px)`, // 12px = half of knob width
+                                            }}
+                                            onMouseDown={handleMouseDown}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="duration-text">
+                                    <span>Game length {getGameDuration(sliderValue)}</span>
+                                </div>
+                            </div>
+
+                            {/* Third Line */}
+                            <div className="third-line">
+                                <span>Choice of Board</span>
+                                <select className="board-select">
+                                    <option value="">Random board</option>
+                                </select>
+                            </div>
+
+                            {/* Fourth Line */}
+                            <div className="fourth-line">
+                                <span>Playing with the Dolphin</span>
+                                <select className="dolphin-select">
+                                    <option value="">Add the Dolphin tile to the bag</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 )}
