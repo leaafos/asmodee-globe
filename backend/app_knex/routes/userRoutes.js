@@ -4,6 +4,7 @@ const userModel = require('../models/userModel');
 const multer = require('multer');
 const path = require('path');
 
+
 // Configuration de Multer pour l'upload d'image
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
