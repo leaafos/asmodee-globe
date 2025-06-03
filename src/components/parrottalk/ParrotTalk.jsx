@@ -1,10 +1,18 @@
 import { useState, useEffect } from "react";
 import "./parrotTalk.scss";
+import deleteIcon from "../../assets/deleteIcon.svg"
+import modifyIcon from "../../assets/modifyIcon.svg"
+import heart from "../../assets/heart.svg"
+import fire from "../../assets/fire.svg"
+import more from "../../assets/more.svg"
+import arrow from "../../assets/arrow.svg"
+import { color } from "three/tsl";
 
 const ParrotTalk = () => {
+  // Utilisation des données depuis localStorage comme dans votre code original
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
-  const userRole = user?.role; // 'A' ou 'B'
+  const userRole = user?.role;
   const userId = user?.id;
 
   const [messages, setMessages] = useState([]);
@@ -28,7 +36,7 @@ const ParrotTalk = () => {
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     if (!message.trim()) return;
 
     try {
@@ -101,44 +109,93 @@ const ParrotTalk = () => {
     msg.reactions.some((r) => r.user_id === userId && r.reaction === reactionType);
 
   return (
-    <div id="parrotContainer">
-      <span id="titleParrot">THE PARROT TALK</span>
-      <div id="messagesList">
-        {messages.length === 0 ? (
-          <p>Aucun message pour le moment.</p>
-        ) : (
-          messages.map((msg) => (
-            <div key={msg.id} className="messageItem">
-              <p>
-                {msg.name} - {msg.structure} - {msg.country}
-              </p>
-              <p>{msg.message}</p>
+    <div className="parrot-wrapper">
+      <div id="parrotContainer">
+        <span id="titleParrot">THE PARROT TALK</span>
+        <div id="messageList">
+          {messages.length === 0 ? (
+            <p style={{color: "white"}} className="no-messages">Aucun message pour le moment.</p>
+          ) : (
+            messages.map((msg) => (
+              <div key={msg.id} className="messageItem">
+                <div className="message-header">
+                  <div className="topPart">
+                    <span className="user-name">{msg.id}</span>
+                    <div className="message-actions">
+                      <button className="action-btn edit-btn">
+                        <img className="actionIcon" src={modifyIcon} alt="" />
+                      </button>
+                      <button className="action-btn delete-btn">
+                        <img className="actionIcon" src={deleteIcon} alt="" />
+                      </button>
+                    </div>
+                  </div>
+                  <p className="user-details">
+                    {msg.structure} • {msg.country}
+                  </p>
+                </div>
+                {/* Message Content */}
+                <p className="message-content">{msg.message}</p>
 
+                {/* Reactions */}
+                <div className="reactions-container">
+                  <button className="reaction-btn">
+                    <img src={more} />
+                  </button>
+                  
+
+                  <button className="reaction-btn">
+                    <span className="count">{countReactions(msg, "like") || 0}</span>
+                    <img src={fire} />
+                  </button>
+                  
+                  <button
+                    className={`reaction-btn ${userHasReacted(msg, "heart") ? "active" : ""}`}
+                    onClick={() => toggleReaction(msg.id, "heart")}
+                    aria-label="Réaction cœur"
+                  >
+                    
+                    <span className="count">{countReactions(msg, "heart")}</span>
+                    <img src={heart} />
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Message Input */}
+        {userRole === "A" && (
+          <div className="input-container">
+            <div className="input-wrapper">
+              <input
+                type="text"
+                placeholder="Send a message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onClick={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSubmit(e);
+                  }
+                }}
+                className="message-input"
+              />
               <button
-                className={`reactionBtn ${userHasReacted(msg, "heart") ? "active" : ""}`}
-                onClick={() => toggleReaction(msg.id, "heart")}
-                aria-label="Réaction cœur"
-                type="button"
+                onClick={handleSubmit}
+                className="send-btn"
+                disabled={!message.trim()}
               >
-                ❤️ {countReactions(msg, "heart")}
+                <img src={arrow} id="arrowSendMsg" />
               </button>
             </div>
-          ))
+          </div>
         )}
-        {userRole === "A" && (
-        <form className="formMessage" onSubmit={handleSubmit}>
-          <input
-            id="inputMessage"
-            placeholder="Écris ton message ici..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            style={{background: 'none', border: '1px solid white'}}
-          />
-          <button type="submit">Envoyer</button>
-        </form>
-      )}
 
-      {error && <p className="error">{error}</p>}
+        {error && (
+          <div className="error-message">
+            {error}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -300,6 +300,58 @@ const GlobeScene = () => {
           </span>
         </div>
       ))}
+{/* 
+          return (
+            <div
+              key={msg.id}
+              ref={el => labelRefs.current[index] = el}
+              style={{
+                position: 'absolute',
+                width: 'auto',
+                maxWidth: '40%', 
+                ...pos,
+                transform: 'translateY(0)',
+                padding: '6px 14px',
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                border: '1px solid #fff',
+                borderRadius: '4px',
+                color: '#fff',
+                fontSize: '14px',
+                whiteSpace: 'nowrap',
+                pointerEvents: 'none',
+                zIndex: 10,
+                boxSizing: 'border-box'
+              }}
+            >
+              {msg.text} */}
+              {/* <div style={{
+                position: 'absolute',
+                top: `${20 + index * 80}px`,
+                right: '20px',
+                width: '300px',
+                padding: '12px',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                border: '1px solid #ccc',
+                borderRadius: '6px',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+                zIndex: 20,
+                color: '#000',
+                fontSize: '0.9rem',
+                lineHeight: 1.4
+              }}>
+               <div>
+                <strong>{msg.structure}</strong><br />
+                {msg.city}, {msg.country}<br />
+                {msg.website && (
+                  <a href={msg.website} target="_blank" rel="noopener noreferrer" style={{ color: '#0077cc' }}>
+                    Site web
+                  </a>
+                )}
+              </div>
+              </div> */}
+            {/* </div>
+          );
+        })} */}
 
       <div style={{
         position: 'absolute',

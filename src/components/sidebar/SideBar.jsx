@@ -92,12 +92,12 @@ const SideBar = () => {
           <div id="topIcons">
             <button className="buttonTop"><img className="imgIcon" src={settings} alt="" /></button>
             <button className="buttonTop"><img className="imgIcon" src={userIcon} alt="" /></button>
-            <button id="logOutButton">Log out</button>
+            <button onClick={handleLogout} id="logOutButton">Log out</button>
           </div>
           <div id="userBlock">
             <img id="avatar" src={avatar} alt="" />
             <div id="userInfo">
-              <span id="jobTitle">PRODUCT DESIGNER</span>
+              <span id="jobTitle">{userJob || 'PRODUCT DESIGNER'}</span>
               <span id="userName">{userName}</span>
             </div>
           </div>

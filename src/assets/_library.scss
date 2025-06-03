@@ -2,10 +2,10 @@
 $background-color: linear-gradient(114deg, #2C5BB8 -0.93%, #3849A3 27.91%, #473287 66.02%);
 
 //Side bar
-$background-sidebar: radial-gradient(120.93% 153.91% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.00) 100%);
+$background-sidebar: url('./backgroundImage.svg'), radial-gradient(120.93% 153.91% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.00) 100%);
 
 //Cards
-$background-card: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
+$background-card: url('./backgroundImage.svg'), radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
 $radius-card: 28px;
 $shadow-card: 0px 17px 64px -32px rgba(207, 227, 247, 0.42);
 $border-card: 2px solid #FFF;
