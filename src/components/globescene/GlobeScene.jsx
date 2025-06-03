@@ -24,7 +24,7 @@ const fixedPositions = [
   { top: '50%', left: '6%' },
 ];
 
-const interpolateColor = interpolateRgb('#FDB2D5', '#f90073');
+const interpolateColor = interpolateRgb('#FFBC00', '#FFBC00');
 
 const GlobeScene = () => {
   const globeRef = useRef();
@@ -37,31 +37,43 @@ const GlobeScene = () => {
   const [popupData, setPopupData] = useState(null);
   const [latOffset, setLatOffset] = useState(46);
   const [lngOffset, setLngOffset] = useState(2);
+  const [retryCount, setRetryCount] = useState(0);
+
 
   // Charge les messages depuis le backend, pas depuis localStorage
   const fetchMessages = async () => {
-    try {
-      const res = await fetch('http://localhost/messages');
-      if (!res.ok) throw new Error('Erreur de récupération des messages');
-      const data = await res.json();
-      // Assure toi que structure et country sont présents dans data, sinon fallback
-      const formatted = data.map(m => ({
-        id: m.id,
-        text: m.text,
-        structure: m.structure ?? 'N/A',
-        country: m.country ?? 'N/A',
-      }));
-      setMessageOptions(formatted);
-      setMessages(formatted.slice(0, 5));
-    } catch (err) {
-      console.error('Erreur lors du chargement des messages :', err);
+  try {
+    const res = await fetch('http://localhost/messages?limit=10');
+    if (!res.ok) throw new Error('Erreur de récupération des messages');
+    const data = await res.json();
+    const formatted = data.map(m => ({
+      id: m.id,
+      text: m.text,
+      structure: m.structure ?? 'N/A',
+      country: m.country ?? 'N/A',
+    }));
+    setMessageOptions(formatted);
+    setRetryCount(0);
+    setMessages(formatted.slice(0, 5));
+  } catch (err) {
+    console.error('Erreur lors du chargement des messages :', err);
+    if (retryCount < 3) {
+      setTimeout(() => fetchMessages(), 3000);
+      setRetryCount(retryCount + 1);
     }
-    const interval = setInterval(() => {
-      fetchMessages(); 
-    }, 2000); 
+  }
+};
 
-    return () => clearInterval(interval);
-  };
+// Crée le polling proprement
+useEffect(() => {
+  fetchMessages(); // Appel initial
+
+  const interval = setInterval(() => {
+    fetchMessages(); // Appels réguliers
+  }, 10000); // toutes les 10 secondes (plus raisonnable que 2s !)
+
+  return () => clearInterval(interval); // Cleanup
+}, []);
 
   useEffect(() => {
     fetch('http://localhost/structures')
@@ -110,7 +122,9 @@ const GlobeScene = () => {
       .pointColor((d, i) => interpolateColor(i / structures.length))
       .pointRadius(0.4)
       .pointLabel(d => `${d.name} — ${d.city}, ${d.country}`)
+      .enablePointerInteraction(true)
       .onPointClick(d => {
+        handleClickStick(d);
         console.log("Point cliqué :", d);
       })
       .onPointHover((point, event) => {
@@ -146,8 +160,8 @@ const GlobeScene = () => {
 
       sticks.forEach(obj => {
         obj.material = new THREE.MeshStandardMaterial({
-          color: new THREE.Color(0xf90073),
-          emissive: new THREE.Color(0xf90073),
+          color: new THREE.Color(0xFFBC00),
+          emissive: new THREE.Color(0xFFBC00),
           emissiveIntensity: 5,
           metalness: 0.7,
           roughness: 0.05,
@@ -160,7 +174,7 @@ const GlobeScene = () => {
         glowGeometry.scale(2, 2, 1.5);
 
         const glowMaterial = new THREE.MeshBasicMaterial({
-          color: new THREE.Color(0xf90073),
+          color: new THREE.Color(0xFFBC00),
           transparent: true,
           opacity: 0.3,
           blending: THREE.AdditiveBlending,
@@ -247,7 +261,9 @@ const GlobeScene = () => {
       }
 
       console.log('Message créé avec succès:', postData ?? '[Pas de contenu JSON]');
+      
       await fetchMessages(); // RECHARGE depuis backend
+
     } catch (error) {
       console.error('Erreur lors du clic sur message :', error);
     }
@@ -303,24 +319,24 @@ const GlobeScene = () => {
         <div
           key={msg.id}
           ref={el => labelRefs.current[index] = el}
-          style={{
+          style={{ // WILLIAM BOUTONS AUTOUR DE LA PLANETE 
             position: 'absolute',
             width: 'auto',
             maxWidth: '40%',
             ...fixedPositions[index % fixedPositions.length],
             transform: 'translateY(0)',
             padding: '6px 14px',
+            fontSize: '0.75em',
             backgroundColor: 'rgba(255, 255, 255, 0.9)',
             border: '1px solid #fff',
             borderRadius: '4px',
             color: '#000',
-            fontSize: 'clamp(11px, 1.2vw, 14px)',
             wordWrap: 'break-word',
             pointerEvents: 'none',
             zIndex: 10,
           }}
         >
-          <strong>{msg.text}</strong><br />
+          <span>{msg.text}</span><br />
           <span style={{ fontSize: '0.75em' }}>
             {msg.structure}  {msg.country}
           </span>
@@ -347,14 +363,14 @@ const GlobeScene = () => {
             <button
               key={opt.id}
               onClick={() => handleClick(opt.id)}
-              style={{
+              style={{ //WILLIAAAN BOUTONS EN BAS
                 fontSize: 'clamp(0.7rem, 1.2vw, 0.8rem)',
                 padding: 'clamp(3px, 0.5vw, 4px) clamp(8px, 1.5vw, 12px)',
                 cursor: 'pointer',
                 borderRadius: '4px',
-                border: '1px solid #f90073',
+                border: '1px solidrgb(255, 226, 239)',
                 backgroundColor: 'transparent',
-                color: '#f90073',
+                color: '#fff',
                 transition: 'all 0.3s ease-in-out',
               }}
             //   onMouseOver={e => e.currentTarget.style.backgroundColor = '#f90073', e.currentTarget.style.color = 'white'}
