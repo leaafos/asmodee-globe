@@ -5,16 +5,51 @@ import * as THREE from 'three';
 import './globeScene.scss';
 
 const arcsData = [{
-  startLat: 48.773,
-  startLng: 2.043,
-  endLat: 44.933,
-  endLng: -93.090,
+  startLat: 44.2684,
+  startLng: 2.4555,
+  endLat: 151.6355,
+  endLng: 46.6293,
   colorStart: '#FEE885',
   colorEnd: '#FBB232',
   stroke: 1.0,
-  dashLength: 5.0,
+  dashLength: 6.0,
   animationDuration: 2000,
-}];
+},
+{
+  startLat: 43.8503,
+  startLng: -2.3517,
+  endLat: -33.2075,
+  endLng: -62.1065,
+  colorStart: '#FEE885',
+  colorEnd: '#FBB232',
+  stroke: 1.0,
+  dashLength: 6.0,
+  animationDuration: 2000,
+},
+{
+  startLat: 36.2569,
+  startLng: -82.5056,
+  endLat: 36.4871,
+  endLng: -103.4843,
+  colorStart: '#FEE885',
+  colorEnd: '#FBB232',
+  stroke: 1.0,
+  dashLength: 6.0,
+  animationDuration: 2000,
+},
+{
+  startLat: 35.2302,
+  startLng: 15.6293,
+  endLat: 28.2684,
+  endLng: -16.4555,
+  colorStart: '#FEE885',
+  colorEnd: '#FBB232',
+  stroke: 1.0,
+  dashLength: 6.0,
+  animationDuration: 2000,
+}
+
+];
 
 const fixedPositions = [
   { top: '24%', right: '11%' },
