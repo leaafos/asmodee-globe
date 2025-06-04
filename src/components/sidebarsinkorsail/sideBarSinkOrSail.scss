@@ -1,28 +1,9 @@
 @import '../../assets/library';
 
-#sideBarSinkOrSailContainer::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-    border-radius: inherit;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: xor;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    opacity: 40%;
-    pointer-events: none;
-    z-index: -1;
-}
 
-#sideBarContainer {
-    background: $background-sidebar;
+#sideBarSinkOrSailContainer {
     height: 94vh;
     width: 21vw;
-    margin-right: 2vw;
-    border-radius: $radius-card;
-    box-shadow: $shadow-card;
     border: 0;
     transition-duration: 300ms;
     display: flex;
@@ -808,29 +789,10 @@
 
 }
 
-#sideBarContainerNotExpanded::before {
-    content: '';
-                position: absolute;
-                inset: 0;
-                padding: 1px;
-                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                border-radius: inherit;
-                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                mask-composite: xor;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                opacity: 40%;
-                pointer-events: none;
-                    z-index: -1;
-}
 
-#sideBarContainerNotExpanded {
+#sideBarSinkOrSailContainerNotExpanded {
     height: 94vh;
-    width: 6vw;
-    background: $background-sidebar;
-    margin-right: 2vw;
-    border-radius: $radius-card;
-    box-shadow: $shadow-card;
+    width: 2vw;
     border: 0;
     transition-duration: 300ms;
     display: flex;
@@ -854,7 +816,7 @@
         width: 100%;
         //background-color: yellow;
         transition-duration: 300ms;
-        display: flex;
+        display: none;
         flex-direction: column;
 
         #topIcons {
