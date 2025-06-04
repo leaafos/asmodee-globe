@@ -82,12 +82,12 @@ router.put('/messagesPT/:id', async (req, res) => {
 // Supprimer un message (seulement l’auteur)
 router.delete('/messagesPT/:id', async (req, res) => {
   const { id } = req.params;
-  const user = await getUserFromRequest(req);
+  // const user = await getUserFromRequest(req);
 
-  const message = await messageModel.getMessagePTById(id);
-  if (!message || message.user_id !== user.id) {
-    return res.status(403).json({ error: 'Non autorisé' });
-  }
+  //const message = await messageModel.getMessagePTById(id);
+  // if (!message || message.user_id !== user.id) {
+  //   return res.status(403).json({ error: 'Non autorisé' });
+  // }
 
   try {
     await messageModel.deleteMessagePT(id);

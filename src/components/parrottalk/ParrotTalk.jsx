@@ -120,7 +120,7 @@ const ParrotTalk = () => {
               <div key={msg.id} className="messageItem">
                 <div className="message-header">
                   <div className="topPart">
-                    <span className="user-name">{msg.id}</span>
+                    <span className="user-name">{msg.senderName}</span>
                     <div className="message-actions">
                       <button className="action-btn edit-btn">
                         <img className="actionIcon" src={modifyIcon} alt="" />
@@ -144,8 +144,12 @@ const ParrotTalk = () => {
                   </button>
                   
 
-                  <button className="reaction-btn">
-                    <span className="count">{countReactions(msg, "like") || 0}</span>
+                  <button
+                    className={`reaction-btn ${userHasReacted(msg, "fire") ? "active" : ""}`}
+                    onClick={() => toggleReaction(msg.id, "fire")}
+                    aria-label="Réaction fire"
+                  >
+                    <span className="count">{countReactions(msg, "fire")}</span>
                     <img src={fire} />
                   </button>
                   
