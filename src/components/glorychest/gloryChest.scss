@@ -1,5 +1,21 @@
 @import "../../assets/library";
 
+#gloryContainer::before {
+     content: '';
+                position: absolute;
+                inset: 0;
+                padding: 2px;
+                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+                border-radius: inherit;
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask-composite: xor;
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                opacity: 40%;
+                pointer-events: none;
+                    z-index: -1;
+}
+
 #gloryContainer {
     height: 100%;
     background: $background-card;
@@ -7,8 +23,9 @@
     margin-left: 1vw;
     border-radius: $radius-card;
     box-shadow: $shadow-card;
-    outline: $border-card;
+    border: 0;
     overflow: hidden;
+    position: relative;
 
     #buttonsTop {
         display: flex;
@@ -79,8 +96,24 @@
                 height: 60px;
                 width: 60px;
                 background: radial-gradient(50% 50% at 50% 50%, rgba(73, 122, 220, 0.00) 50.48%, rgba(241, 251, 255, 0.48) 100%);
-                border: 1px solid white;
-                
+                border: 0;
+                position: relative;
+            }
+
+            #buttonBadge::before {
+                 content: '';
+                position: absolute;
+                inset: 0;
+                padding: 1px;
+                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+                border-radius: inherit;
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask-composite: xor;
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                opacity: 40%;
+                pointer-events: none;
+                    z-index: -1;
             }
 
         }
@@ -104,14 +137,31 @@
 
                     #voteButton {
                         background: none;
-                        border: 1px solid white;
+                        border: 0;
                         font-size: 0.65rem;
                         color: white;
                         padding: 4px 10px;
                         border-radius: 4px;
                         cursor: pointer;
+                        position: relative;
 
                         
+                    }
+
+                    #voteButton::before {
+                         content: '';
+                position: absolute;
+                inset: 0;
+                padding: 1px;
+                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+                border-radius: inherit;
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask-composite: xor;
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                opacity: 40%;
+                pointer-events: none;
+                    z-index: -1;
                     }
 
                     #voteButton:hover {
@@ -169,6 +219,22 @@
                             display: flex;
                             align-items: end;
 
+                            .vote-progress-container::before {
+                                 content: '';
+                position: absolute;
+                inset: 0;
+                padding: 1px;
+                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+                border-radius: inherit;
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask-composite: xor;
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                opacity: 40%;
+                pointer-events: none;
+                    z-index: -1;
+                            }
+
                             .vote-progress-container {
                                 width: 100%;
                                 height: 16px;
@@ -176,7 +242,7 @@
                                 border-radius: 15px;
                                 overflow: hidden;
                                 position: relative;
-                                border: 1px solid white;
+                                border: 0;
 
                                 .vote-progress-bar {
                                     height: 100%;

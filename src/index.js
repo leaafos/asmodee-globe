@@ -9,6 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import Login from './components/login';
 import Game from './pages/game/Game';
 import Victory from './pages/victory/Victory';
+import SinkOrSail from './pages/sinkorsail/SinkOrSail';
 
 const root = document.getElementById("root");
 
@@ -17,6 +18,7 @@ ReactDOM.createRoot(root).render(
     <Routes>
       <Route path="*" element={<Login />} />
       <Route path="/" element={<Home />} />
+      <Route path="/sinkorsail" element={<SinkOrSail />} />
       <Route path='/game/:gameId' element={<Game />} />
       <Route path='/victory/:gameId' element={<Victory />} />
 

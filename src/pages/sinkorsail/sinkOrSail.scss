@@ -1,0 +1,17 @@
+@import "../../assets/library";
+
+#sinkOrSailContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 3vh 2vw;
+
+    #innerSinkOrSailContainer {
+        display: flex;
+        background: $background-sidebar;
+        border-radius: $radius-card;
+        border: 1px solid white;
+        width: 100%;
+        padding-right: 2vw;
+
+    }
+}

@@ -1,4 +1,5 @@
-import "./sideBar.scss";
+import "./sideBarSinkOrSail.scss"
+
 import { useState, useEffect } from "react";
 import arrow from "../../assets/arrow.svg";
 import userIcon from "../../assets/user_icon.png"
@@ -12,7 +13,7 @@ import avatar from "../../assets/avatar.png"
 import { cover } from "three/src/extras/TextureUtils.js";
 import { useNavigate } from "react-router-dom";
 
-const SideBar = () => {
+const SideBarSinkOrSail = () => {
   const navigate = useNavigate();
   const [expandedBar, setExpandedBar] = useState(false);
   const [expandedFavorites, setExpandedFavorites] = useState(false);
@@ -93,7 +94,7 @@ const SideBar = () => {
   };
 
   return (
-    <div id={expandedBar ? "sideBarContainerNotExpanded" : "sideBarContainer"}>
+    <div id={expandedBar ? "sideBarSinkOrSailContainerNotExpanded" : "sideBarSinkOrSailContainer"}>
       <button id="toggleSideBar" onClick={handleClick}>
         <img src={arrow} alt="toggle sidebar" />
       </button>
@@ -233,7 +234,7 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default SideBarSinkOrSail;
 
 /*
 
