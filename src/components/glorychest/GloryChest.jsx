@@ -1,43 +1,22 @@
 import React, { useEffect, useState } from "react";
 import "./gloryChest.scss";
 import TeamBadgeForm from "./Form";
-import piratsCouncil from "../../assets/piratsCouncil.png"
-import gloryChest from "../../assets/gloryChest.png"
-import Background from "three/src/renderers/common/Background.js";
-import { color } from "three/tsl";
-
 
 const GloryChest = () => {
   const [teamId, setTeamId] = useState(null);
-  const [user, setUser] = useState(null); // Ajouté
+  const [user, setUser] = useState(null);
   const [unlockedBadges, setUnlockedBadges] = useState([]);
   const [pendingBadges, setPendingBadges] = useState([]);
   const [othersPendingBadges, setOthersPendingBadges] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [voteMessage, setVoteMessage] = useState(null);
   const [voteError, setVoteError] = useState(null);
-  const [gloryChestContent, setGloryChestContent] = useState('glory')
-
-  const TabButton = ({ isActive, onClick, children, backgroundImage }) => (
-    <button
-      onClick={onClick}
-      className={`button ${isActive ? 'activeButton' : ''}`}
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
-    >
-      {children}
-    </button>
-  );
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser); // Stocker l'utilisateur
+      setUser(parsedUser); 
       setTeamId(parsedUser.teamId || parsedUser.team_id);
     }
   }, []);
@@ -106,133 +85,84 @@ const GloryChest = () => {
 
   return (
     <div id="gloryContainer">
-      <div id="buttonsTop">
-        <TabButton
-          isActive={gloryChestContent === 'glory'}
-          onClick={() => setGloryChestContent('glory')}
-          backgroundImage={gloryChest}
-        >
-          THE GLORY CHEST
-        </TabButton>
-        <TabButton
-          isActive={gloryChestContent === 'council'}
-          onClick={() => setGloryChestContent('council')}
-          backgroundImage={piratsCouncil}
-        >
-          THE PIRAT'S COUNCIL
-        </TabButton>
-      </div>
-      <div id="mainContent">
-        {gloryChestContent === 'glory' ? (
-          <div id="gloryChestContent">
+      <h2>Glory Chest de la team {teamId}</h2>
+      <button onClick={() => setShowForm(true)}>Soumettre un badge</button>
+      {showForm && <TeamBadgeForm />}
 
-            {unlockedBadges.length === 0 ? (
-              <p style={{ color: "white" }}>Aucun badge débloqué.</p>
-            ) : (
-              unlockedBadges.map((badge) => (
-                <div key={badge.id} className="badge-card">
-                  <img
-                    src={`http://localhost/uploads/${badge.image}`}
-                    alt={badge.badge_name}
-                    className="imgBadge"
-                  />
-                  <span className="badgeName">{badge.badge_name}</span>
-                  <p>{badge.description}</p>
-
-                </div>
-              ))
-            )}
-
-            {pendingBadges.length === 0 ? (
-              <p style={{ color: 'white' }}>Aucun badge en cours de vote.</p>
-            ) : (
-              pendingBadges.map((badge) => (
-                <div key={badge.id} className="badge-card">
-
-                  <img
-                    src={`http://localhost/uploads/${badge.image}`}
-                    alt={badge.badge_name}
-                    className="imgBadge"
-                  />
-                  <span className="badgeName">{badge.badge_name}</span>
-                  <p>{badge.description}</p>
-                </div>
-              ))
-            )}
-
-            <div className="badge-card">
-              <button id="buttonBadge" onClick={() => setShowForm(true)}>Soumettre un badge</button>
-              {showForm && <TeamBadgeForm />}
-
-            </div>
-
-
-
-
-
-          </div>
+      <section>
+        <h3>Badges débloqués</h3>
+        {unlockedBadges.length === 0 ? (
+          <p>Aucun badge débloqué.</p>
         ) : (
-          <div id="piratCouncilContent">
-            {voteMessage && <p style={{ color: "green" }}>{voteMessage}</p>}
-            {voteError && <p style={{ color: "red" }}>{voteError}</p>}
-            {othersPendingBadges.length === 0 ? (
-              <p style={{ color: 'white' }}>Aucun badge à voter pour les autres équipes.</p>
-            ) : (
-              othersPendingBadges.map((badge) => (
-                <div key={badge.id} className="innerContainer">
-                  <div className="leftContainer">
-                    <img
-                      src={`http://localhost/uploads/${badge.image}`}
-                      alt={badge.badge_name}
-
-                    />
-                    <button id="voteButton" onClick={() => handleVote(badge.id)}>Voter</button>
-                  </div>
-                  <div className="rightBlock">
-                    <div className="topRightBlock">
-                      <div className="badgeInfos">
-                        <span className="badgeName">{badge.badge_name}</span>
-                        <span className="teamName">{badge.team_name}</span>
-                      </div>
-                      <div className="voteBar">
-                        <div className="vote-progress-container">
-                          <div
-                            className="vote-progress-bar"
-                            style={{
-                              width: `${Math.min((badge.votes / badge.vote_threshold) * 100, 100)}%`
-                            }}
-                          >
-                            <span className="vote-percentage">
-                              {Math.round((badge.votes / badge.vote_threshold) * 100)}%
-                            </span>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div className="bottomRightBlock">
-                      <p className="description">{badge.description}</p>
-
-                    </div>
-
-
-                  </div>
-                </div>
-
-              ))
-            )}
-          </div>
+          unlockedBadges.map((badge) => (
+            <div key={badge.id} className="badge-card">
+              <h4>{badge.badge_name}</h4>
+              <p>{badge.description}</p>
+              <img
+                src={`http://localhost/uploads/${badge.image}`}
+                alt={badge.badge_name}
+                style={{ width: "100px", height: "100px"}}
+              />
+              <p>Votes : {badge.votes}</p>
+              <p>Débloqué : Oui</p>
+            </div>
+          ))
         )}
-      </div>
+      </section>
+
+      <section>
+        <h3>Badges en cours de vote</h3>
+        {pendingBadges.length === 0 ? (
+          <p>Aucun badge en cours de vote.</p>
+        ) : (
+          pendingBadges.map((badge) => (
+            <div key={badge.id} className="badge-card">
+              <h4>{badge.badge_name}</h4>
+              <p>{badge.description}</p>
+              <img
+                src={`http://localhost/uploads/${badge.image}`}
+                alt={badge.badge_name}
+                style={{ width: "100px", height: "100px"}}
+              />
+              <p>
+                Votes : {badge.votes} / {badge.vote_threshold} (
+                {badge.vote_threshold - badge.votes} votes manquants)
+              </p>
+              <p>Débloqué : Non</p>
+            </div>
+          ))
+        )}
+      </section>
+
+      <section>
+        <h3>Pirat's Council - Voter pour les badges des autres équipes</h3>
+        {voteMessage && <p style={{ color: "green" }}>{voteMessage}</p>}
+        {voteError && <p style={{ color: "red" }}>{voteError}</p>}
+
+        {othersPendingBadges.length === 0 ? (
+          <p>Aucun badge à voter pour les autres équipes.</p>
+        ) : (
+          othersPendingBadges.map((badge) => (
+            <div key={badge.id} className="badge-card">
+              <h4>{badge.badge_name}</h4>
+              <p>Équipe : {badge.team_name}</p>
+              <p>{badge.description}</p>
+              <img
+                src={`http://localhost/uploads/${badge.image}`}
+                alt={badge.badge_name}
+                style={{ width: "100px", height: "100px" }}
+              />
+              <p>
+                Votes : {badge.votes} / {badge.vote_threshold} (
+                {badge.vote_threshold - badge.votes} votes manquants)
+              </p>
+              <button onClick={() => handleVote(badge.id)}> Voter </button>
+            </div>
+          ))
+        )}
+      </section>
     </div>
   );
 };
 
 export default GloryChest;
-
-
-
-
-
-
-

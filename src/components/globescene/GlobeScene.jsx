@@ -52,11 +52,11 @@ const arcsData = [{
 ];
 
 const fixedPositions = [
-  { top: '24%', right: '11%' },
-  { top: '43%', right: '4%' },
-  { top: '64%', right: '11%' },
-  { top: '30%', left: '11%' },
-  { top: '50%', left: '6%' },
+  { top: '24%', right: '8%' },
+  { top: '43%', right: '3%' },
+  { top: '64%', right: '5%' },
+  { top: '30%', left: '5%' },
+  { top: '50%', left: '2%' },
 ];
 
 const interpolateColor = interpolateRgb('#FFBC00', '#FFBC00');
@@ -175,7 +175,7 @@ const GlobeScene = () => {
     globe.controls().autoRotate = true;
     globe.controls().autoRotateSpeed = 0.1;
     globeInstance.current = globe;
-    globeInstance.current.camera().position.z = 400;
+    globeInstance.current.camera().position.z = 500;
 
     const scene = globe.scene();
 
@@ -363,10 +363,10 @@ const GlobeScene = () => {
             transform: 'translateY(0)',
             padding: '6px 14px',
             fontSize: '0.75em',
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            border: '1px solid #fff',
+            background: 'radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.2) 100%)',
+            border: '1px solid white',
             borderRadius: '4px',
-            color: '#000',
+            color: '#fff',
             wordWrap: 'break-word',
             pointerEvents: 'none',
             zIndex: 10,
