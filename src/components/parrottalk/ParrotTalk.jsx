@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./parrotTalk.scss";
 import deleteIcon from "../../assets/deleteIcon.svg"
 import modifyIcon from "../../assets/modifyIcon.svg"
@@ -14,10 +14,13 @@ const ParrotTalk = () => {
   const user = storedUser ? JSON.parse(storedUser) : null;
   const userRole = user?.role;
   const userId = user?.id;
+  const messageListRef = useRef(null);
 
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
+
 
   useEffect(() => {
     fetch("http://localhost/messagesPT")
@@ -108,11 +111,22 @@ const ParrotTalk = () => {
   const userHasReacted = (msg, reactionType) =>
     msg.reactions.some((r) => r.user_id === userId && r.reaction === reactionType);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (messageListRef.current) {
+        messageListRef.current.scrollTop += 1; 
+      }
+    }, 50); 
+  
+    return () => clearInterval(interval); 
+  }, []);
+  
+
   return (
     <div className="parrot-wrapper">
       <div id="parrotContainer">
         <span id="titleParrot">THE PARROT TALK</span>
-        <div id="messageList">
+        <div id="messageList" ref={messageListRef}>
           {messages.length === 0 ? (
             <p style={{color: "white"}} className="no-messages">Aucun message pour le moment.</p>
           ) : (
@@ -121,14 +135,16 @@ const ParrotTalk = () => {
                 <div className="message-header">
                   <div className="topPart">
                     <span className="user-name">{msg.senderName}</span>
-                    <div className="message-actions">
-                      <button className="action-btn edit-btn">
-                        <img className="actionIcon" src={modifyIcon} alt="" />
-                      </button>
-                      <button className="action-btn delete-btn">
-                        <img className="actionIcon" src={deleteIcon} alt="" />
-                      </button>
-                    </div>
+                    {currentUser && currentUser.name === msg.senderName && (
+                      <div className="message-actions">
+                        <button className="action-btn edit-btn">
+                          <img className="actionIcon" src={modifyIcon} alt="Edit" />
+                        </button>
+                        <button className="action-btn delete-btn">
+                          <img className="actionIcon" src={deleteIcon} alt="Delete" />
+                        </button>
+                      </div>
+                    )}
                   </div>
                   <p className="user-details">
                     {msg.structure} • {msg.country}
