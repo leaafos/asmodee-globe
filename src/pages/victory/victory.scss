@@ -1,11 +1,11 @@
 @import "../../assets/library";
 
-#gameContainer {
+#victoryContainer {
     display: flex;
     justify-content: space-between;
     padding: 3vh 2vw;
 
-    #innerGameContainer {
+    #innerVictoryContainer {
         display: flex;
         background: $background-sidebar;
         border-radius: $radius-card;

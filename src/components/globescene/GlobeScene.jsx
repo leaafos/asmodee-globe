@@ -368,8 +368,8 @@ useEffect(() => {
                 padding: 'clamp(3px, 0.5vw, 4px) clamp(8px, 1.5vw, 12px)',
                 cursor: 'pointer',
                 borderRadius: '4px',
-                border: '1px solidrgb(255, 226, 239)',
-                backgroundColor: 'transparent',
+                border: '1px solid white',
+                background: 'radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%)',
                 color: '#fff',
                 transition: 'all 0.3s ease-in-out',
               }}
