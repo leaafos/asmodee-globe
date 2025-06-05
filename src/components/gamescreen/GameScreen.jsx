@@ -1,6 +1,7 @@
 import "./gameScreen.scss"
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import captainFlipBg from '../../assets/captainFlipBg.mp4'
 
 const GameScreen = () => {
 
@@ -32,6 +33,9 @@ const GameScreen = () => {
 
     return (
         <div onClick={handleGameClick} id="gameScreenContainer">
+            <video autoPlay muted id="bgVideo">
+                <source src={captainFlipBg} type="video/mp4" />
+            </video>
         </div>
     );
 };

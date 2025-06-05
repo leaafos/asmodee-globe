@@ -7,20 +7,20 @@
 
     #welcomeBlock::before {
         content: '';
-                position: absolute;
-                inset: 0;
-                padding: 2px;
-                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                border-radius: inherit;
-                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                mask-composite: xor;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                opacity: 40%;
+        position: absolute;
+        inset: 0;
+        padding: 2px;
+        background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+        border-radius: inherit;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: xor;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        opacity: 40%;
     }
 
     #welcomeBlock {
-        background: url("./../assets/loginBgImg.svg"), url("./../assets/backgroundImage.svg"),  radial-gradient(120.93% 153.91% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.00) 100%);
+        background: url("./../assets/loginBgImg.svg"), url("./../assets/backgroundImage.svg"), radial-gradient(120.93% 153.91% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.00) 100%);
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
@@ -51,6 +51,7 @@
                     font-size: 3rem;
                     color: white;
                     font-weight: 400;
+                    text-align: center;
                 }
 
                 #description {
@@ -66,7 +67,7 @@
                 display: flex;
                 flex-direction: column;
                 width: 70%;
-               
+
 
                 #inputLogin {
                     background: none;
@@ -81,19 +82,19 @@
                 #inputLogin::placeholder {
                     color: white;
                 }
-                
+
                 #btnLogin::before {
                     content: '';
-                position: absolute;
-                inset: 0;
-                padding: 2px;
-                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                border-radius: inherit;
-                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                mask-composite: xor;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                opacity: 40%;
+                    position: absolute;
+                    inset: 0;
+                    padding: 2px;
+                    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+                    border-radius: inherit;
+                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                    mask-composite: xor;
+                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                    -webkit-mask-composite: xor;
+                    opacity: 40%;
                 }
 
                 #btnLogin {
@@ -106,15 +107,15 @@
                     font-weight: 500;
                     cursor: pointer;
                     position: relative;
-                    
+
                 }
             }
 
 
 
-            
+
 
         }
     }
-    
+
 }

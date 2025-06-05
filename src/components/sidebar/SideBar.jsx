@@ -21,16 +21,17 @@ const SideBar = () => {
   const [showSinkOrSail, setShowSinkOrSail] = useState(false);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser);
-      fetch(`http://localhost/${parsedUser.id}`)
-        .then((res) => res.json())
-        .then(setFavorites)
-        .catch((err) => console.error("Erreur favoris :", err));
-    }
-  }, []);
+  const storedUser = localStorage.getItem("user");
+  if (storedUser) {
+    const parsedUser = JSON.parse(storedUser);
+    setUser(parsedUser);
+    // Correction de l'endpoint ici 👇
+    fetch(`http://localhost/liked/${parsedUser.id}`)
+      .then((res) => res.json())
+      .then(setFavorites)
+      .catch((err) => console.error("Erreur favoris :", err));
+  }
+}, []);
 
   useEffect(() => {
     fetch("http://localhost/games")
@@ -135,9 +136,7 @@ const SideBar = () => {
               </button>
               <ul
                 id={
-                  expandedFavorites
-                    ? "noContainerFavoriteGames"
-                    : "containerFavoriteGames"
+expandedFavorites ? "noContainerFavoriteGames" : "containerFavoriteGames"
                 }
               >
                 {favorites.map((game) => {
@@ -178,9 +177,7 @@ const SideBar = () => {
                             <button className="invite">Invite</button>
                           </div>
                           <button
-                            className={`favorite-btn ${
-                              isFavorite ? "favorited" : ""
-                            }`}
+                            className={`favorite-btn ${isFavorite ? "favorited" : ""}`}
                             onClick={() => toggleFavorite(game.id)}
                           >
                             <img

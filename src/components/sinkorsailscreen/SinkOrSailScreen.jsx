@@ -12,45 +12,47 @@ const RadarChart = ({ games, voteCounts, votes, handleVote, remainingVotes }) =>
   }));
 
   return (
-    <div style={{ height: "500px", position: 'relative' }}>
-      <ResponsiveRadar
-        data={radarData}
-        keys={['votes']}
-        
-        maxValue={Math.max(...Object.values(voteCounts), 10)} // Max dynamique ou 10 minimum
-        margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
-        borderWidth={2}
-        borderColor={{ from: 'color' }}
-        gridLevels={5}
-        gridShape="circular"
-        gridLabelOffset={36}
-        dotSize={8}
-        dotColor={{ theme: 'background' }}
-        dotBorderWidth={2}
-        dotBorderColor={{ from: 'color' }}
-        colors={['#8b5cf6', '#6366f1', '#3b82f6', '#06b6d4', '#10b981', '#84cc16', '#eab308']}
-        fillOpacity={0.1}
-        blendMode="multiply"
-        animate={true}
-        isInteractive={true}
-        theme={{
-          axis: {
-            ticks: {
-              text: {
-                fill: '#ffffff',
-                fontSize: 12
+    <div className="radar-container">
+      {/* Radar Chart */}
+      <div className="radar-chart">
+        <ResponsiveRadar
+          data={radarData}
+          keys={['votes']}
+          maxValue={Math.max(...Object.values(voteCounts), 10)}
+          margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
+          borderWidth={2}
+          borderColor={{ from: 'color' }}
+          gridLevels={5}
+          gridShape="circular"
+          gridLabelOffset={36}
+          dotSize={8}
+          dotColor={{ theme: 'background' }}
+          dotBorderWidth={2}
+          dotBorderColor={{ from: 'color' }}
+          colors={['#ffffff']}
+          fillOpacity={0.2}
+          blendMode="multiply"
+          animate={true}
+          isInteractive={true}
+          theme={{
+            axis: {
+              ticks: {
+                text: {
+                  fill: '#ffffff',
+                  fontSize: 12
+                }
+              }
+            },
+            grid: {
+              line: {
+                stroke: 'rgba(255, 255, 255, 0.35)',
+                strokeWidth: 1
               }
             }
-          },
-          grid: {
-            line: {
-              stroke: '#6b46c1',
-              strokeWidth: 1
-            }
-          }
-        }}
-        legends={[]}
-      />
+          }}
+          legends={[]}
+        />
+      </div>
       
       {/* Game Cards positionnées autour du radar */}
       <div className="radar-game-cards">
@@ -68,11 +70,12 @@ const RadarChart = ({ games, voteCounts, votes, handleVote, remainingVotes }) =>
               style={{ 
                 left: `${x}%`, 
                 top: `${y}%`,
-                position: 'absolute',
-                transform: 'translate(-50%, -50%)'
               }}
             >
-              <div className="card-content">
+              <div className={`vote-button ${votes[game.id] ? 'voted' : ''}`}
+                  disabled={votes[game.id] || remainingVotes <= 0}
+                  onClick={() => handleVote(game.id)}
+                >
                 <img
                   src={`http://localhost/uploads/${game.image}`}
                   alt={game.name}
@@ -80,16 +83,7 @@ const RadarChart = ({ games, voteCounts, votes, handleVote, remainingVotes }) =>
                 />
                 <h4 className="game-title">{game.name}</h4>
                 <p className="game-category">{game.category || "Jeu de société"}</p>
-                <div className="vote-info">
-                  <span className="vote-count">Votes: {voteCounts[game.id] || 0}</span>
-                </div>
-                <button
-                  className={`vote-button ${votes[game.id] ? 'voted' : ''}`}
-                  disabled={votes[game.id] || remainingVotes <= 0}
-                  onClick={() => handleVote(game.id)}
-                >
-                  {votes[game.id] ? "✓ Voté" : "Voter"}
-                </button>
+                
               </div>
             </div>
           );
@@ -156,8 +150,8 @@ const SinkOrSailScreen = () => {
 
             if (res.ok) {
                 setVotes((prev) => ({ ...prev, [gameId]: true }));
-                setMessage("Vote enregistré !");
-                refreshVotes(); // 🔁 recharge les totaux
+                setMessage("Voted !");
+                refreshVotes();
             } else {
                 setMessage(data.error || "Erreur lors du vote.");
             }
@@ -169,12 +163,13 @@ const SinkOrSailScreen = () => {
 
     return (
         <div id="sinkOrSailScreenContainer">
-            <div id="chart">
-                <h2>Sink or Sail</h2>
-                <p>Vote pour 5 jeux maximum. Votes restants : {remainingVotes}</p>
+            <div className="header-section">
+                <h2>SINK OR SAIL</h2>
+                <p>Keep {remainingVotes}/5 games</p>
                 {message && <p className="feedback">{message}</p>}
-                
-                {/* Radar Chart avec les données de l'API */}
+            </div>
+            
+            <div className="chart-section">
                 {games.length > 0 && (
                     <RadarChart 
                         games={games} 
@@ -185,29 +180,6 @@ const SinkOrSailScreen = () => {
                     />
                 )}
             </div>
-
-            {/* Suppression de la grille de jeux car maintenant intégrée dans le radar */}
-            {/* 
-            <div className="games-grid">
-                {games.map((game) => (
-                    <div key={game.id} className="game-card">
-                        <h3>{game.name}</h3>
-                        <img
-                            src={`http://localhost/uploads/${game.image}`}
-                            alt={game.name}
-                            style={{ width: "150px", height: "150px" }}
-                        />
-                        <p>Votes totaux : {voteCounts[game.id] || 0}</p>
-                        <button
-                            disabled={votes[game.id] || remainingVotes <= 0}
-                            onClick={() => handleVote(game.id)}
-                        >
-                            {votes[game.id] ? "Déjà voté" : "Voter"}
-                        </button>
-                    </div>
-                ))}
-            </div>
-            */}
         </div>
     );
 };
