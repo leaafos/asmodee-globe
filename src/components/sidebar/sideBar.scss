@@ -29,10 +29,6 @@
     justify-content: center;
     position: relative;
 
-    //overflow: hidden;
-
-
-
     #toggleSideBar {
         display: flex;
         align-items: center;
@@ -40,23 +36,27 @@
         transform: rotate(0deg);
         backdrop-filter: blur(80px);
         background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
-        border: 1px solid white;
+        border: 0;
         cursor: pointer;
-
     }
 
     #innerContainer {
         height: 100%;
         width: 82%;
-        //background-color: yellow;
         transition-duration: 300ms;
+        display: flex;
+        flex-direction: column;
+
+        // Section fixe du haut
+        .fixed-top-section {
+            flex-shrink: 0; // Ne se réduit pas
+        }
 
         #topIcons {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin: 3vh 0;
-            //background-color: red;
             height: 20px;
             width: 120px;
 
@@ -65,8 +65,6 @@
                 background: none;
                 border: 0;
                 cursor: pointer;
-
-
 
                 .imgIcon {
                     height: 100%;
@@ -82,7 +80,6 @@
                 border: 0;
                 cursor: pointer;
                 position: relative;
-
             }
 
             #logOutButton::before {
@@ -119,7 +116,6 @@
                 justify-content: space-around;
                 gap: 5px;
 
-
                 #jobTitle {
                     font-size: 0.6875rem;
                     color: $color-title;
@@ -130,7 +126,6 @@
                     font-size: 0.9rem;
                     color: white;
                 }
-
             }
         }
 
@@ -144,7 +139,18 @@
             color: white;
             font-size: 1rem;
             cursor: pointer;
+            gap: 20px;
+            display: flex;
+            align-items: center;
+        }
 
+        // Section scrollable qui prend l'espace restant
+        .scrollable-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0; // Important pour permettre le scroll
+            overflow: hidden;
         }
 
         #favoritesList::before {
@@ -163,10 +169,8 @@
             z-index: -1;
         }
 
-
-
         #favoritesList {
-            height: 33%;
+            flex-shrink: 0; // Taille basée sur le contenu
             border-top: 0;
             padding: 1vh 0;
             position: relative;
@@ -174,7 +178,6 @@
             #favoritesTitle {
                 color: $color-title;
                 font-size: 0.9rem;
-
             }
 
             #displayFavorites {
@@ -187,6 +190,7 @@
                 border-radius: 12px;
                 padding: 16px;
                 margin: 1vh 0;
+                cursor: pointer;
 
                 #leftFavorites {
                     display: flex;
@@ -194,16 +198,13 @@
                     gap: 20px;
                     width: auto;
 
-
                     #favoriteButtonImg {
                         width: 24px;
-
                     }
 
                     #favoriteButtonText {
                         color: white;
                         font-size: 1rem;
-
                     }
                 }
             }
@@ -218,8 +219,9 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                height: 190px;
-                overflow-y: scroll;
+                // Hauteur dynamique basée sur le nombre d'éléments, avec un maximum
+                max-height: 30vh;
+                overflow-y: auto;
 
                 .gameBlock::before {
                     content: '';
@@ -301,7 +303,6 @@
                                     border-radius: 100%;
                                 }
                             }
-
                         }
 
                         .bottomBlock {
@@ -312,7 +313,6 @@
                                 display: flex;
                                 gap: 4px;
 
-
                                 .findMatch {
                                     font-size: 0.625rem;
                                     background: none;
@@ -322,7 +322,6 @@
                                     padding: 2px 5px;
                                     color: white;
                                     position: relative;
-
                                 }
 
                                 .findMatch::before {
@@ -366,31 +365,23 @@
                                     pointer-events: none;
                                     z-index: -1;
                                 }
-
-
                             }
 
                             .favorite-btn {
                                 background: none;
                                 border: 0;
                                 cursor: pointer;
-
                             }
 
                             .favorited {
                                 background: none;
                                 border: 0;
                                 cursor: pointer;
-
                             }
                         }
-
                     }
                 }
-
             }
-
-
         }
 
         #gameList::before {
@@ -410,16 +401,18 @@
         }
 
         #gameList {
-            height: 33%;
+            flex: 1; // Prend tout l'espace restant
             border-top: 0;
             padding: 1vh 0;
             position: relative;
-
+            display: flex;
+            flex-direction: column;
+            min-height: 0; // Important pour le scroll
 
             #gamesMostPlayed {
                 color: $color-title;
                 font-size: 0.9rem;
-
+                flex-shrink: 0;
             }
 
             #gamesTitle {
@@ -436,6 +429,7 @@
                 border-radius: 12px;
                 padding: 4px 16px;
                 margin: 1vh 0;
+                flex-shrink: 0;
 
                 #leftGamesButton {
                     display: flex;
@@ -443,206 +437,28 @@
                     gap: 20px;
                     width: auto;
 
-
                     #gameButtonImg {
                         width: 24px;
-
                     }
 
                     #gameButtonText {
                         color: white;
                         font-size: 1rem;
-
                     }
                 }
             }
 
+            // Container unique qui s'adapte à l'espace disponible
+            #containerGames,
             #containerGamesExtended {
                 margin: 0;
                 padding: 0;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                height: 360px;
-                overflow-y: scroll;
-
-                .gameBlock::before {
-                    content: '';
-                    position: absolute;
-                    inset: 0;
-                    padding: 1px;
-                    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                    border-radius: inherit;
-                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                    mask-composite: xor;
-                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                    -webkit-mask-composite: xor;
-                    opacity: 40%;
-                    pointer-events: none;
-                    z-index: -1;
-                }
-
-
-                .gameBlock {
-                    width: 89%;
-                    height: auto;
-                    padding: 3%;
-                    list-style: none;
-                    display: flex;
-                    justify-content: space-between;
-                    background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
-                    border: 0;
-                    border-radius: 10px;
-                    margin-bottom: 1vh;
-                    color: white;
-                    position: relative;
-
-                    .leftBlock {
-                        width: 26%;
-                        height: auto;
-                        border-radius: 4px;
-                    }
-
-                    .rightBlock {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-around;
-                        width: 68%;
-                        gap: 10px;
-
-                        .topBlock {
-                            display: flex;
-                            justify-content: space-between;
-
-                            .titleAndCategories {
-                                display: flex;
-                                flex-direction: column;
-
-                                .gameName {
-                                    font-size: 1rem;
-                                }
-
-                                .categoryName {
-                                    font-size: 0.5rem;
-                                }
-                            }
-
-                            .usersInGame {
-                                gap: 3px;
-                                height: 16%;
-                                display: flex;
-                                align-items: center;
-                                justify-content: space-between;
-                                font-size: 0.625rem;
-                                color: white;
-                                padding: 5px 5px;
-                                background: linear-gradient(173deg, rgba(255, 255, 255, 0.40) 0%, rgba(238, 237, 237, 0.20) 100%);
-                                box-shadow: 0px 0.2px 3.3px 0px #CFE3F7;
-                                border-radius: 10px;
-
-                                .presence {
-                                    background-color: #46B82C;
-                                    height: 6px;
-                                    width: 6px;
-                                    border-radius: 100%;
-                                }
-                            }
-
-                        }
-
-                        .bottomBlock {
-                            display: flex;
-                            justify-content: space-between;
-
-                            .leftButtons {
-                                display: flex;
-                                gap: 4px;
-
-
-                                .findMatch {
-                                    font-size: 0.625rem;
-                                    background: none;
-                                    cursor: pointer;
-                                    border: 0;
-                                    border-radius: 4px;
-                                    padding: 2px 5px;
-                                    color: white;
-                                    position: relative;
-                                }
-
-                                .findMatch::before {
-                                    content: '';
-                                    position: absolute;
-                                    inset: 0;
-                                    padding: 1px;
-                                    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                                    border-radius: inherit;
-                                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                                    mask-composite: xor;
-                                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                                    -webkit-mask-composite: xor;
-                                    opacity: 40%;
-                                    pointer-events: none;
-                                    z-index: -1;
-                                }
-
-                                .invite {
-                                    font-size: 0.625rem;
-                                    background: none;
-                                    cursor: pointer;
-                                    border-radius: 4px;
-                                    border: 0;
-                                    color: white;
-                                    position: relative;
-                                }
-
-                                .invite::before {
-                                    content: '';
-                                    position: absolute;
-                                    inset: 0;
-                                    padding: 1px;
-                                    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                                    border-radius: inherit;
-                                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                                    mask-composite: xor;
-                                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                                    -webkit-mask-composite: xor;
-                                    opacity: 40%;
-                                    pointer-events: none;
-                                    z-index: -1;
-                                }
-
-
-                            }
-
-                            .favorite-btn {
-                                background: none;
-                                border: 0;
-                                cursor: pointer;
-
-                            }
-
-                            .favorited {
-                                background: none;
-                                border: 0;
-                                cursor: pointer;
-
-                            }
-                        }
-
-                    }
-                }
-
-            }
-
-            #containerGames {
-                margin: 0;
-                padding: 0;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                height: 170px;
-                overflow-y: scroll;
+                flex: 1; // Prend tout l'espace disponible
+                overflow-y: auto;
+                min-height: 0;
 
                 .gameBlock::before {
                     content: '';
@@ -724,7 +540,6 @@
                                     border-radius: 100%;
                                 }
                             }
-
                         }
 
                         .bottomBlock {
@@ -734,7 +549,6 @@
                             .leftButtons {
                                 display: flex;
                                 gap: 4px;
-
 
                                 .findMatch {
                                     font-size: 0.625rem;
@@ -788,39 +602,31 @@
                                     pointer-events: none;
                                     z-index: -1;
                                 }
-
-
                             }
 
                             .favorite-btn {
                                 background: none;
                                 border: 0;
                                 cursor: pointer;
-
                             }
 
                             .favorited {
                                 background: none;
                                 border: 0;
                                 cursor: pointer;
-
                             }
                         }
-
                     }
                 }
-
             }
-
-
         }
 
         #stateBar {
             display: flex;
             justify-content: space-evenly;
             height: 2px;
-
             width: 100%;
+            flex-shrink: 0; // Ne se réduit pas
 
             #small {
                 height: 2px;
@@ -836,12 +642,10 @@
                 width: 40%;
             }
         }
-
     }
-
-
 }
 
+// Version réduite inchangée
 #sideBarContainerNotExpanded::before {
     content: '';
     position: absolute;
@@ -878,22 +682,19 @@
         justify-content: center;
         backdrop-filter: blur(80px);
         background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
-        border: 1px solid white;
+        border: 0;
         cursor: pointer;
-
     }
 
     #innerContainerNotExpanded {
         height: 100%;
         width: 100%;
-        //background-color: yellow;
         transition-duration: 300ms;
         display: flex;
         flex-direction: column;
 
         #topIcons {
             display: none;
-
         }
 
         #userBlock {
@@ -910,7 +711,6 @@
 
             #userInfo {
                 display: none;
-
             }
         }
 
@@ -929,32 +729,25 @@
                 text-align: center;
                 color: $color-title;
                 font-size: 0.9rem;
-
             }
 
             #displayFavorites {
-
                 width: 100%;
                 border: 0;
                 border-radius: 12px;
                 background: none;
 
-
                 #leftFavorites {
-
-
                     #favoriteButtonImg {
                         width: 24px;
                         background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
                         padding: 16px;
                         margin: 1vh 0;
                         border-radius: 12px;
-
                     }
 
                     #favoriteButtonText {
                         display: none;
-
                     }
                 }
 
@@ -993,15 +786,9 @@
 
                     .rightBlock {
                         display: none;
-
-
-
                     }
                 }
-
             }
-
-
         }
 
         #gameList {
@@ -1015,17 +802,14 @@
                 display: none;
             }
 
-
             #gamesTitle {
                 color: $color-title;
                 font-size: 0.9rem;
                 margin-bottom: 1vh;
-
             }
 
             #searchGames {
                 display: none;
-
             }
 
             #containerGames {
@@ -1053,18 +837,11 @@
 
                     .rightBlock {
                         display: none;
-
-
                     }
                 }
-
             }
         }
-
-
     }
-
-
 }
 
 #toggleSideBar {

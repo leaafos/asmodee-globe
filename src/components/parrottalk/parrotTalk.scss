@@ -34,6 +34,7 @@
         color: white;
         margin-top: 5vh;
         margin-bottom: 2vh;
+        font-weight: 500;
 
         
     }
@@ -45,6 +46,7 @@
         gap: 20px;
         width: 80%;
         overflow: scroll;
+
 
         .messageItem::before {
              content: '';
@@ -234,3 +236,4 @@
     }
     
 }
+

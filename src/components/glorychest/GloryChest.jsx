@@ -30,7 +30,7 @@ const GloryChest = () => {
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
       }}
     >
       {children}
@@ -131,67 +131,67 @@ const GloryChest = () => {
       <div id="mainContent">
         {gloryChestContent === 'glory' ? (
           <div id="gloryChestContent">
-            <div style={{display: 'flex', flexWrap: 'wrap', width: 'auto', gap: '2rem'}}>
-            {unlockedBadges.length === 0 ? (
-              <p style={{ color: "white" }}>Aucun badge débloqué.</p>
-            ) : (
-              unlockedBadges.map((badge) => (
-                <div key={`badge1-${badge.id}`} className="badge-card">
-                  <img
-                    src={badge1}
-                    alt={badge.badge_name}
-                    className="imgBadge"
-                  />
-                  <div className="belowBadge">
-                    <span className="badgeName">Team spirit</span>
-                    <p className="badgeDescription">The Key Collaborator</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', width: 'auto', gap: '2rem' }}>
+              {unlockedBadges.length === 0 ? (
+                <p style={{ color: "white" }}>Aucun badge débloqué.</p>
+              ) : (
+                unlockedBadges.map((badge) => (
+                  <div key={`badge1-${badge.id}`} className="badge-card">
+                    <img
+                      src={badge1}
+                      alt={badge.badge_name}
+                      className="imgBadge"
+                    />
+                    <div className="belowBadge">
+                      <span className="badgeName">Team spirit</span>
+                      <p className="badgeDescription">The Key Collaborator</p>
+
+                    </div>
 
                   </div>
+                ))
+              )}
 
-                </div>
-              ))
-            )}
+              {unlockedBadges.length === 0 ? (
+                <p style={{ color: "white" }}>Aucun badge débloqué.</p>
+              ) : (
+                unlockedBadges.map((badge) => (
+                  <div key={`badge2-${badge.id}`} className="badge-card">
+                    <img
+                      src={badge2}
+                      alt={badge.badge_name}
+                      className="imgBadge"
+                    />
+                    <div className="belowBadge">
+                      <span className="badgeName">Team spirit</span>
+                      <p className="badgeDescription">The Key Collaborator</p>
 
-            {unlockedBadges.length === 0 ? (
-              <p style={{ color: "white" }}>Aucun badge débloqué.</p>
-            ) : (
-              unlockedBadges.map((badge) => (
-                <div key={`badge2-${badge.id}`} className="badge-card">
-                  <img
-                    src={badge2}
-                    alt={badge.badge_name}
-                    className="imgBadge"
-                  />
-                  <div className="belowBadge">
-                    <span className="badgeName">Team spirit</span>
-                    <p className="badgeDescription">The Key Collaborator</p>
+                    </div>
 
                   </div>
+                ))
+              )}
 
-                </div>
-              ))
-            )}
-
-            {pendingBadges.length === 0 ? (
-              <p style={{ color: 'white' }}>Aucun badge en cours de vote.</p>
-            ) : (
-              pendingBadges.map((badge) => (
-                <div key={pendingBadges[0].id} className="badge-card">
-                  <img
-                    src={badge3}
-                    alt={badge.badge_name}
-                    className="imgBadge"
-                  />
-                  <div className="belowBadge">
-                    <span className="badgeName">Creativity</span>
-                    <p className="badgeDescription">The playful visionary</p>
+              {pendingBadges.length === 0 ? (
+                <p style={{ color: 'white' }}>Aucun badge en cours de vote.</p>
+              ) : (
+                pendingBadges.map((badge) => (
+                  <div key={pendingBadges[0].id} className="badge-card">
+                    <img
+                      src={badge3}
+                      alt={badge.badge_name}
+                      className="imgBadge"
+                    />
+                    <div className="belowBadge">
+                      <span className="badgeName">Creativity</span>
+                      <p className="badgeDescription">The playful visionary</p>
+                    </div>
                   </div>
-                </div>
-              ))
-            )}
+                ))
+              )}
             </div>
 
-            <div className="badge-card">
+            <div className="badge-card" id="containerButton">
               <button id="buttonBadge" onClick={() => setShowForm(true)}>
                 <img src={defaultBadge} />
               </button>

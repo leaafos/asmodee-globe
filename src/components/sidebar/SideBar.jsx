@@ -10,6 +10,7 @@ import myGames from "../../assets/my_games_icon.svg";
 import searchIcon from "../../assets/search_icon.svg";
 import defaultAvatar from "../../assets/avatar.png";
 import { useNavigate } from "react-router-dom";
+import sinkIcon from "../../assets/sink_icon.svg"
 
 const SideBar = () => {
   const navigate = useNavigate();
@@ -21,17 +22,16 @@ const SideBar = () => {
   const [showSinkOrSail, setShowSinkOrSail] = useState(false);
 
   useEffect(() => {
-  const storedUser = localStorage.getItem("user");
-  if (storedUser) {
-    const parsedUser = JSON.parse(storedUser);
-    setUser(parsedUser);
-    // Correction de l'endpoint ici 👇
-    fetch(`http://localhost/liked/${parsedUser.id}`)
-      .then((res) => res.json())
-      .then(setFavorites)
-      .catch((err) => console.error("Erreur favoris :", err));
-  }
-}, []);
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      fetch(`http://localhost/liked/${parsedUser.id}`)
+        .then((res) => res.json())
+        .then(setFavorites)
+        .catch((err) => console.error("Erreur favoris :", err));
+    }
+  }, []);
 
   useEffect(() => {
     fetch("http://localhost/games")
@@ -63,7 +63,6 @@ const SideBar = () => {
       body: JSON.stringify({ user_id: user.id, game_id: gameId }),
     };
 
-
     fetch(url, options)
       .then((res) => res.json())
       .then(setFavorites)
@@ -91,7 +90,8 @@ const SideBar = () => {
         <img src={arrow} alt="toggle sidebar" />
       </button>
       <div id={expandedBar ? "innerContainerNotExpanded" : "innerContainer"}>
-        <div>
+        {/* Section fixe du haut */}
+        <div className="fixed-top-section">
           <div id="topIcons">
             <button className="buttonTop">
               <img className="imgIcon" src={settings} alt="settings" />
@@ -121,9 +121,11 @@ const SideBar = () => {
           </div>
 
           <button onClick={handleSinkOrSailClick} id="sinkOrSail">
+            <img src={sinkIcon} />
             Sink or sail
           </button>
-
+        </div>
+        <div className="scrollable-content">
           {favorites.length > 0 && (
             <div id="favoritesList">
               <span id="favoritesTitle">FAVORITES</span>
@@ -136,7 +138,7 @@ const SideBar = () => {
               </button>
               <ul
                 id={
-expandedFavorites ? "noContainerFavoriteGames" : "containerFavoriteGames"
+                  expandedFavorites ? "noContainerFavoriteGames" : "containerFavoriteGames"
                 }
               >
                 {favorites.map((game) => {
@@ -275,11 +277,6 @@ expandedFavorites ? "noContainerFavoriteGames" : "containerFavoriteGames"
               </ul>
             </div>
           )}
-
-          <div id="stateBar">
-            <div id="small"></div>
-            <div id="extend"></div>
-          </div>
         </div>
       </div>
     </div>

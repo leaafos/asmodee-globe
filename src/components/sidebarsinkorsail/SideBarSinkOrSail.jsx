@@ -12,6 +12,7 @@ import searchIcon from "../../assets/search_icon.svg"
 import avatar from "../../assets/avatar.png"
 import { cover } from "three/src/extras/TextureUtils.js";
 import { useNavigate } from "react-router-dom";
+import sinkIcon from "../../assets/sink_icon.svg"
 
 const SideBarSinkOrSail = () => {
   const navigate = useNavigate();
@@ -99,7 +100,8 @@ const SideBarSinkOrSail = () => {
         <img src={arrow} alt="toggle sidebar" />
       </button>
       <div id={expandedBar ? "innerContainerNotExpanded" : "innerContainer"}>
-        <div>
+        {/* Section fixe du haut */}
+        <div className="fixed-top-section">
           <div id="topIcons">
             <button className="buttonTop"><img className="imgIcon" src={settings} alt="" /></button>
             <button className="buttonTop"><img className="imgIcon" src={userIcon} alt="" /></button>
@@ -113,18 +115,23 @@ const SideBarSinkOrSail = () => {
             </div>
           </div>
           <button onClick={handleSinkOrSailClick} id="sinkOrSail">
+            <img src={sinkIcon} />
             Sink or sail
           </button>
+        </div>
+
+        {/* Contenu scrollable */}
+        <div className="scrollable-content">
           {favorites.length > 0 && (
-          <div id="favoritesList">
-            <span id="favoritesTitle">FAVORITES</span>
-            <button id="displayFavorites" onClick={handleClick2}>
-              <div id="leftFavorites">
-                <img id="favoriteButtonImg" src={myGames} alt="" />
-                <span id="favoriteButtonText">My games</span>
-              </div>
-              <img id="arrow" src={arrowDown} alt="" />
-            </button>
+            <div id="favoritesList">
+              <span id="favoritesTitle">FAVORITES</span>
+              <button id="displayFavorites" onClick={handleClick2}>
+                <div id="leftFavorites">
+                  <img id="favoriteButtonImg" src={myGames} alt="" />
+                  <span id="favoriteButtonText">My games</span>
+                </div>
+                <img id="arrow" src={arrowDown} alt="" />
+              </button>
               <ul id={expandedFavorites ? "noContainerFavoriteGames" : "containerFavoriteGames"}>
                 {favorites.map(game => {
                   const isFavorite = favorites.some(fav => fav.id === game.id);
@@ -151,9 +158,9 @@ const SideBarSinkOrSail = () => {
                               <button className="invite">Invite</button>
                             </div>
                             <button
-                          className={`favorite-btn ${isFavorite ? 'favorited' : ''}`}
-                          onClick={() => toggleFavorite(game.id)}
-                          aria-label={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
+                              className={`favorite-btn ${isFavorite ? 'favorited' : ''}`}
+                              onClick={() => toggleFavorite(game.id)}
+                              aria-label={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
                             >
                               <img 
                                 src={isFavorite ? favoriteCheck : favorite} 
@@ -169,16 +176,17 @@ const SideBarSinkOrSail = () => {
               </ul>
             </div>
           )}
+
           {games.length > 0 && (
-          <div id="gameList">
-            <span id="gamesMostPlayed">MOST PLAYED</span>
-            <span id="gamesTitle">GAMES</span>
-            <button id="searchGames">
-              <div id="leftGamesButton">
-                <img id="gameButtonImg" src={searchIcon} alt="" />
-                <span id="gameButtonText">Search</span>
-              </div>
-            </button>
+            <div id="gameList">
+              <span id="gamesMostPlayed">MOST PLAYED</span>
+              <span id="gamesTitle">GAMES</span>
+              <button id="searchGames">
+                <div id="leftGamesButton">
+                  <img id="gameButtonImg" src={searchIcon} alt="" />
+                  <span id="gameButtonText">Search</span>
+                </div>
+              </button>
               <ul id={expandedFavorites ? "containerGamesExtended" : "containerGames"}>
                 {availableGames.map(game => {
                   const isFavorite = favorites.some(fav => fav.id === game.id);
@@ -205,9 +213,9 @@ const SideBarSinkOrSail = () => {
                               <button className="invite">Invite</button>
                             </div>
                             <button
-                          className={`favorite-btn ${isFavorite ? 'favorited' : ''}`}
-                          onClick={() => toggleFavorite(game.id)}
-                          aria-label={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
+                              className={`favorite-btn ${isFavorite ? 'favorited' : ''}`}
+                              onClick={() => toggleFavorite(game.id)}
+                              aria-label={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
                             >
                               <img 
                                 src={isFavorite ? favoriteCheck : favorite} 
@@ -223,11 +231,6 @@ const SideBarSinkOrSail = () => {
               </ul>
             </div>               
           )}
-          <div id="stateBar">
-            <div id="small"></div>
-            <div id="extend"></div>
-
-          </div>
         </div>
       </div>
     </div>
@@ -235,30 +238,3 @@ const SideBarSinkOrSail = () => {
 };
 
 export default SideBarSinkOrSail;
-
-/*
-
-=======
-
-
->>>>>>> 2384efbb228dfdad176cc65f184338cdb626d432
-      <div id={expandedBar ? "innerContainerExpanded" : "innerContainer"}>
-        <div style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
-          <button onClick={handleLogout} >
-            Logout
-          </button>
-        </div>
-        <div style={{ padding: "10px", textAlign: "center" }}>
-          <button onClick={() => setShowSinkOrSail(true)}>Sink or Sail</button>
-        </div>
-        {showSinkOrSail && (
-          <div className="modal-overlay">
-            <div className="modal-content">
-              <button className="close-btn" onClick={() => setShowSinkOrSail(false)}>X</button>
-              <SinkOrSail />
-            </div>
-          </div>
-        )}
->>>>>>> 2384efbb228dfdad176cc65f184338cdb626d432
-
-*/
