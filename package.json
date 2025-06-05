@@ -13,7 +13,7 @@
     "d3-interpolate": "^3.0.1",
     "globe.gl": "^2.41.4",
     "knex": "^3.1.0",
-    "multer": "^2.0.0",
+    "multer": "^2.0.1",
     "path": "^0.12.7",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
