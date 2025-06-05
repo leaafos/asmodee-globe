@@ -352,7 +352,7 @@ const GlobeScene = () => {
       )}
 
       {messages.map((msg, index) => (
-        <div
+        <div className='globeMsg'
           key={msg.id}
           ref={el => labelRefs.current[index] = el}
           style={{ // WILLIAM BOUTONS AUTOUR DE LA PLANETE 
@@ -364,7 +364,6 @@ const GlobeScene = () => {
             padding: '6px 14px',
             fontSize: '0.75em',
             background: 'radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.2) 100%)',
-            border: '0.5px solid white',
             borderRadius: '4px',
             color: '#fff',
             wordWrap: 'break-word',
@@ -397,6 +396,7 @@ const GlobeScene = () => {
           .filter(opt => opt.id >= 1 && opt.id <= 5)
           .map(opt => (
             <button
+              className='btnMsg'
               key={opt.id}
               onClick={() => handleClick(opt.id)}
               style={{ //WILLIAAAN BOUTONS EN BAS
@@ -404,7 +404,6 @@ const GlobeScene = () => {
                 padding: 'clamp(3px, 0.5vw, 4px) clamp(8px, 1.5vw, 12px)',
                 cursor: 'pointer',
                 borderRadius: '4px',
-                border: '0.5px solid white',
                 background: 'radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%)',
                 color: '#fff',
                 transition: 'all 0.3s ease-in-out',

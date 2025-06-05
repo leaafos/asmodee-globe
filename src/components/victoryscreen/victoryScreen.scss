@@ -48,6 +48,13 @@
                 font-size: 0.65rem;
                 flex-shrink: 0;
                 padding: 1vh 0;
+
+                .header {
+                    font-size: 0.625rem;
+                    font-weight: 400;
+                    color: #D1D1D6;
+                    
+                }
             }
 
             #userRow {
@@ -151,9 +158,25 @@
             height: 56px;
             width: 100%;
 
+            #button::before {
+                content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
+            }
+
             #button {
                 background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
-                border: 1px solid white;
+                border: 0;
                 border-radius: 12px;
                 height: 100%;
                 width: 100%;
@@ -161,6 +184,7 @@
                 color: white;
                 font-weight: 400;
                 cursor: pointer;
+                position: relative;
             }
 
         }

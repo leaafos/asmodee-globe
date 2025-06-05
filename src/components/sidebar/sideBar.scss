@@ -4,7 +4,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    padding: 1px;
+    padding: 2px;
     background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
     border-radius: inherit;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -31,7 +31,7 @@
 
     //overflow: hidden;
 
-    
+
 
     #toggleSideBar {
         display: flex;
@@ -144,15 +144,32 @@
             color: white;
             font-size: 1rem;
             cursor: pointer;
-            
+
+        }
+
+        #favoritesList::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding-top: 1px;
+            background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: xor;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            opacity: 40%;
+            pointer-events: none;
+            z-index: -1;
         }
 
 
 
         #favoritesList {
             height: 33%;
-            border-top: 1px white solid;
+            border-top: 0;
             padding: 1vh 0;
+            position: relative;
 
             #favoritesTitle {
                 color: $color-title;
@@ -310,18 +327,18 @@
 
                                 .findMatch::before {
                                     content: '';
-                position: absolute;
-                inset: 0;
-                padding: 1px;
-                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                border-radius: inherit;
-                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                mask-composite: xor;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                opacity: 40%;
-                pointer-events: none;
-                    z-index: -1;
+                                    position: absolute;
+                                    inset: 0;
+                                    padding: 1px;
+                                    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+                                    border-radius: inherit;
+                                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                                    mask-composite: xor;
+                                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                                    -webkit-mask-composite: xor;
+                                    opacity: 40%;
+                                    pointer-events: none;
+                                    z-index: -1;
                                 }
 
                                 .invite {
@@ -336,18 +353,18 @@
 
                                 .invite::before {
                                     content: '';
-                position: absolute;
-                inset: 0;
-                padding: 1px;
-                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                border-radius: inherit;
-                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                mask-composite: xor;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                opacity: 40%;
-                pointer-events: none;
-                    z-index: -1;
+                                    position: absolute;
+                                    inset: 0;
+                                    padding: 1px;
+                                    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+                                    border-radius: inherit;
+                                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                                    mask-composite: xor;
+                                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                                    -webkit-mask-composite: xor;
+                                    opacity: 40%;
+                                    pointer-events: none;
+                                    z-index: -1;
                                 }
 
 
@@ -376,10 +393,27 @@
 
         }
 
+        #gameList::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding-top: 1px;
+            background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: xor;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            opacity: 40%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
         #gameList {
             height: 33%;
-            border-top: 1px white solid;
+            border-top: 0;
             padding: 1vh 0;
+            position: relative;
 
 
             #gamesMostPlayed {
@@ -434,17 +468,17 @@
 
                 .gameBlock::before {
                     content: '';
-                position: absolute;
-                inset: 0;
-                padding: 1px;
-                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                border-radius: inherit;
-                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                mask-composite: xor;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                opacity: 40%;
-                pointer-events: none;
+                    position: absolute;
+                    inset: 0;
+                    padding: 1px;
+                    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+                    border-radius: inherit;
+                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                    mask-composite: xor;
+                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                    -webkit-mask-composite: xor;
+                    opacity: 40%;
+                    pointer-events: none;
                     z-index: -1;
                 }
 
@@ -538,18 +572,18 @@
 
                                 .findMatch::before {
                                     content: '';
-                position: absolute;
-                inset: 0;
-                padding: 1px;
-                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                border-radius: inherit;
-                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                mask-composite: xor;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                opacity: 40%;
-                pointer-events: none;
-                    z-index: -1;
+                                    position: absolute;
+                                    inset: 0;
+                                    padding: 1px;
+                                    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+                                    border-radius: inherit;
+                                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                                    mask-composite: xor;
+                                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                                    -webkit-mask-composite: xor;
+                                    opacity: 40%;
+                                    pointer-events: none;
+                                    z-index: -1;
                                 }
 
                                 .invite {
@@ -564,18 +598,18 @@
 
                                 .invite::before {
                                     content: '';
-                position: absolute;
-                inset: 0;
-                padding: 1px;
-                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                border-radius: inherit;
-                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                mask-composite: xor;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                opacity: 40%;
-                pointer-events: none;
-                    z-index: -1;
+                                    position: absolute;
+                                    inset: 0;
+                                    padding: 1px;
+                                    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+                                    border-radius: inherit;
+                                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                                    mask-composite: xor;
+                                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                                    -webkit-mask-composite: xor;
+                                    opacity: 40%;
+                                    pointer-events: none;
+                                    z-index: -1;
                                 }
 
 
@@ -612,17 +646,17 @@
 
                 .gameBlock::before {
                     content: '';
-                position: absolute;
-                inset: 0;
-                padding: 1px;
-                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                border-radius: inherit;
-                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                mask-composite: xor;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                opacity: 40%;
-                pointer-events: none;
+                    position: absolute;
+                    inset: 0;
+                    padding: 1px;
+                    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+                    border-radius: inherit;
+                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                    mask-composite: xor;
+                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                    -webkit-mask-composite: xor;
+                    opacity: 40%;
+                    pointer-events: none;
                     z-index: -1;
                 }
 
@@ -715,18 +749,18 @@
 
                                 .findMatch::before {
                                     content: '';
-                position: absolute;
-                inset: 0;
-                padding: 1px;
-                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                border-radius: inherit;
-                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                mask-composite: xor;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                opacity: 40%;
-                pointer-events: none;
-                    z-index: -1;
+                                    position: absolute;
+                                    inset: 0;
+                                    padding: 1px;
+                                    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+                                    border-radius: inherit;
+                                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                                    mask-composite: xor;
+                                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                                    -webkit-mask-composite: xor;
+                                    opacity: 40%;
+                                    pointer-events: none;
+                                    z-index: -1;
                                 }
 
                                 .invite {
@@ -741,18 +775,18 @@
 
                                 .invite::before {
                                     content: '';
-                position: absolute;
-                inset: 0;
-                padding: 1px;
-                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                border-radius: inherit;
-                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                mask-composite: xor;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                opacity: 40%;
-                pointer-events: none;
-                    z-index: -1;
+                                    position: absolute;
+                                    inset: 0;
+                                    padding: 1px;
+                                    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+                                    border-radius: inherit;
+                                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                                    mask-composite: xor;
+                                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                                    -webkit-mask-composite: xor;
+                                    opacity: 40%;
+                                    pointer-events: none;
+                                    z-index: -1;
                                 }
 
 
@@ -810,18 +844,18 @@
 
 #sideBarContainerNotExpanded::before {
     content: '';
-                position: absolute;
-                inset: 0;
-                padding: 1px;
-                background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
-                border-radius: inherit;
-                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                mask-composite: xor;
-                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                -webkit-mask-composite: xor;
-                opacity: 40%;
-                pointer-events: none;
-                    z-index: -1;
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
 }
 
 #sideBarContainerNotExpanded {

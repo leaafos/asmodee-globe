@@ -62,11 +62,13 @@
         overflow: scroll;
 
         #gloryChestContent {
-            padding: 0 5%;
-            height: 100%;
+            padding: 5% 5%;
+            height: auto;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            
+            width: -webkit-fill-available;
+            
 
 
             .badge-card {
@@ -74,7 +76,7 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: space-between;
-                height: 70%;
+                height: auto;
 
                 .imgBadge {
                     width: auto;
@@ -142,6 +144,9 @@
         #piratCouncilContent {
             flex: 1;
             padding: 3%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
 
             .innerContainer {
                 background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);

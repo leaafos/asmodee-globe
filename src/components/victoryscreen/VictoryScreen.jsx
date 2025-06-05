@@ -1,5 +1,5 @@
 import "./victoryScreen.scss"
-import videoBg from "./../../assets/videoBg.mp4"
+import videoBg from "./../../assets/share_victory.mp4"
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -57,7 +57,7 @@ const VictoryScreen = () => {
 
     return (
         <div id="victoryScreenContainer">
-            <video autoPlay loop muted id="myVideo">
+            <video autoPlay muted id="myVideo">
                 <source src={videoBg} type="video/mp4" />
             </video>
             <div id="innerVideoContainer">
@@ -67,9 +67,9 @@ const VictoryScreen = () => {
                     ) : (
                         <div id="tableWrapper">
                             <div id="tableHeader">
-                                <div className="col-rank">RANK</div>
-                                <div className="col-name">NAME</div>
-                                <div className="col-score">SCORE</div>
+                                <div className="col-rank header">RANK</div>
+                                <div className="col-name header">NAME</div>
+                                <div className="col-score header">SCORE</div>
                             </div>
                             {userScore && (
                                 <div id="userRow">

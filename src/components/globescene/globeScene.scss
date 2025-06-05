@@ -24,6 +24,51 @@
 
 }
 
+.btnMsg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
+    
+}
+
+.globeMsg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.globeMsg {
+    border: 0;
+    position: relative;
+
+}
+
+.btnMsg {
+    border: 0;
+    position: relative;
+
+}
+
 
 
 

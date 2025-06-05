@@ -34,13 +34,29 @@
         justify-content: center;
     }
 
+    #titleContainer::before {
+        content: '';
+                 position: absolute;
+                 inset: 0;
+                 padding-bottom: 1px;
+                 background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);                 border-radius: inherit;
+                 mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                 mask-composite: xor;
+                 -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                 -webkit-mask-composite: xor;
+                opacity: 40%;                 pointer-events: none;
+                  z-index: -1;
+
+    }
+
     #titleContainer {
         height: 25%;
         padding: 0 2vw;
         display: flex;
         align-items: center;
-        border-bottom: 1px solid white;
+        border-bottom: 0;
         flex-shrink: 0;
+        position: relative;
 
         #titleText {
             font-size: 1rem;
@@ -71,6 +87,13 @@
             font-size: 0.65rem;
             flex-shrink: 0;
             padding: 1vh 0;
+
+            .header {
+                font-size: 0.625rem;
+                font-weight: 400;
+                color: #D1D1D6;
+            }
+            
         }
 
         #userRow {

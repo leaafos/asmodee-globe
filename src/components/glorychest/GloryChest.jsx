@@ -131,11 +131,12 @@ const GloryChest = () => {
       <div id="mainContent">
         {gloryChestContent === 'glory' ? (
           <div id="gloryChestContent">
+            <div style={{display: 'flex', flexWrap: 'wrap', width: 'auto', gap: '2rem'}}>
             {unlockedBadges.length === 0 ? (
               <p style={{ color: "white" }}>Aucun badge débloqué.</p>
             ) : (
               unlockedBadges.map((badge) => (
-                <div key={badge.id} className="badge-card">
+                <div key={`badge1-${badge.id}`} className="badge-card">
                   <img
                     src={badge1}
                     alt={badge.badge_name}
@@ -155,7 +156,7 @@ const GloryChest = () => {
               <p style={{ color: "white" }}>Aucun badge débloqué.</p>
             ) : (
               unlockedBadges.map((badge) => (
-                <div key={badge.id} className="badge-card">
+                <div key={`badge2-${badge.id}`} className="badge-card">
                   <img
                     src={badge2}
                     alt={badge.badge_name}
@@ -175,7 +176,7 @@ const GloryChest = () => {
               <p style={{ color: 'white' }}>Aucun badge en cours de vote.</p>
             ) : (
               pendingBadges.map((badge) => (
-                <div key={badge.id} className="badge-card">
+                <div key={pendingBadges[0].id} className="badge-card">
                   <img
                     src={badge3}
                     alt={badge.badge_name}
@@ -188,6 +189,7 @@ const GloryChest = () => {
                 </div>
               ))
             )}
+            </div>
 
             <div className="badge-card">
               <button id="buttonBadge" onClick={() => setShowForm(true)}>

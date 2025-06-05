@@ -50,13 +50,30 @@
                 }
             }
 
+            #logOutButton::before {
+                content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
+            }
+
             #logOutButton {
+                position: relative;
                 font-size: 0.75rem;
                 padding: 5px 10px;
                 background: $background-button;
                 color: $color-button;
                 border-radius: $radius-button;
-                border: $border-button;
+                border: 0;
                 cursor: pointer;
 
             }
@@ -94,9 +111,26 @@
             }
         }
 
+        #favoritesList::before {
+            content: '';
+    position: absolute;
+    inset: 0;
+    padding-top: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
+        }
+
         #favoritesList {
+            position: relative;
             height: auto;
-            border-top: 1px white solid;
+            border-top: 0;
             padding: 1vh 0;
 
             #favoritesTitle {
@@ -148,6 +182,22 @@
                 height: auto;
                 overflow-y: scroll;
 
+                .gameBlock::before {
+                    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
+                }
+
                 .gameBlock {
                     width: -webkit-fill-available;
                     height: auto;
@@ -156,10 +206,11 @@
                     display: flex;
                     justify-content: space-between;
                     background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
-                    border: 1px solid white;
+                    border: 0;
                     border-radius: 10px;
                     margin-bottom: 1vh;
                     color: white;
+                    position: relative;
 
 
                     .leftBlock {
@@ -223,16 +274,49 @@
                                 display: flex;
                                 gap: 4px;
 
+                                .findMatch::before {
+                                    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
+                                }
+
 
                                 .findMatch {
                                     font-size: 0.625rem;
                                     background: none;
                                     cursor: pointer;
-                                    border: 1px solid white;
+                                    border: 0;
                                     border-radius: 4px;
                                     padding: 2px 5px;
                                     color: white;
+                                    position: relative;
 
+                                }
+
+                                .invite::before {
+                                    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
                                 }
 
                                 .invite {
@@ -240,8 +324,9 @@
                                     background: none;
                                     cursor: pointer;
                                     border-radius: 4px;
-                                    border: 1px solid white;
+                                    border: 0;
                                     color: white;
+                                    position: relative;
                                 }
 
 
@@ -267,12 +352,29 @@
 
             }
 
+            #nbPlayers::before {
+                content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
+            }
+
             #nbPlayers {
                 display: flex;
                 flex-direction: column;
                 background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
                 border-radius: 10px;
-                border: 1px solid white;
+                border: 0;
+                position: relative;
 
                 #title {
                    font-size: 0.75rem;
@@ -286,17 +388,34 @@
                     justify-content: space-between;
                     align-items: center;
 
+                    .player-selector::before {
+                        content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
+                    }
+
                     .player-selector {
                         display: flex;
                         align-items: center;
                         color: white;
                         background: linear-gradient(173deg, rgba(255, 255, 255, 0.40) 0%, rgba(238, 237, 237, 0.20) 100%);
-                        border: 1px solid white;
+                        border: 0;
                         box-shadow: 0px 0.2px 3.3px 0px #CFE3F7;
                         border-radius: 10px;
                         padding: 1px 2px;
                         font-size: 0.625rem;
                         cursor: pointer;
+                        position: relative;
 
                         #arrow-down {
                             height: 0.625rem;
@@ -453,10 +572,27 @@
             }
         }
 
+        #gameList::before {
+            content: '';
+    position: absolute;
+    inset: 0;
+    padding-top: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
+        }
+
         #gameList {
             height: auto;
-            border-top: 1px white solid;
+            border-top: 0;
             padding: 1vh 0;
+            position: relative;
 
 
             #gamesMostPlayed {
@@ -509,6 +645,22 @@
                 
                 overflow-y: scroll;
 
+                .gameBlock::before {
+                    content: '';
+    position: absolute;
+    inset: 0;
+    padding-top: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
+                }
+
 
                 .gameBlock {
                     width: -webkit-fill-available;
@@ -518,10 +670,11 @@
                     display: flex;
                     justify-content: space-between;
                     background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
-                    border: 1px solid white;
+                    border: 0;
                     border-radius: 10px;
                     margin-bottom: 1vh;
                     color: white;
+                    position: relative;
 
                     .leftBlock {
                         width: 26%;
@@ -636,6 +789,22 @@
                 height: 100%;
                 overflow-y: scroll;
 
+                .gameBlock::before {
+                    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
+                }
+
                 .gameBlock {
                     width: -webkit-fill-available;
                     height: auto;
@@ -644,10 +813,11 @@
                     display: flex;
                     justify-content: space-between;
                     background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
-                    border: 1px solid white;
+                    border: 0;
                     border-radius: 10px;
                     margin-bottom: 1vh;
                     color: white;
+                    position: relative;
 
                     .leftBlock {
                         width: 26%;
@@ -756,6 +926,22 @@
 
         }
 
+        #playAgainButton::before {
+            content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(40deg, #FFFFFF 0%, rgba(238, 237, 237, 0.5) 100%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 40%;
+    pointer-events: none;
+    z-index: -1;
+        }
+
        
 
         #playAgainButton {
@@ -764,10 +950,11 @@
             background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
             padding: 16px 0;
             border-radius: 12px;
-            border: 1px solid white;
+            border: 0;
             font-size: 1rem;
             color: white;
             font-weight: 500;
+            position: relative;
         }
        
 

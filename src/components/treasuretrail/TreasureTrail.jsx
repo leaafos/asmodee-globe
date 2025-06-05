@@ -79,9 +79,9 @@ const TreasureTrail = () => {
       <div id="listScores">
         <div id="tableWrapper">
           <div id="tableHeader">
-            <div className="col-rank">RANK</div>
-            <div className="col-name">NAME</div>
-            <div className="col-score">SCORE</div>
+            <div className="col-rank header">RANK</div>
+            <div className="col-name header">NAME</div>
+            <div className="col-score header">SCORE</div>
           </div>
 
           <div id="scrollableContent">
