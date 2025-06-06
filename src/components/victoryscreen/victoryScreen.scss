@@ -119,6 +119,7 @@
                 display: flex;
                 align-items: center;
                 font-size: 0.75rem;
+                padding-left: 24px;
             }
 
             .col-name {
@@ -192,3 +193,10 @@
         }
     }
 }
+
+.table-row.me {
+    background: radial-gradient(100.71% 141.42% at 0% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.06) 100%);
+    font-weight: bold;   
+    padding: 12px; 
+    border-radius: 10px;
+    border-radius: 12px;}

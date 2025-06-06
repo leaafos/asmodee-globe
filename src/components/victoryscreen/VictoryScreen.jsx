@@ -1,7 +1,7 @@
 import "./victoryScreen.scss"
 import videoBg from "./../../assets/share_victory.mp4"
 import victoryImage from "../../assets/victoryImage.svg"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const VictoryScreen = () => {
@@ -13,6 +13,7 @@ const VictoryScreen = () => {
     const [error, setError] = useState(null);
     const [showContainer, setShowContainer] = useState(false); // Nouvel état pour l'animation
     const navigate = useNavigate();
+     const userRowRef = useRef(null);
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -46,6 +47,11 @@ const VictoryScreen = () => {
 
     const userScore = scores.find(score => score.id === userId);
     const otherScores = scores.filter(score => score.id !== userId);
+    const sortedScores = [...scores].sort((a, b) => {
+        if (a.id === userId) return -1;
+        if (b.id === userId) return 1;
+        return (a.ranking ?? Infinity) - (b.ranking ?? Infinity);
+      });
 
     if (loading) {
         return <div id="treasureContainer">Chargement des scores...</div>;
@@ -83,23 +89,24 @@ const VictoryScreen = () => {
                                 <div className="col-name header">NAME</div>
                                 <div className="col-score header">SCORE</div>
                             </div>
-                            {userScore && (
-                                <div id="userRow">
-                                    <div className="col-rank">{userScore.ranking}</div>
-                                    <div className="col-name">{userScore.name}</div>
-                                    <div className="col-score">{userScore.score}</div>
-                                </div>
-                            )}
-                            <div id="scrollableContent">
-                                {otherScores.map((scoreItem) => (
-                                    <div key={scoreItem.id} className="table-row">
-                                        <div className="col-rank">{scoreItem.ranking ?? "-"}</div>
-                                        <div className="col-name">{scoreItem.name}</div>
+                            {sortedScores.map((scoreItem) => {
+                                const isUser = scoreItem.name === "Me";
+                                return (
+                                    <div>
+                                    <div
+                                    key={scoreItem.id}
+                                    ref={isUser ? userRowRef : null}
+                                    className={`table-row ${isUser ? "me" : ""}`}
+                                    >
+                                    <div className="col-rank">{scoreItem.ranking ?? "-"}</div>
+                                        <div className="col-name">{isUser ? "Me" : scoreItem.name}</div>
                                         <div className="col-score">{scoreItem.score}</div>
+
                                     </div>
-                                ))}
+                                    </div>
+                                );
+                                })}
                             </div>
-                        </div>
                     )}
                 </div>
                 <div id="score">
