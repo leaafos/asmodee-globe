@@ -31,7 +31,7 @@ async function createTable() {
         table.string('title');
         table.string('description');
         table.string('image');
-        table.integer('vote_threshold'); // Seuil de vote pour obtenir le badge
+        table.integer('vote_threshold'); 
       });
       console.log('La table "badges" a été créée avec succès.');
     } else {

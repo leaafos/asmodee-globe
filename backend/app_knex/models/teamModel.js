@@ -8,11 +8,25 @@ async function createTeam( name, badgeTeam_id, structure_id, staff) {
 
 // Read
 async function getAllTeams() {
-  return await knex.select().from('Teams');
+  return await knex('teams')
+    .select(
+      'teams.*',
+      'structures.country',
+      'structures.city'
+    )
+    .leftJoin('structures', 'teams.structure_id', 'structures.id');
 }
 
 async function getTeamById(id) {
-  return await knex('Teams').where({ id }).first();
+  return await knex('teams')
+    .select(
+      'teams.*',
+      'structures.country',
+      'structures.city'
+    )
+    .leftJoin('structures', 'teams.structure_id', 'structures.id')
+    .where('teams.id', id)
+    .first();
 }
 
 // Update

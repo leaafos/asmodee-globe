@@ -132,7 +132,7 @@ const GloryChest = () => {
         {gloryChestContent === 'glory' ? (
           <div id="gloryChestContent">
             <div style={{ display: 'flex', flexWrap: 'wrap', width: 'auto', gap: '2rem' }}>
-              {unlockedBadges.length === 0 ? (
+              {/* {unlockedBadges.length === 0 ? (
                 <p style={{ color: "white" }}>Aucun badge débloqué.</p>
               ) : (
                 unlockedBadges.map((badge) => (
@@ -150,7 +150,7 @@ const GloryChest = () => {
 
                   </div>
                 ))
-              )}
+              )} */}
 
               {unlockedBadges.length === 0 ? (
                 <p style={{ color: "white" }}>Aucun badge débloqué.</p>
@@ -163,8 +163,8 @@ const GloryChest = () => {
                       className="imgBadge"
                     />
                     <div className="belowBadge">
-                      <span className="badgeName">Team spirit</span>
-                      <p className="badgeDescription">The Key Collaborator</p>
+                      <span className="badgeName"> {badge.badge_name} </span>
+                      <p className="badgeDescription">Team award</p>
 
                     </div>
 
@@ -172,7 +172,7 @@ const GloryChest = () => {
                 ))
               )}
 
-              {pendingBadges.length === 0 ? (
+              {/* {pendingBadges.length === 0 ? (
                 <p style={{ color: 'white' }}>Aucun badge en cours de vote.</p>
               ) : (
                 pendingBadges.map((badge) => (
@@ -188,7 +188,7 @@ const GloryChest = () => {
                     </div>
                   </div>
                 ))
-              )}
+              )} */}
             </div>
 
             <div className="badge-card" id="containerButton">

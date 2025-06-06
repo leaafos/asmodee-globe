@@ -10,6 +10,7 @@ const TeamBadgeForm = ({ onClose = () => {} }) => {
 
   // Pour modifier ou afficher la description et pays de l'équipe
   const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
   const [description, setDescription] = useState("");
 
   const [message, setMessage] = useState(null);
@@ -29,18 +30,21 @@ const TeamBadgeForm = ({ onClose = () => {} }) => {
   }, []);
 
   // Met à jour pays & description à partir de l'équipe sélectionnée
-  useEffect(() => {
-    if (!selectedTeam) {
-      setCountry("");
-      setDescription("");
-      return;
-    }
-    const team = teams.find((t) => t.id === parseInt(selectedTeam));
-    if (team) {
-      setCountry(team.country || "");
-      setDescription(team.description || "");
-    }
-  }, [selectedTeam, teams]);
+ useEffect(() => {
+  if (!selectedTeam) {
+    setCountry("");
+    setCity("");
+    setDescription("");
+    return;
+  }
+  const team = teams.find((t) => t.id === parseInt(selectedTeam));
+  if (team) {
+    setCountry(team.country || "");
+    setCity(team.city || "");
+    setDescription(team.description || "");
+  }
+  console.log(teams)
+}, [selectedTeam, teams]);
 
   // Fermer la popup avec Escape
   useEffect(() => {
@@ -84,6 +88,7 @@ const TeamBadgeForm = ({ onClose = () => {} }) => {
       setSelectedTeam("");
       setSelectedBadge("");
       setCountry("");
+      setCity("");
       setDescription("");
       
       // Fermer la popup après 2 secondes
@@ -109,7 +114,7 @@ const TeamBadgeForm = ({ onClose = () => {} }) => {
     <div className="modal-overlay" onClick={handleClose}>
       <div className="modal" onClick={handleModalClick}>
         <div className="modal-header">
-          <h2 className="modal-title">Attribuer un badge à une équipe</h2>
+          <h2 className="modal-title"> Assign a badge to a team</h2>
           <button
             className="close-button"
             onClick={handleClose}
@@ -123,21 +128,21 @@ const TeamBadgeForm = ({ onClose = () => {} }) => {
           <div className="form-content">
             <div className="form-group">
               <label className="form-label">
-                Équipe<span className="required">*</span> :
+                Team<span className="required">*</span> :
               </label>
               <select
-                value={selectedTeam}
-                onChange={(e) => setSelectedTeam(e.target.value)}
-                required
-                className="form-select"
-              >
-                <option value="">-- Sélectionnez une équipe --</option>
-                {teams.map((team) => (
-                  <option key={team.id} value={team.id}>
-                    {team.name} ({team.country})
-                  </option>
-                ))}
-              </select>
+              value={selectedTeam}
+              onChange={(e) => setSelectedTeam(e.target.value)}
+              required
+              className="form-select"
+            >
+              <option value="">-- Select a team --</option>
+              {teams.map((team) => (
+                <option key={team.id} value={team.id}>
+                  {team.name} ({team.country}{team.city ? `, ${team.city}` : ""})
+                </option>
+              ))}
+            </select>
             </div>
 
             <div className="form-group">
@@ -150,7 +155,7 @@ const TeamBadgeForm = ({ onClose = () => {} }) => {
                 required
                 className="form-select"
               >
-                <option value="">-- Sélectionnez un badge --</option>
+                <option value="">-- Select a badge --</option>
                 {badges.map((badge) => (
                   <option key={badge.id} value={badge.id}>
                     {badge.name}
@@ -159,7 +164,7 @@ const TeamBadgeForm = ({ onClose = () => {} }) => {
               </select>
             </div>
 
-            <div className="form-group">
+            {/* <div className="form-group">
               <label className="form-label">
                 Pays 
               </label>
@@ -170,7 +175,7 @@ const TeamBadgeForm = ({ onClose = () => {} }) => {
       
                 className="form-input"
               />
-            </div>
+            </div> */}
 
             <div className="form-group">
               <label className="form-label">
@@ -191,13 +196,13 @@ const TeamBadgeForm = ({ onClose = () => {} }) => {
                 onClick={handleClose}
                 className="btn btn-secondary"
               >
-                Annuler
+                Cancel
               </button>
               <button 
                 type="submit"
                 className="btn btn-primary"
               >
-                Attribuer le badge
+                Assign the badge
               </button>
             </div>
 

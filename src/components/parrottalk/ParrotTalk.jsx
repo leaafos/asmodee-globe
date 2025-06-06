@@ -116,7 +116,7 @@ const ParrotTalk = () => {
       if (messageListRef.current) {
         messageListRef.current.scrollTop += 1; 
       }
-    }, 50); 
+    }, 150); 
   
     return () => clearInterval(interval); 
   }, []);

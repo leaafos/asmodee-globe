@@ -10,6 +10,7 @@ const TreasureTrail = () => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
+    
     if (storedUser) {
       const user = JSON.parse(storedUser);
       setUserId(Number(user.id));
@@ -34,7 +35,12 @@ const TreasureTrail = () => {
   }, []);
 
   const userScore = scores.find(score => score.id === userId);
-
+  const sortedScores = [...scores].sort((a, b) => {
+    if (a.id === userId) return -1;
+    if (b.id === userId) return 1;
+    return (a.ranking ?? Infinity) - (b.ranking ?? Infinity);
+  });
+  
 
   const scrollToUser = () => {
     if (userRowRef.current) {
@@ -63,7 +69,8 @@ const TreasureTrail = () => {
         <span id="titleText">TREASURE TRAIL</span>
       </div>
       <div>
-            {userScore ? (
+
+            {/* {userScore ? (
               <div
                 id="userRowTop"
                 onClick={scrollToUser}
@@ -73,7 +80,7 @@ const TreasureTrail = () => {
                 <div className="col-name">{userScore?.name}</div>
                 <div className="col-score">{userScore?.score}</div>
               </div>
-            ) : null}
+            ) : null} */}
             </div>
 
       <div id="listScores">
@@ -83,26 +90,26 @@ const TreasureTrail = () => {
             <div className="col-name header">NAME</div>
             <div className="col-score header">SCORE</div>
           </div>
+    
 
           <div id="scrollableContent">
-           
-            {scores.map((scoreItem) => {
-              const isUser = scoreItem.id === userId;
-              return (
-                <div
-                  key={scoreItem.id}
-                  ref={isUser ? userRowRef : null}
-                  className={`table-row ${isUser ? "me" : ""}`}
-                >
-                  <div className="col-rank">{scoreItem.ranking ?? "-"}</div>
-                  <div className="col-name">
-                    {scoreItem.name}
-                    {isUser ? " ✨" : ""}
-                  </div>
-                  <div className="col-score">{scoreItem.score}</div>
-                </div>
-              );
-            })}
+              {sortedScores.map((scoreItem) => {
+                const isUser = scoreItem.name === "Me";
+                  return (
+                    <div>
+                    <div
+                      key={scoreItem.id}
+                      ref={isUser ? userRowRef : null}
+                      className={`table-row ${isUser ? "me" : ""}`}
+                    >
+                       <div className="col-rank">{scoreItem.ranking ?? "-"}</div>
+                        <div className="col-name">{isUser ? "Me" : scoreItem.name}</div>
+                        <div className="col-score">{scoreItem.score}</div>
+
+                      </div>
+                    </div>
+                  );
+                })}
           </div>
         </div>
       </div>

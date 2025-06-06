@@ -31,6 +31,7 @@ const SideBar = () => {
         .then(setFavorites)
         .catch((err) => console.error("Erreur favoris :", err));
     }
+    console.log("User loaded:", storedUser);
   }, []);
 
   useEffect(() => {
@@ -103,7 +104,9 @@ const SideBar = () => {
               Log out
             </button>
           </div>
-
+           {/* <div>
+              <p>{user.jobTitle}</p>
+            </div> */}
           <div id="userBlock">
             <img
               id="avatar"
@@ -113,7 +116,10 @@ const SideBar = () => {
                   : defaultAvatar
               }
               alt="avatar"
+              style={{ width: "50px", height: "50px" }
+            }
             />
+          
             <div id="userInfo">
               <span id="jobTitle">{user?.jobTitle || "DESIGNER"}</span>
               <span id="userName">{user?.name || "James"}</span>
