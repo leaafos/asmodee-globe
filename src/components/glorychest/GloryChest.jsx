@@ -173,7 +173,7 @@ const GloryChest = () => {
               )}
 
               {/* {pendingBadges.length === 0 ? (
-                <p style={{ color: 'white' }}>Aucun badge en cours de vote.</p>
+               <p style={{ color: 'white' }}>Aucun badge en cours de vote.</p>
               ) : (
                 pendingBadges.map((badge) => (
                   <div key={pendingBadges[0].id} className="badge-card">
@@ -184,7 +184,7 @@ const GloryChest = () => {
                     />
                     <div className="belowBadge">
                       <span className="badgeName">Creativity</span>
-                      <p className="badgeDescription">The playful visionary</p>
+                      <p className="badgeDescription">Team award</p>
                     </div>
                   </div>
                 ))
