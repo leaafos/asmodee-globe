@@ -27,7 +27,7 @@ A peer-to-peer recognition system where employees can award virtual badges to ce
 A fun, gamified leaderboard system that encourages participation through friendly competition.
 
 ## 🧰 Tech Stack
-Frontend: React.js, SCSS
+Frontend: React.js, SCSS, Nivo (For the radar graphic on the Sink or Sail page)
 
 Backend: Node.js (Express), Knex.js, PostgreSQL
 
