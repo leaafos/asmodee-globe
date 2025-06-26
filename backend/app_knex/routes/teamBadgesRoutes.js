@@ -50,14 +50,10 @@ router.get('/teamBadges/pendingOthers/:teamId', async (req, res) => {
 // Ajouter un vote à un teamBadge
 router.post('/teamBadges/:id/vote', async (req, res) => {
   const { id } = req.params;
-  const { userId } = req.body; // optionnel si tu veux vérifier que l'utilisateur n'a pas déjà voté
+  const { userId } = req.body; 
 
   try {
-    // Ici tu peux vérifier si userId a déjà voté sur ce teamBadgeId pour éviter votes multiples (optionnel)
-    // await teamBadgeModel.checkUserVote(id, userId);
-
     await teamBadgeModel.addVote(id, userId);
-
     res.json({ message: 'Vote ajouté avec succès' });
   } catch (error) {
     res.status(500).json({ error: error.message });
